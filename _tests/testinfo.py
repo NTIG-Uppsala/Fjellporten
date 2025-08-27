@@ -9,8 +9,8 @@ from os import path, getcwd
 class TestHemsida(TestCase):
 
     # inställningar för hur testerna körs
-    stangintebrowsern = True  # om True så hålls webbläsaren öppen efter testerna är klara, annars stängs den
-    gomfonstret = False  # visar webbläsaren medan testerna körs
+    stangintebrowsern = False  # om True så hålls webbläsaren öppen efter testerna är klara, annars stängs den
+    gomfonstret = True  # visar webbläsaren medan testerna körs
 
     # setUpClass körs INNAN FÖRSTA testet
     @classmethod
@@ -48,9 +48,15 @@ class TestHemsida(TestCase):
         self.browser.get(path.join(getcwd(), 'index.html'))
         self.assertIn("555-3571113", self.browser.page_source)
     
-    # def testPageHeader(self):
-    #     self.browser.get(path.join(getcwd(), 'index.html'))
-    #     self.assertIn("<h1>", self.browser.page_source)
+    def testEmail(self):
+        self.browser.get(path.join(getcwd(), 'index.html'))
+        self.assertIn("notreal@fjellporten.se", self.browser.page_source)
+
+    def testAddress(self):
+        self.browser.get(path.join(getcwd(), 'index.html'))
+        self.assertIn("Kurravaaravägen 4, 98137 Kiruna", self.browser.page_source)
+
+    
 
 
 

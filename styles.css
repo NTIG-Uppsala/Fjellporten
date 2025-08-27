@@ -2,12 +2,13 @@ body
 {
     margin: 0;
     display: flex;
+    justify-content: center;
     height: 100vh;
 }
 .centered
 {
     width: fit-content;
-    margin: auto;
+    margin: auto 10px;
     text-align: center;
     border: 5px black solid;
     padding: 20px;
