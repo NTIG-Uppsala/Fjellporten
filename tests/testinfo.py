@@ -42,7 +42,7 @@ class TestHemsida(TestCase):
     # HÄR BÖRJAR TESTERNA
     def testCompanyName(self):
         self.browser.get(path.join(getcwd(), 'index.html'))
-        self.assertIn("Fjellportens biluthyrning", self.browser.page_source)
+        self.assertIn("Fjellporten biluthyrning", self.browser.page_source)
 
     def testPhoneNumber(self):
         self.browser.get(path.join(getcwd(), 'index.html'))
