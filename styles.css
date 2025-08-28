@@ -1,36 +1,49 @@
 body
 {
     margin: 0;
-    display: flex;
-    justify-content: center;
+    display: grid;
+    grid-template-rows: repeat(3, min-content) 1fr min-content;
     height: 100vh;
     background-color: #859BA1;
-    font-family: 'calibri';
+    font-family:'Calibri', 'Trebuchet MS', sans-serif;
 }
 a
 {
-    color: #305548;
+    color: #EBF4F5;
 }
 a:hover
 {
     color:#5C8257;
 }
-h1{
-    font-family: 'Times New Roman', Times, serif;
-}
-.centered
+footer
 {
-    width: fit-content;
-    margin: auto 10px;
-    text-align: center;
-    border: 5px black solid;
-    border-radius: 7px;
-    padding: 20px;
-    background-color: #EBF4F5;
+    background-color: #305548;
+    color: #EBF4F5;
 }
 .day
 {
     padding-right: 7px;
+}
+#header
+{
+    text-align: center;
+    font-family: 'Times New Roman', Times, serif;
+}
+#banner
+{
+    background-image: url(mountain-9172053_1280.jpg);
+    background-size: 100%;
+    background-position: 50% 45%;
+    height: 25vw;
+    border-radius: 50% 50% 0 0;
+}
+#content-container
+{
+    background-color: #EBF4F5;
+}
+#filler
+{
+    background-color: #EBF4F5;
 }
 #opening-hours-title
 {
