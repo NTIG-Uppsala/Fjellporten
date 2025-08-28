@@ -56,6 +56,15 @@ class TestHemsida(TestCase):
         self.browser.get(path.join(getcwd(), 'index.html'))
         self.assertIn("Kurravaaravägen 4, 98137 Kiruna", self.browser.page_source)
 
+    def testOpeningHours(self):
+        self.browser.get(path.join(getcwd(), 'index.html'))
+        self.assertIn("Måndagar 10-22", self.browser.page_source)
+        self.assertIn("Tisdagar 10-22", self.browser.page_source)
+        self.assertIn("Onsdagar 10-24", self.browser.page_source)
+        self.assertIn("Torsdagar 10-22", self.browser.page_source)
+        self.assertIn("Fredagar 10-03", self.browser.page_source)
+        self.assertIn("Lördagar 12-04", self.browser.page_source)
+        self.assertIn("Söndagar 12-23", self.browser.page_source)
     
 
 
