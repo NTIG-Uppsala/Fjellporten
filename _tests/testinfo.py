@@ -6,40 +6,39 @@ from os import path, getcwd
 
 
 
-class TestHemsida(TestCase):
+class TestWebsite(TestCase):
 
-    # inställningar för hur testerna körs
-    stangintebrowsern = False  # om True så hålls webbläsaren öppen efter testerna är klara, annars stängs den
-    gomfonstret = True  # visar webbläsaren medan testerna körs
+    # settings for how tests are run
+    doNotCloseBrowser = False   # if true the browser stays open after tests are done
+    hideWindow = True  # shows browser while tests are running
 
-    # setUpClass körs INNAN FÖRSTA testet
+    # setUpClass runs BEFORE FIRST test
     @classmethod
     def setUpClass(cls):
         chr_options = Options()
 
-        if cls.stangintebrowsern:
+        if cls.doNotCloseBrowser:
             chr_options.add_experimental_option("detach", True)
 
-        if cls.gomfonstret:
+        if cls.hideWindow:
             chr_options.add_argument("--headless")
 
         cls.browser = webdriver.Chrome(options=chr_options)
 
-    # tearDownClass körs EFTER SISTA testet
+    # tearDownClass runs AFTER LAST test
     @classmethod
     def tearDownClass(cls):
-        pass  # gör ingenting
+        pass  # does nothing
 
-    # setUp körs INNAN VARJE TEST
+    # setUp runs BEFORE EACH test
     def setUp(self):
-        pass  # gör ingenting
+        pass  # does nothing
 
-    # tearDown körs EFTER VARJE TEST
+    # tearDown runs AFTER EACH test
     def tearDown(self):
-        self.browser.get('about:blank')  # gå till en tom sida för att undvika att tidigare test påverkar senare
+        self.browser.get('about:blank')  # go to blank page to avoid influence from prior tests
 
-
-    # HÄR BÖRJAR TESTERNA
+    # TESTS START HERE
     def testCompanyName(self):
         self.browser.get(path.join(getcwd(), 'index.html'))
         self.assertIn("Fjellporten biluthyrning", self.browser.page_source)
@@ -77,6 +76,6 @@ class TestHemsida(TestCase):
 
 
 
-# denna bit finns här så att testerna körs om filen körs som vanligt python-program
+# this bit is here so that the tests are run when the file is run as a normal python-program
 if __name__ == '__main__':
     main(verbosity=2)
