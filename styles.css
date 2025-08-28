@@ -13,7 +13,17 @@ body
     border: 5px black solid;
     padding: 20px;
 }
-.opening-hours
+.day
+{
+    padding-right: 7px;
+}
+#opening-hours-title
 {
     margin: 5px;
+}
+#opening-hours
+{
+    margin: 5px auto;
+    text-align: start;
+    width: fit-content;
 }

@@ -58,13 +58,19 @@ class TestHemsida(TestCase):
 
     def testOpeningHours(self):
         self.browser.get(path.join(getcwd(), 'index.html'))
-        self.assertIn("Måndagar 10-22", self.browser.page_source)
-        self.assertIn("Tisdagar 10-22", self.browser.page_source)
-        self.assertIn("Onsdagar 10-24", self.browser.page_source)
-        self.assertIn("Torsdagar 10-22", self.browser.page_source)
-        self.assertIn("Fredagar 10-03", self.browser.page_source)
-        self.assertIn("Lördagar 12-04", self.browser.page_source)
-        self.assertIn("Söndagar 12-23", self.browser.page_source)
+        self.assertIn("10-22", self.browser.page_source)
+        self.assertIn("Måndag", self.browser.page_source)
+        self.assertIn("Tisdag", self.browser.page_source)
+        self.assertIn("Torsdag", self.browser.page_source)
+        self.assertIn("10-24", self.browser.page_source)
+        self.assertIn("Onsdag", self.browser.page_source)
+        self.assertIn("10-03", self.browser.page_source)
+        self.assertIn("Fredag", self.browser.page_source)
+        self.assertIn("12-04", self.browser.page_source)
+        self.assertIn("Lördag", self.browser.page_source)
+        self.assertIn("12-23", self.browser.page_source)
+        self.assertIn("Söndag", self.browser.page_source)
+        
     
 
 
