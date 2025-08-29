@@ -4,7 +4,7 @@ body
     display: grid;
     grid-template-rows: repeat(2, min-content) 1fr min-content;
     height: 100vh;
-    background-color: #859BA1;
+    background-color: #EBF4F5;
     font-family:'Calibri', 'Trebuchet MS', sans-serif;
 }
 h1
@@ -24,9 +24,10 @@ footer
     background-color: #305548;
     color: #EBF4F5;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-around;
     flex-wrap: wrap;
     padding-bottom: 5px;
+    /* border: 2px solid black; */
 }
 .footer-content
 {
@@ -57,6 +58,8 @@ footer
 #content-container
 {
     background-color: #EBF4F5;
+    max-width: 1900px;
+    margin: 0 auto;
 }
 #filler
 {
@@ -70,4 +73,80 @@ footer
     align-items: flex-start;
     padding: 0 5px;
     margin: 0 auto;
+}
+#content-container
+{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    padding: 10px;
+    width: 100%;
+}
+#content-container img
+{
+    width: 100%;
+}
+
+#content-container button
+{
+    background-color: #305548;
+    color: #EBF4F5;
+    border: none;
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+    border-radius: 10px;
+}
+
+#content-container button:hover
+{
+    background-color: #5C8257;
+}
+
+#product 
+{
+    border: 2px solid black;
+    /* margin: 10px; */
+    margin: 20px 0;
+    padding: 10px;
+    background-color: white;
+    color: black;
+    text-align: center;
+    width: 10vw;
+    height: 20vw;
+    
+}
+#product a, #product h2, #product p
+{
+    text-decoration: none;
+    font-weight: bold;
+    color: black;
+    font-size: calc(100vw / 100);
+}
+
+hr
+{
+    border: 1px solid black;
+    margin: 10px 0;
+}
+
+#fillerv2
+{
+    height: 40px;
+    background-color: #305548;
+}
+@media screen and (max-width: 768px) {
+    #content-container {
+        flex-direction: column;
+        align-items: center;
+    }
+    #product {
+        width: 60vw;
+        height: 100vw;
+    }
+    #product a, #product h2, #product p
+    {
+        font-size: calc(100vw / 25);
+    }
 }
