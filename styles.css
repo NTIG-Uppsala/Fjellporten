@@ -2,10 +2,14 @@ body
 {
     margin: 0;
     display: grid;
-    grid-template-rows: repeat(3, min-content) 1fr min-content;
+    grid-template-rows: repeat(2, min-content) 1fr min-content;
     height: 100vh;
     background-color: #859BA1;
     font-family:'Calibri', 'Trebuchet MS', sans-serif;
+}
+h1
+{
+    font-size: 5vw;
 }
 a
 {
@@ -40,18 +44,15 @@ footer
 {
     padding-right: 4px;
 }
-#header
-{
-    text-align: center;
-    font-family: 'Times New Roman', Times, serif;
-}
 #banner
 {
     background-image: url(images/banner_mountain.jpg);
     background-size: 100%;
-    background-position: 50% 45%;
-    height: 25vw;
-    border-radius: 50% 50% 0 0;
+    background-position: 50% 55%;
+    height: 40vw;
+    text-align: center;
+    color: white;
+    text-shadow: #305548 1px 1px 2px;
 }
 #content-container
 {
