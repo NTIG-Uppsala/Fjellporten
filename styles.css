@@ -19,10 +19,26 @@ footer
 {
     background-color: #305548;
     color: #EBF4F5;
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    padding-bottom: 5px;
 }
-.day
+.footer-content
 {
-    padding-right: 7px;
+    padding: 0 5px;
+    max-width: 230px;
+    min-width: min-content;
+}
+.footer-title
+{
+    margin: 5px;
+    font-family: 'Times New Roman', Times, serif;
+    text-align: center;
+}
+.day, .time
+{
+    padding-right: 4px;
 }
 #header
 {
@@ -31,7 +47,7 @@ footer
 }
 #banner
 {
-    background-image: url(mountain-9172053_1280.jpg);
+    background-image: url(images/banner_mountain.jpg);
     background-size: 100%;
     background-position: 50% 45%;
     height: 25vw;
@@ -45,14 +61,12 @@ footer
 {
     background-color: #EBF4F5;
 }
-#opening-hours-title
-{
-    margin: 5px;
-    font-family: 'Times New Roman', Times, serif;
-}
 #opening-hours
 {
-    margin: 5px auto;
-    text-align: start;
-    width: fit-content;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 0 5px;
+    margin: 0 auto;
 }
