@@ -6,7 +6,7 @@ from os import path, getcwd
 
 
 
-class TestWebsite(TestCase):
+class TestBasicInfo(TestCase):
 
     # settings for how tests are run
     doNotCloseBrowser = False   # if true the browser stays open after tests are done
@@ -57,18 +57,10 @@ class TestWebsite(TestCase):
 
     def testOpeningHours(self):
         self.browser.get(path.join(getcwd(), 'index.html'))
-        self.assertIn("10-22", self.browser.page_source)
-        self.assertIn("Måndag", self.browser.page_source)
-        self.assertIn("Tisdag", self.browser.page_source)
-        self.assertIn("Torsdag", self.browser.page_source)
-        self.assertIn("10-24", self.browser.page_source)
-        self.assertIn("Onsdag", self.browser.page_source)
-        self.assertIn("10-03", self.browser.page_source)
-        self.assertIn("Fredag", self.browser.page_source)
-        self.assertIn("12-04", self.browser.page_source)
-        self.assertIn("Lördag", self.browser.page_source)
-        self.assertIn("12-23", self.browser.page_source)
-        self.assertIn("Söndag", self.browser.page_source)
+        body = self.browser.find_element(By.TAG_NAME, "body")
+        
+        for text in "Måndag: 10-22", "Tisdag: 10-22", "Onsdag: 10-24", "Torsdag: 10-22", "Fredag: 10-03", "Lördag: 12-04", "Söndag: 12-23":
+            self.assertIn(text, body.text)
         
     
 
