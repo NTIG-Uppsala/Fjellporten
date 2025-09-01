@@ -32,6 +32,7 @@ footer
     justify-content: space-around;
     flex-wrap: wrap;
     padding-bottom: 5px;
+    /* border: 2px solid black; */
 }
 .product 
 {
