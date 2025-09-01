@@ -62,7 +62,49 @@ class TestBasicInfo(TestCase):
         for text in "Måndag: 10-22", "Tisdag: 10-22", "Onsdag: 10-24", "Torsdag: 10-22", "Fredag: 10-03", "Lördag: 12-04", "Söndag: 12-23":
             self.assertIn(text, body.text)
         
-    
+class TestMainPage(TestCase):
+
+    # settings for how tests are run
+    doNotCloseBrowser = False   # if true the browser stays open after tests are done
+    hideWindow = True  # shows browser while tests are running
+
+    # setUpClass runs BEFORE FIRST test
+    @classmethod
+    def setUpClass(cls):
+        chr_options = Options()
+
+        if cls.doNotCloseBrowser:
+            chr_options.add_experimental_option("detach", True)
+
+        if cls.hideWindow:
+            chr_options.add_argument("--headless")
+
+        cls.browser = webdriver.Chrome(options=chr_options)
+
+    # tearDownClass runs AFTER LAST test
+    @classmethod
+    def tearDownClass(cls):
+        pass  # does nothing
+
+    # setUp runs BEFORE EACH test
+    def setUp(self):
+        pass  # does nothing
+
+    # tearDown runs AFTER EACH test
+    def tearDown(self):
+        self.browser.get('about:blank')  # go to blank page to avoid influence from prior tests
+
+    # TESTS START HERE
+    def testProductList(self):
+        self.browser.get(path.join(getcwd(), 'index.html'))
+        content = self.browser.find_element(By.ID, "content-container")
+        self.assertIn("liten bil", content.text.lower())
+        self.assertIn("stor bil", content.text.lower())
+        self.assertIn("husbil", content.text.lower())
+        self.assertIn("liten bil", content.text.lower())
+        self.assertIn("500 kr/dag", content.text.lower())
+        self.assertIn("1000 kr/dag", content.text.lower())
+        self.assertIn("1500 kr/dag", content.text.lower())
 
 
 
