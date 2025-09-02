@@ -73,7 +73,7 @@ footer
 .footer-title
 {
     margin: 5px;
-    font-family: 'Times New Roman', Times, serif;
+    font-family:'Calibri', 'Trebuchet MS', sans-serif;
     text-align: center;
 }
 .day, .time
