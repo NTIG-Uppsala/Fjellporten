@@ -45,7 +45,7 @@ class TestBasicInfo(TestCase):
 
     def testPhoneNumber(self):
         self.browser.get(path.join(getcwd(), 'index.html'))
-        self.assertIn("555-3571113", self.browser.page_source)
+        self.assertIn("555-357 11 13", self.browser.page_source)
     
     def testEmail(self):
         self.browser.get(path.join(getcwd(), 'index.html'))
