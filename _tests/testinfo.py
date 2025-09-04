@@ -122,6 +122,14 @@ class TestMainPage(TestCase):
         self.assertIn("Audi A4 Avant", self.browser.page_source)
         self.assertIn("Adria Coral XL", self.browser.page_source)
 
+    def testMomsButton(self):
+        self.browser.get(path.join(getcwd(), "index.html"))
+        card = self.browser.find_element(By.CLASS_NAME, "category-card")
+        card.click()
+        self.assertIn("520 kr/dag", self.browser.page_source)
+        button = self.browser.find_element(By.ID, "tax-button")
+        button.click()
+        self.assertIn("364 kr/dag", self.browser.page_source)
 
 # this bit is here so that the tests are run when the file is run as a normal python-program
 if __name__ == "__main__":
