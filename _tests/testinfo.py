@@ -110,9 +110,9 @@ class TestMainPage(TestCase):
     def testCategoryList(self):
         self.browser.get(path.join(getcwd(), "index.html"))
         content = self.browser.find_element(By.ID, "content-container")
-        self.assertIn("liten bil", content.text.lower())
-        self.assertIn("stor bil", content.text.lower())
-        self.assertIn("husbil", content.text.lower())
+        self.assertIn("små bilar", content.text.lower())
+        self.assertIn("stora bilar", content.text.lower())
+        self.assertIn("husbilar", content.text.lower())
 
     def testProducts(self):
         self.browser.get(path.join(getcwd(), "index.html"))

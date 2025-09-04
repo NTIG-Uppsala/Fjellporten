@@ -1,0 +1,95 @@
+body {
+  margin: 0;
+  background-color: whitesmoke;
+  background-image: url(images/banner_mountain.jpg);
+  background-size: cover;
+  background-position: 50% 55%;
+  font-family: "calibri", sans-serif;
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: min-content 1fr min-content;
+}
+h1 {
+  color: white;
+  text-align: center;
+  font-size: 60px;
+  text-shadow: #305548 1px 1px 2px;
+  margin: 0px auto 10px;
+  padding: 20px;
+  text-decoration: none;
+  font-family: "calibri", "serif";
+}
+a {
+  color: white;
+}
+h1 > a {
+  text-decoration: none;
+}
+
+.container {
+  background-color: white;
+  margin: 0 auto 20px;
+  width: 80%;
+  padding: 5px 30px 30px 30px;
+  border-radius: 10px;
+  box-shadow: 0px 3px 5px 5px rgba(30, 55, 48, 0.7);
+  height: fit-content;
+}
+
+.container > h2 {
+  text-align: center;
+  font-size: 30px;
+  margin: 10px 0;
+}
+
+.car-table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.car-table td {
+  margin: 0;
+  border: black 1px solid;
+  padding: 5px 10px;
+}
+.car {
+  width: 83%;
+}
+
+footer {
+  background-color: #305548;
+}
+#footer-container {
+  color: #ebf4f5;
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  padding-bottom: 5px;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+}
+.footer-content {
+  padding: 0 10px;
+  max-width: 230px;
+  min-width: min-content;
+}
+.footer-title {
+  width: 100%;
+  margin: 5px;
+  font-family: "Calibri", "Trebuchet MS", sans-serif;
+  text-align: center;
+}
+.day,
+.time {
+  padding-right: 4px;
+}
+
+#opening-hours {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 0 5px;
+  margin: 0 auto;
+}
