@@ -124,15 +124,26 @@ class TestMainPage(TestCase):
 
     def testTaxButton(self):
         taxAmount = 0.7
-        
-        self.browser.get(path.join(getcwd(), "index.html"))
-        card = self.browser.find_element(By.CLASS_NAME, "category-card")
-        card.click()
+
+        self.browser.get(path.join(getcwd(), "hyr_bil.html"))
         prices = self.browser.find_elements(By.CLASS_NAME, "price")
         price = int(prices[0].text.split(" ")[0])
         button = self.browser.find_element(By.ID, "tax-button")
         button.click()
         self.assertIn(f"{int(price * taxAmount)} kr/dag", self.browser.page_source)
+
+    def testTaxCookie(self):
+        taxAmount = 0.7
+
+        self.browser.get(path.join(getcwd(), "hyr_bil.html"))
+        prices = self.browser.find_elements(By.CLASS_NAME, "price")
+        price = int(prices[0].text.split(" ")[0])
+        button = self.browser.find_element(By.ID, "tax-button")
+        button.click()
+        self.assertIn(f"{int(price * taxAmount)} kr/dag", self.browser.page_source)
+        self.browser.refresh()
+        self.assertIn(f"{int(price * taxAmount)} kr/dag", self.browser.page_source)
+
 
 # this bit is here so that the tests are run when the file is run as a normal python-program
 if __name__ == "__main__":
