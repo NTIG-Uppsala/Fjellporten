@@ -36,6 +36,20 @@ h1 > a {
   height: fit-content;
 }
 
+#tax-container {
+  float: right;
+  display: flex;
+  align-items: center;
+  margin: 0;
+} 
+#tax-container p, #tax-container input {
+  margin: 5px 2px; 
+}
+
+#tax-button[type="checkbox"] {
+  color: aqua;
+}
+
 .container > h2 {
   text-align: center;
   font-size: 30px;
