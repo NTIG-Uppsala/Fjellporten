@@ -28,7 +28,7 @@ h2 {
 }
 
 a {
-    color: #ebf4f5;
+    color: #fffafa;
 }
 
 footer {
@@ -96,6 +96,7 @@ footer {
 }
 
 .footer-title {
+    color: #fffafa;
     margin: 5px;
     font-family: "Calibri", "Trebuchet MS", sans-serif;
     text-align: center;
@@ -104,6 +105,10 @@ footer {
 .day,
 .time {
     padding-right: 4px;
+}
+
+.time {
+    color: #fffafa;
 }
 
 #banner {

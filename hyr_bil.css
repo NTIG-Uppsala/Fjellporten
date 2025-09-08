@@ -1,6 +1,6 @@
 body {
   margin: 0;
-  background-color: whitesmoke;
+  background-color: #EBF4F5;
   background-image: url(images/banner_mountain.jpg);
   background-size: cover;
   background-position: 50% 55%;
@@ -9,8 +9,8 @@ body {
   display: grid;
   grid-template-rows: min-content 1fr min-content;
 }
+
 h1 {
-  color: white;
   text-align: center;
   font-size: 60px;
   text-shadow: #305548 1px 1px 2px;
@@ -19,24 +19,27 @@ h1 {
   text-decoration: none;
   font-family: "calibri", "serif";
 }
+
 a {
-  color: white;
+  color: #fffafa;
 }
-h1 > a {
+
+h1>a {
   text-decoration: none;
 }
 
 .container {
-  background-color: white;
+  background-color: #fffafa;
   margin: 0 auto 20px;
   width: 80%;
   padding: 5px 30px 30px 30px;
   border-radius: 10px;
-  box-shadow: 0px 3px 5px 5px rgba(30, 55, 48, 0.7);
+  box-shadow: 0px 3px 5px 5px #1e3730b3;
   height: fit-content;
 }
 
-.container > h2 {
+
+.container>h2 {
   text-align: center;
   font-size: 30px;
   margin: 10px 0;
@@ -52,6 +55,11 @@ h1 > a {
   border: black 1px solid;
   padding: 5px 10px;
 }
+
+.car-table tr:nth-child(2n) {
+  background-color: #ebf4f5;
+}
+
 .car {
   width: 83%;
 }
@@ -59,6 +67,7 @@ h1 > a {
 footer {
   background-color: #305548;
 }
+
 #footer-container {
   color: #ebf4f5;
   display: flex;
@@ -69,20 +78,29 @@ footer {
   max-width: 900px;
   margin: 0 auto;
 }
+
 .footer-content {
   padding: 0 10px;
   max-width: 230px;
   min-width: min-content;
 }
+
 .footer-title {
   width: 100%;
   margin: 5px;
   font-family: "Calibri", "Trebuchet MS", sans-serif;
   text-align: center;
+  color: #FFFAFA;
 }
+
 .day,
 .time {
+
   padding-right: 4px;
+}
+
+.time {
+  color: #FFFAFA;
 }
 
 #opening-hours {
