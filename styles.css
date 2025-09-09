@@ -71,6 +71,8 @@ footer {
 
 .category-card img {
     margin: 30% auto;
+    height: 50%;
+    max-width: 100%;
 }
 
 .category-card h2,
@@ -128,10 +130,6 @@ footer {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     justify-items: center;
-}
-
-#content-container img {
-    width: 100%;
 }
 
 hr {
