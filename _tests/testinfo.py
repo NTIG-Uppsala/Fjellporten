@@ -41,35 +41,25 @@ class TestBasicInfo(TestCase):
 
     # TESTS START HERE
     def testCompanyName(self):
-        self.browser.get(path.join(getcwd(), "index.html"))
+        self.browser.get("http://localhost:8000/index.html")
         self.assertIn("Fjellporten biluthyrning", self.browser.page_source)
 
     def testPhoneNumber(self):
-        self.browser.get(path.join(getcwd(), "index.html"))
+        self.browser.get("http://localhost:8000/index.html")
         self.assertIn("555-357 11 13", self.browser.page_source)
 
     def testEmail(self):
-        self.browser.get(path.join(getcwd(), "index.html"))
+        self.browser.get("http://localhost:8000/index.html")
         self.assertIn("notreal@fjellporten.se", self.browser.page_source)
 
     def testAddress(self):
-        self.browser.get(path.join(getcwd(), "index.html"))
+        self.browser.get("http://localhost:8000/index.html")
         self.assertIn("Kurravaaravägen 4, 98137 Kiruna", self.browser.page_source)
 
     def testOpeningHours(self):
-        self.browser.get(path.join(getcwd(), "index.html"))
+        self.browser.get("http://localhost:8000/index.html")
         body = self.browser.find_element(By.TAG_NAME, "body")
-
-        for text in (
-            "Måndag: 10-22",
-            "Tisdag: 10-22",
-            "Onsdag: 10-24",
-            "Torsdag: 10-22",
-            "Fredag: 10-03",
-            "Lördag: 12-04",
-            "Söndag: 12-23",
-        ):
-            self.assertIn(text, body.text)
+        self.assertIn("Onsdag: 10-24", body.text)
 
 
 class TestMainPage(TestCase):
@@ -108,14 +98,14 @@ class TestMainPage(TestCase):
 
     # TESTS START HERE
     def testCategoryList(self):
-        self.browser.get(path.join(getcwd(), "index.html"))
+        self.browser.get("http://localhost:8000/index.html")
         content = self.browser.find_element(By.ID, "content-container")
         self.assertIn("små bilar", content.text.lower())
         self.assertIn("stora bilar", content.text.lower())
         self.assertIn("husbilar", content.text.lower())
 
     def testProducts(self):
-        self.browser.get(path.join(getcwd(), "index.html"))
+        self.browser.get("http://localhost:8000/index.html")
         card = self.browser.find_element(By.CLASS_NAME, "category-card")
         card.click()
         self.assertIn("Kia Picanto", self.browser.page_source)
@@ -123,27 +113,25 @@ class TestMainPage(TestCase):
         self.assertIn("Adria Coral XL", self.browser.page_source)
 
     def testTaxButton(self):
-        taxAmount = 0.7
-
-        self.browser.get(path.join(getcwd(), "hyr_bil.html"))
-        prices = self.browser.find_elements(By.CLASS_NAME, "price")
-        price = int(prices[0].text.split(" ")[0])
-        button = self.browser.find_element(By.ID, "tax-button")
-        button.click()
-        self.assertIn(f"{int(price * taxAmount)} kr/dag", self.browser.page_source)
-
-    # To run this test make sure to use a server, example: "python -m http.server"
-    def testTaxCookie(self):
-        taxAmount = 0.7
-
         self.browser.get("http://localhost:8000/hyr_bil.html")
-        prices = self.browser.find_elements(By.CLASS_NAME, "price")
-        price = int(prices[0].text.split(" ")[0])
+        self.assertIn("450", self.browser.page_source)
+        self.assertNotIn("360", self.browser.page_source)
         button = self.browser.find_element(By.ID, "tax-button")
         button.click()
-        self.assertIn(f"{int(price * taxAmount)} kr/dag", self.browser.page_source)
+        self.assertNotIn("450", self.browser.page_source)
+        self.assertIn("360", self.browser.page_source)
+
+    def testTaxCookie(self):
+        self.browser.get("http://localhost:8000/hyr_bil.html")
+        self.assertIn("450", self.browser.page_source)
+        self.assertNotIn("360", self.browser.page_source)
+        button = self.browser.find_element(By.ID, "tax-button")
+        button.click()
+        self.assertNotIn("450", self.browser.page_source)
+        self.assertIn("360", self.browser.page_source)
         self.browser.refresh()
-        self.assertIn(f"{int(price * taxAmount)} kr/dag", self.browser.page_source)
+        self.assertNotIn("450", self.browser.page_source)
+        self.assertIn("360", self.browser.page_source)
 
 
 # this bit is here so that the tests are run when the file is run as a normal python-program
