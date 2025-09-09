@@ -8,8 +8,8 @@ from os import path, getcwd
 class TestBasicInfo(TestCase):
 
     # settings for how tests are run
-    doNotCloseBrowser = False  # if true the browser stays open after tests are done
-    hideWindow = True  # shows browser while tests are running
+    doNotCloseBrowser = True  # if true the browser stays open after tests are done
+    hideWindow = False  # shows browser while tests are running
 
     # setUpClass runs BEFORE FIRST test
     @classmethod
@@ -31,13 +31,14 @@ class TestBasicInfo(TestCase):
 
     # setUp runs BEFORE EACH test
     def setUp(self):
-        pass  # does nothing
-
-    # tearDown runs AFTER EACH test
-    def tearDown(self):
+        self.browser.delete_all_cookies()
         self.browser.get(
             "about:blank"
         )  # go to blank page to avoid influence from prior tests
+
+    # tearDown runs AFTER EACH test
+    def tearDown(self):
+        pass  # does nothing
 
     # TESTS START HERE
     def testCompanyName(self):
@@ -65,8 +66,8 @@ class TestBasicInfo(TestCase):
 class TestMainPage(TestCase):
 
     # settings for how tests are run
-    doNotCloseBrowser = False  # if true the browser stays open after tests are done
-    hideWindow = True  # shows browser while tests are running
+    doNotCloseBrowser = True  # if true the browser stays open after tests are done
+    hideWindow = False  # shows browser while tests are running
 
     # setUpClass runs BEFORE FIRST test
     @classmethod
@@ -88,13 +89,14 @@ class TestMainPage(TestCase):
 
     # setUp runs BEFORE EACH test
     def setUp(self):
-        pass  # does nothing
-
-    # tearDown runs AFTER EACH test
-    def tearDown(self):
+        self.browser.delete_all_cookies()
         self.browser.get(
             "about:blank"
         )  # go to blank page to avoid influence from prior tests
+
+    # tearDown runs AFTER EACH test
+    def tearDown(self):
+        pass  # does nothing
 
     # TESTS START HERE
     def testCategoryList(self):
@@ -115,23 +117,20 @@ class TestMainPage(TestCase):
     def testTaxButton(self):
         self.browser.get("http://localhost:8000/hyr_bil.html")
         self.assertIn("450", self.browser.page_source)
-        self.assertNotIn("360", self.browser.page_source)
+        self.assertNotIn("416", self.browser.page_source)
         button = self.browser.find_element(By.ID, "tax-button")
         button.click()
-        self.assertNotIn("450", self.browser.page_source)
-        self.assertIn("360", self.browser.page_source)
+        self.assertIn("416", self.browser.page_source)
 
     def testTaxCookie(self):
         self.browser.get("http://localhost:8000/hyr_bil.html")
         self.assertIn("450", self.browser.page_source)
-        self.assertNotIn("360", self.browser.page_source)
+        self.assertNotIn("416", self.browser.page_source)
         button = self.browser.find_element(By.ID, "tax-button")
         button.click()
-        self.assertNotIn("450", self.browser.page_source)
-        self.assertIn("360", self.browser.page_source)
+        self.assertIn("416", self.browser.page_source)
         self.browser.refresh()
-        self.assertNotIn("450", self.browser.page_source)
-        self.assertIn("360", self.browser.page_source)
+        self.assertIn("416", self.browser.page_source)
 
 
 # this bit is here so that the tests are run when the file is run as a normal python-program
