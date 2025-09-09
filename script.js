@@ -29,7 +29,6 @@ function updatePrices() {
 
     if (isTaxFree) {
       let newPrice = amount / taxAmount;
-      newPrice = newPrice.toFixed(2);
       // Format number with spaces as thousands separator
       let newPriceFormatted = newPrice.toLocaleString("sv-SE");
       cell.textContent = newPriceFormatted + " kr/dag";
