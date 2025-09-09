@@ -132,7 +132,7 @@ class TestMainPage(TestCase):
         button.click()
         self.assertIn(f"{int(price * taxAmount)} kr/dag", self.browser.page_source)
 
-    # To run this test make sure to use a server "python -m http.server"
+    # To run this test make sure to use a server, example: "python -m http.server"
     def testTaxCookie(self):
         taxAmount = 0.7
 
