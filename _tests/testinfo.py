@@ -132,10 +132,11 @@ class TestMainPage(TestCase):
         button.click()
         self.assertIn(f"{int(price * taxAmount)} kr/dag", self.browser.page_source)
 
+    # To run this test make sure to use a server "python -m http.server"
     def testTaxCookie(self):
         taxAmount = 0.7
 
-        self.browser.get(path.join(getcwd(), "hyr_bil.html"))
+        self.browser.get("http://localhost:8000/hyr_bil.html")
         prices = self.browser.find_elements(By.CLASS_NAME, "price")
         price = int(prices[0].text.split(" ")[0])
         button = self.browser.find_element(By.ID, "tax-button")
