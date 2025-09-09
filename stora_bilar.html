@@ -1,46 +1,49 @@
 <!DOCTYPE html>
-<html lang="sv">
+<html lang="en">
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fjellporten</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Hyra bil</title>
+    <link rel="stylesheet" href="hyr_bil.css">
   </head>
-
-  <body>
-    <div id="banner">
-      <h1>Fjellporten biluthyrning</h1>
-      <div id="content-container">
-        <a href="små_bilar.html" class="category-card">
-          <div>
-            <h2>SMÅ BILAR</h2>
-            <hr>
-          </div>
-          <img src="images/liten_bil.svg" alt="Liten bil">
-          <p>Boka här</p>
-        </a>
-        <a href="stora_bilar.html" class="category-card">
-          <div>
-            <h2>STORA BILAR</h2>
-            <hr>
-          </div>
-          <img src="images/stor_bil.svg" alt="Stor bil">
-          <p>Boka här</p>
-        </a>
-        <a href="husbilar.html" class="category-card">
-          <div>
-            <h2>HUSBILAR</h2>
-            <hr>
-          </div>
-          <img src="images/husbil.svg" alt="Husbil">
-          <p>Boka här</p>
-        </a>
+  <body onload="checkCookies()">
+    <h1><a href="index.html">Fjellporten biluthyrning</a></h1>
+    <div class="container">
+      
+      <h2>Stora bilar</h2>
+      <div id="tax-container">
+        <p>exkl. moms</p>
+        <input type="checkbox" id="tax-button">
+      </div>
+      <div class="cars">
+        <table class="car-table">
+          <tr>
+            <td class="car">Volvo XC60 D4 AWD</td>
+            <td class="price">1 050 kr/dag</td>
+          </tr>
+          <tr>
+            <td>Volkswagen Passat Variant</td>
+            <td class="price">900 kr/dag</td>
+          </tr>
+          <tr>
+            <td>Skoda Kodiaq 7-sits</td>
+            <td class="price">1 100 kr/dag</td>
+          </tr>
+          <tr>
+            <td>BMW 320d Touring</td>
+            <td class="price">1 000 kr/dag</td>
+          </tr>
+          <tr>
+            <td>Audi A4 Avant</td>
+            <td class="price">980 kr/dag</td>
+          </tr>
+          <tr>
+            <td>Mercedes-Benz GLC</td>
+            <td class="price">1 200 kr/dag</td>
+          </tr>
+        </table>
       </div>
     </div>
-    <h2>
-      Välkommen till norr <br>
-      Välkommen till Fjellporten
-    </h2>
     <footer>
       <div id="footer-container">
         <div class="footer-content">
@@ -51,9 +54,7 @@
             <a href="mailto:notreal@fjellporten.se">notreal@fjellporten.se</a>
             <br>
             Adress:
-            <a href="https://maps.app.goo.gl/Hxnt9voo3bzES1Q3A"
-              >Kurravaaravägen 4, 98137 Kiruna</a
-            >
+            <a href="https://maps.app.goo.gl/Hxnt9voo3bzES1Q3A">Kurravaaravägen 4, 98137 Kiruna</a>
           </p>
         </div>
         <div class="footer-content">
@@ -95,5 +96,6 @@
         </div>
       </div>
     </footer>
+    <script src="script.js"></script>
   </body>
 </html>

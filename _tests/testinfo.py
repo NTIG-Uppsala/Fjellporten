@@ -128,7 +128,7 @@ class TestMainPage(TestCase):
         self.assertNotIn("Audi A4 Avant", self.browser.page_source)
 
     def testTaxButton(self):
-        self.browser.get("http://localhost:8000/hyr_bil.html")
+        self.browser.get("http://localhost:8000/små_bilar.html")
         self.assertIn("450", self.browser.page_source)
         self.assertNotIn("416", self.browser.page_source)
         button = self.browser.find_element(By.ID, "tax-button")
@@ -136,7 +136,7 @@ class TestMainPage(TestCase):
         self.assertIn("416", self.browser.page_source)
 
     def testTaxCookie(self):
-        self.browser.get("http://localhost:8000/hyr_bil.html")
+        self.browser.get("http://localhost:8000/små_bilar.html")
         self.assertIn("450", self.browser.page_source)
         self.assertNotIn("416", self.browser.page_source)
         button = self.browser.find_element(By.ID, "tax-button")
