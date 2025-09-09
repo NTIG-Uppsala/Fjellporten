@@ -8,15 +8,14 @@ prices.forEach(cell => {
   cell.setAttribute("original-price", cell.textContent);
 });
 
-button.addEventListener("click", () => {;
-
+button.addEventListener("click", () => {
   isTaxFree = !isTaxFree;
   updatePrices();
 });
 
 function checkCookies() {
   let cookie = document.cookie;
-  if (cookie =='VAT=True') {
+  if (cookie == 'taxFree=True') {
     isTaxFree = true;
     updatePrices();
     document.getElementById("tax-button").checked = true;
@@ -32,10 +31,11 @@ function updatePrices() {
       let newPrice = Math.round(amount * taxAmount);
       let newPriceFormatted = newPrice.toLocaleString("sv-SE");
       cell.textContent = newPriceFormatted + " kr/dag";
-      document.cookie = 'VAT=True';
+      document.cookie = 'taxFree=True';
     } else {
       let original = cell.getAttribute("original-price");
       cell.textContent = original;
-      document.cookie = 'VAT=False';
+      document.cookie = 'taxFree=False';
     }
-  })};
+  })
+};
