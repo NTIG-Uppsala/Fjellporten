@@ -8,8 +8,8 @@ from os import path, getcwd
 class TestBasicInfo(TestCase):
 
     # settings for how tests are run
-    doNotCloseBrowser = True  # if true the browser stays open after tests are done
-    hideWindow = False  # shows browser while tests are running
+    doNotCloseBrowser = False  # if true the browser stays open after tests are done
+    hideWindow = True  # shows browser while tests are running
 
     # setUpClass runs BEFORE FIRST test
     @classmethod
@@ -66,8 +66,8 @@ class TestBasicInfo(TestCase):
 class TestMainPage(TestCase):
 
     # settings for how tests are run
-    doNotCloseBrowser = True  # if true the browser stays open after tests are done
-    hideWindow = False  # shows browser while tests are running
+    doNotCloseBrowser = False  # if true the browser stays open after tests are done
+    hideWindow = True  # shows browser while tests are running
 
     # setUpClass runs BEFORE FIRST test
     @classmethod
@@ -106,13 +106,26 @@ class TestMainPage(TestCase):
         self.assertIn("stora bilar", content.text.lower())
         self.assertIn("husbilar", content.text.lower())
 
-    def testProducts(self):
+    def testSmallCars(self):
         self.browser.get("http://localhost:8000/index.html")
-        card = self.browser.find_element(By.CLASS_NAME, "category-card")
+        card = self.browser.find_elements(By.CLASS_NAME, "category-card")[0]
         card.click()
         self.assertIn("Kia Picanto", self.browser.page_source)
+        self.assertNotIn("Audi A4 Avant", self.browser.page_source)
+
+    def testLargeCars(self):
+        self.browser.get("http://localhost:8000/index.html")
+        card = self.browser.find_elements(By.CLASS_NAME, "category-card")[1]
+        card.click()
         self.assertIn("Audi A4 Avant", self.browser.page_source)
+        self.assertNotIn("Kia Picanto", self.browser.page_source)
+
+    def testCamperVans(self):
+        self.browser.get("http://localhost:8000/index.html")
+        card = self.browser.find_elements(By.CLASS_NAME, "category-card")[2]
+        card.click()
         self.assertIn("Adria Coral XL", self.browser.page_source)
+        self.assertNotIn("Audi A4 Avant", self.browser.page_source)
 
     def testTaxButton(self):
         self.browser.get("http://localhost:8000/hyr_bil.html")
