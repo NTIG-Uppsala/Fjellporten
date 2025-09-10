@@ -144,6 +144,15 @@ class TestMainPage(TestCase):
         self.assertIn("416", self.browser.page_source)
         self.browser.refresh()
         self.assertIn("416", self.browser.page_source)
+    
+    def testStaffPictures(self):
+        self.browser.get("http://localhost:8000/personal.html")
+        pictures = self.browser.find_elements(By.CLASS_NAME, "staff-picture")
+        self.assertEqual(len(pictures), 3)
+        content = self.browser.find_element(By.ID, "content-container")
+        self.assertIn("Anna Pettersson", content.text)
+        self.assertIn("Fredrik Örtqvist", content.text)
+        self.assertIn("Peter Johansson", content.text)
 
 
 # this bit is here so that the tests are run when the file is run as a normal python-program
