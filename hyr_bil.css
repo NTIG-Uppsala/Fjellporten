@@ -92,9 +92,28 @@ footer {
 }
 
 .footer-content {
-  padding: 0 10px;
-  max-width: 230px;
-  min-width: min-content;
+    padding: 0 10px;
+    max-width: 230px;
+    min-width: min-content;
+}
+
+.footer-content a {
+    text-decoration: none;
+}
+
+.footer-title {
+    color: #fffafa;
+    margin: 5px;
+    font-family: "Calibri", "Trebuchet MS", sans-serif;
+    text-align: center;
+}
+
+.sidor {
+    text-decoration: none;
+}
+
+.footer-content a:hover {
+    text-decoration: underline;
 }
 
 .footer-title {

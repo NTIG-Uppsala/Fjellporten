@@ -1,104 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hyra bil</title>
+    <link rel="stylesheet" href="hyr_bil.css" />
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hyra bil</title>
-  <link rel="stylesheet" href="hyr_bil.css">
-</head>
-
-<body onload="checkCookies()">
-  <h1><a href="index.html">Fjellporten biluthyrning</a></h1>
-  <div class="container">
-
-    <h2>Stora bilar</h2>
-    <div id="tax-container">
-      <p>exkl. moms</p>
-      <input type="checkbox" id="tax-button">
-    </div>
-    <div class="cars">
-      <table class="car-table">
-        <tr>
-          <td class="car">Volvo XC60 D4 AWD</td>
-          <td class="price">1 050 kr/dag</td>
-        </tr>
-        <tr>
-          <td>Volkswagen Passat Variant</td>
-          <td class="price">900 kr/dag</td>
-        </tr>
-        <tr>
-          <td>Skoda Kodiaq 7-sits</td>
-          <td class="price">1 100 kr/dag</td>
-        </tr>
-        <tr>
-          <td>BMW 320d Touring</td>
-          <td class="price">1 000 kr/dag</td>
-        </tr>
-        <tr>
-          <td>Audi A4 Avant</td>
-          <td class="price">980 kr/dag</td>
-        </tr>
-        <tr>
-          <td>Mercedes-Benz GLC</td>
-          <td class="price">1 200 kr/dag</td>
-        </tr>
-      </table>
-    </div>
-  </div>
-  <footer>
-    <div id="footer-container">
-      <div class="footer-content">
-        <h2 class="footer-title">Kontakta oss</h2>
-        <p>
-          Tel: <a href="tel:5553571113">555-357 11 13</a><br>
-          E-post:
-          <a href="mailto:notreal@fjellporten.se">notreal@fjellporten.se</a>
-          <br>
-          Adress:
-          <a href="https://maps.app.goo.gl/Hxnt9voo3bzES1Q3A">Kurravaaravägen 4, 98137 Kiruna</a>
-        </p>
+  <body onload="checkCookies()">
+    <h1><a href="index.html">Fjellporten biluthyrning</a></h1>
+    <div class="container">
+      <h2>Stora bilar</h2>
+      <div id="tax-container">
+        <p>exkl. moms</p>
+        <input type="checkbox" id="tax-button" />
       </div>
-      <div class="footer-content">
-        <h2 class="footer-title">Öppettider</h2>
-        <div id="opening-hours">
-          <table>
-            <tr>
-              <td class="day">Måndag:</td>
-              <td class="time">10-22</td>
-            </tr>
-            <tr>
-              <td class="day">Tisdag:</td>
-              <td class="time">10-22</td>
-            </tr>
-            <tr>
-              <td class="day">Onsdag:</td>
-              <td class="time">10-24</td>
-            </tr>
-            <tr>
-              <td class="day">Torsdag:</td>
-              <td class="time">10-22</td>
-            </tr>
-          </table>
-          <table>
-            <tr>
-              <td class="day">Fredag:</td>
-              <td class="time">10-03</td>
-            </tr>
-            <tr>
-              <td class="day">Lördag:</td>
-              <td class="time">12-04</td>
-            </tr>
-            <tr>
-              <td class="day">Söndag:</td>
-              <td class="time">12-23</td>
-            </tr>
-          </table>
+      <div class="cars">
+        <table class="car-table">
+          <tr>
+            <td class="car">Volvo XC60 D4 AWD</td>
+            <td class="price">1 050 kr/dag</td>
+          </tr>
+          <tr>
+            <td>Volkswagen Passat Variant</td>
+            <td class="price">900 kr/dag</td>
+          </tr>
+          <tr>
+            <td>Skoda Kodiaq 7-sits</td>
+            <td class="price">1 100 kr/dag</td>
+          </tr>
+          <tr>
+            <td>BMW 320d Touring</td>
+            <td class="price">1 000 kr/dag</td>
+          </tr>
+          <tr>
+            <td>Audi A4 Avant</td>
+            <td class="price">980 kr/dag</td>
+          </tr>
+          <tr>
+            <td>Mercedes-Benz GLC</td>
+            <td class="price">1 200 kr/dag</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <footer>
+      <div id="footer-container">
+        <div class="footer-content">
+          <h2 class="footer-title">Sidor</h2>
+          <p>
+            <a href="små_bilar.html" class="sidor">Hyr liten bil</a>
+            <br />
+            <a href="stora_bilar.html" class="sidor">Hyr stor bil</a>
+            <br />
+            <a href="husbilar.html" class="sidor">Hyr husbil</a>
+            <br />
+            <a href="personal.html" class="sidor">Personalen</a>
+          </p>
+        </div>
+        <div class="footer-content">
+          <h2 class="footer-title">Kontakta oss</h2>
+          <p>
+            Tel: <a href="tel:5553571113">555-357 11 13</a><br />
+            E-post:
+            <a href="mailto:notreal@fjellporten.se">notreal@fjellporten.se</a>
+            <br />
+            Adress:
+            <a href="https://maps.app.goo.gl/Hxnt9voo3bzES1Q3A"
+              >Kurravaaravägen 4, 98137 Kiruna</a
+            >
+          </p>
+        </div>
+        <div class="footer-content">
+          <h2 class="footer-title">Öppettider</h2>
+          <div id="opening-hours">
+            <table>
+              <tr>
+                <td class="day">Måndag:</td>
+                <td class="time">10-22</td>
+              </tr>
+              <tr>
+                <td class="day">Tisdag:</td>
+                <td class="time">10-22</td>
+              </tr>
+              <tr>
+                <td class="day">Onsdag:</td>
+                <td class="time">10-24</td>
+              </tr>
+              <tr>
+                <td class="day">Torsdag:</td>
+                <td class="time">10-22</td>
+              </tr>
+            </table>
+            <table>
+              <tr>
+                <td class="day">Fredag:</td>
+                <td class="time">10-03</td>
+              </tr>
+              <tr>
+                <td class="day">Lördag:</td>
+                <td class="time">12-04</td>
+              </tr>
+              <tr>
+                <td class="day">Söndag:</td>
+                <td class="time">12-23</td>
+              </tr>
+            </table>
+          </div>
         </div>
       </div>
-    </div>
-  </footer>
-  <script src="script.js"></script>
-</body>
-
+    </footer>
+    <script src="script.js"></script>
+  </body>
 </html>
