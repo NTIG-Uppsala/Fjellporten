@@ -1,1 +1,2 @@
-Länk till hemsidan https://ntig-uppsala.github.io/Fjellporten/
+Länk till hemsidan: https://fejllporten.ntig.dev  
+Länk till dev-sida: https://fejllportendev.ntig.dev
