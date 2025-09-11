@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="hyr_bil.css" />
 </head>
 
-<body onload="checkCookies()">
+<body onload="addTable(småBilarArray); originalPrices(); checkCookies();">
   <h1><a href="index.html">Fjellporten biluthyrning</a></h1>
   <div class="container">
     <h2>Små bilar</h2>
@@ -17,31 +17,7 @@
       <input type="checkbox" id="tax-button" />
     </div>
     <div class="cars">
-      <table class="car-table">
-        <tr>
-          <td class="car">Toyota Yaris 1.5 Hybrid</td>
-          <td class="price">520 kr/dag</td>
-        </tr>
-        <tr>
-          <td>Volkswagen Polo TSI</td>
-          <td class="price">480 kr/dag</td>
-        </tr>
-        <tr>
-          <td>Kia Picanto</td>
-          <td class="price">360 kr/dag</td>
-        </tr>
-        <tr>
-          <td>Renault Clio</td>
-          <td class="price">400 kr/dag</td>
-        </tr>
-        <tr>
-          <td>Ford Fiesta EcoBoost</td>
-          <td class="price">450 kr/dag</td>
-        </tr>
-        <tr>
-          <td>Peugeot 208</td>
-          <td class="price">430 kr/dag</td>
-        </tr>
+      <table id="car-table">
       </table>
     </div>
   </div>

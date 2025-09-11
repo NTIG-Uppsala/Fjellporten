@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="hyr_bil.css" />
 </head>
 
-<body onload="checkCookies()">
+<body onload="addTable(husbilarArray); originalPrices(); checkCookies();">
   <h1><a href="index.html">Fjellporten biluthyrning</a></h1>
   <div class="container">
     <h2>Husbilar</h2>
@@ -17,31 +17,7 @@
       <input type="checkbox" id="tax-button" />
     </div>
     <div class="cars">
-      <table class="car-table">
-        <tr>
-          <td class="car">Adria Coral XL (4 bäddar)</td>
-          <td class="price">1 800 kr/dag</td>
-        </tr>
-        <tr>
-          <td>Hymer B-Class Modern Comfort (5 bäddar)</td>
-          <td class="price">2 200 kr/dag</td>
-        </tr>
-        <tr>
-          <td>Knaus BoxStar Camper Van (2 bäddar)</td>
-          <td class="price">1 400 kr/dag</td>
-        </tr>
-        <tr>
-          <td>Bürstner Lyseo TD (4 bäddar)</td>
-          <td class="price">1 900 kr/dag</td>
-        </tr>
-        <tr>
-          <td>Sunlight A72 (6 bäddar)</td>
-          <td class="price">2 400 kr/dag</td>
-        </tr>
-        <tr>
-          <td>Dethleffs Globebus (3 bäddar)</td>
-          <td class="price">1 600 kr/dag</td>
-        </tr>
+      <table id="car-table">
       </table>
     </div>
   </div>

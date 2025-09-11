@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="hyr_bil.css" />
 </head>
 
-<body onload="checkCookies()">
+<body onload="addTable(storaBilarArray); originalPrices(); checkCookies();">
   <h1><a href="index.html">Fjellporten biluthyrning</a></h1>
   <div class="container">
     <h2>Stora bilar</h2>
@@ -17,31 +17,7 @@
       <input type="checkbox" id="tax-button" />
     </div>
     <div class="cars">
-      <table class="car-table">
-        <tr>
-          <td class="car">Volvo XC60 D4 AWD</td>
-          <td class="price">1 050 kr/dag</td>
-        </tr>
-        <tr>
-          <td>Volkswagen Passat Variant</td>
-          <td class="price">900 kr/dag</td>
-        </tr>
-        <tr>
-          <td>Skoda Kodiaq 7-sits</td>
-          <td class="price">1 100 kr/dag</td>
-        </tr>
-        <tr>
-          <td>BMW 320d Touring</td>
-          <td class="price">1 000 kr/dag</td>
-        </tr>
-        <tr>
-          <td>Audi A4 Avant</td>
-          <td class="price">980 kr/dag</td>
-        </tr>
-        <tr>
-          <td>Mercedes-Benz GLC</td>
-          <td class="price">1 200 kr/dag</td>
-        </tr>
+      <table id="car-table">
       </table>
     </div>
   </div>

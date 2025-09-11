@@ -4,22 +4,21 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 from os import path, getcwd
 
+# settings for how tests are run
+doNotCloseBrowser = False  # if true the browser stays open after tests are done
+hideWindow = True  # shows browser while tests are running
 
 class TestBasicInfo(TestCase):
-
-    # settings for how tests are run
-    doNotCloseBrowser = False  # if true the browser stays open after tests are done
-    hideWindow = True  # shows browser while tests are running
 
     # setUpClass runs BEFORE FIRST test
     @classmethod
     def setUpClass(cls):
         chr_options = Options()
 
-        if cls.doNotCloseBrowser:
+        if doNotCloseBrowser:
             chr_options.add_experimental_option("detach", True)
 
-        if cls.hideWindow:
+        if hideWindow:
             chr_options.add_argument("--headless")
 
         cls.browser = webdriver.Chrome(options=chr_options)
@@ -65,19 +64,15 @@ class TestBasicInfo(TestCase):
 
 class TestMainPage(TestCase):
 
-    # settings for how tests are run
-    doNotCloseBrowser = False  # if true the browser stays open after tests are done
-    hideWindow = True  # shows browser while tests are running
-
     # setUpClass runs BEFORE FIRST test
     @classmethod
     def setUpClass(cls):
         chr_options = Options()
 
-        if cls.doNotCloseBrowser:
+        if doNotCloseBrowser:
             chr_options.add_experimental_option("detach", True)
 
-        if cls.hideWindow:
+        if hideWindow:
             chr_options.add_argument("--headless")
 
         cls.browser = webdriver.Chrome(options=chr_options)
@@ -127,6 +122,47 @@ class TestMainPage(TestCase):
         self.assertIn("Adria Coral XL", self.browser.page_source)
         self.assertNotIn("Audi A4 Avant", self.browser.page_source)
 
+    def testStaffPictures(self):
+        self.browser.get("http://localhost:8000/personal.html")
+        pictures = self.browser.find_elements(By.CLASS_NAME, "staff-picture")
+        self.assertEqual(len(pictures), 3)
+        content = self.browser.find_element(By.ID, "content-container")
+        self.assertIn("Anna Pettersson", content.text)
+        self.assertIn("Fredrik Örtqvist", content.text)
+        self.assertIn("Peter Johansson", content.text)
+
+class TestProductPage(TestCase):
+
+    # setUpClass runs BEFORE FIRST test
+    @classmethod
+    def setUpClass(cls):
+        chr_options = Options()
+
+        if doNotCloseBrowser:
+            chr_options.add_experimental_option("detach", True)
+
+        if hideWindow:
+            chr_options.add_argument("--headless")
+
+        cls.browser = webdriver.Chrome(options=chr_options)
+
+    # tearDownClass runs AFTER LAST test
+    @classmethod
+    def tearDownClass(cls):
+        pass  # does nothing
+
+    # setUp runs BEFORE EACH test
+    def setUp(self):
+        self.browser.delete_all_cookies()
+        self.browser.get(
+            "about:blank"
+        )  # go to blank page to avoid influence from prior tests
+
+    # tearDown runs AFTER EACH test
+    def tearDown(self):
+        pass  # does nothing
+
+    # TESTS START HERE
     def testTaxButton(self):
         self.browser.get("http://localhost:8000/små_bilar.html")
         self.assertIn("450", self.browser.page_source)
@@ -145,15 +181,15 @@ class TestMainPage(TestCase):
         self.browser.refresh()
         self.assertIn("416", self.browser.page_source)
     
-    def testStaffPictures(self):
-        self.browser.get("http://localhost:8000/personal.html")
-        pictures = self.browser.find_elements(By.CLASS_NAME, "staff-picture")
-        self.assertEqual(len(pictures), 3)
-        content = self.browser.find_element(By.ID, "content-container")
-        self.assertIn("Anna Pettersson", content.text)
-        self.assertIn("Fredrik Örtqvist", content.text)
-        self.assertIn("Peter Johansson", content.text)
-
+    def testSortingDefault(self):
+        self.browser.get("http://localhost:8000/stora_bilar.html") 
+        rows = self.browser.find_elements(By.CSS_SELECTOR, "#car-table tr")
+        firstCar = rows[0].find_elements(By.TAG_NAME, "td")[0]
+        firstCarName = firstCar.text
+        assert firstCarName == "Audi A4 Avant", f"Expected 'Audi A4 Avant' but got '{firstCarName}'"
+        lastCar = rows[-1].find_elements(By.TAG_NAME, "td")[0]
+        lastCarName = lastCar.text
+        assert lastCarName == "Volvo XC60 D4 AWD", f"Expected 'Volvo XC60 D4 AWD' but got '{lastCarName}'"
 
 # this bit is here so that the tests are run when the file is run as a normal python-program
 if __name__ == "__main__":
