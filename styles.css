@@ -239,10 +239,6 @@ hr {
   background-color: #305548;
 }
 
-#filler {
-  background-color: #ebf4f5;
-}
-
 #opening-hours {
   display: flex;
   flex-wrap: wrap;
