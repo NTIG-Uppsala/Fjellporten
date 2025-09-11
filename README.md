@@ -1,2 +1,2 @@
-Länk till hemsidan: https://fejllporten.ntig.dev  
-Länk till dev-sida: https://fejllportendev.ntig.dev
+Länk till hemsidan: https://fjellporten.ntig.dev  
+Länk till dev-sida: https://fjellportendev.ntig.dev
