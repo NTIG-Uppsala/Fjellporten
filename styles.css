@@ -1,51 +1,127 @@
+/* === General Styles === */
 body {
   margin: 0;
   display: grid;
   grid-template-rows: min-content 1fr min-content;
   min-height: 100vh;
-  background-color: #ebf4f5;
   font-family: "Calibri", "Trebuchet MS", sans-serif;
   background-image: url(images/banner_mountain.jpg);
   background-size: cover;
-  background-position: 50% 55%;
+  background-position: center;
 }
 
-#banner {
-  min-height: fit-content;
-  text-align: center;
-  color: #fffafa;
-  text-shadow: #305548 1px 1px 2px;
-  background-repeat: no-repeat;
-}
-
+/* === Headings === */
 h1 {
+  text-align: center;
   font-size: 6em;
-  margin: 5px;
+  text-shadow: #305548 1px 1px 2px;
+  margin: 25px auto 30px;
 }
 
-#title {
+h1 a {
   text-decoration: none;
 }
 
 h2 {
-  width: 100%;
   text-align: center;
-  margin: 0px;
+  margin: 0;
+}
+
+.container h2 {
+  font-size: 30px;
+  margin: 10px 0;
 }
 
 #staff-header {
-  width: fit-content;
-  text-align: center;
   margin: 5px auto;
   font-size: 3em;
 }
 
-#content-container > h2 {
-  margin-top: 10px;
+#slogan {
+  color: #fffafa;
+  align-self: center;
   font-size: 5em;
-  margin: auto;
+  text-shadow: #305548 1px 1px 2px;
 }
 
+/* === Links === */
+a {
+  color: #fffafa;
+}
+
+.footer-content a {
+  text-decoration: none;
+}
+
+.footer-content a:hover {
+  text-decoration: underline;
+}
+
+.staff-text a {
+  color: black;
+}
+
+/* === Container === */
+.container {
+  background-color: #fffafa;
+  margin: 0 auto 20px;
+  width: 80%;
+  padding: 5px 30px 30px 30px;
+  border-radius: 10px;
+  box-shadow: 0px 3px 5px 5px #1e3730b3;
+  height: fit-content;
+  max-width: 700px;
+}
+
+#content-container {
+  width: 90%;
+  min-width: fit-content;
+  max-width: 1600px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  justify-items: center;
+}
+
+/* === Control Panel === */
+#control-panel {
+  float: right;
+  display: flex;
+  align-items: center;
+  margin: 0;
+}
+
+#control-panel p,
+#control-panel input {
+  margin: 5px 2px;
+}
+
+/* === Tables === */
+#car-table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#car-table td {
+  border: black 1px solid;
+  padding: 5px 10px;
+}
+
+#car-table tr:nth-child(2n) {
+  background-color: #ebf4f5;
+}
+
+.car {
+  width: 83%;
+}
+
+/* === Banner === */
+#banner {
+  color: #fffafa;
+  text-shadow: #305548 1px 1px 2px;
+}
+
+/* === Staff-card === */
 .staff-card {
   text-shadow: none;
   display: flex;
@@ -56,20 +132,13 @@ h2 {
   background-color: #fffafa;
   color: black;
   text-align: center;
-  width: 250px;
-  height: fit-content;
-  text-decoration: none;
-  transition: transform 0.1s;
   box-shadow: 0px 1px 1px 1px rgba(30, 55, 48, 0.7);
 }
 
 .staff-picture {
-  /* border-radius: 50%; */
   height: 250px;
   width: 250px;
-  object-fit: cover;
   margin: 20px auto 10px auto;
-  /* box-shadow: 0px 1px 1px 1px rgba(30, 55, 48, 0.7); */
 }
 
 .staff-name {
@@ -79,38 +148,15 @@ h2 {
 }
 
 .staff-title {
-  font-size: 20px;
-  /* font-style: italic; */
-  margin: 5px 0 15px 0;
+  font-size: 21px;
+  margin: 5px 0;
 }
 
 .staff-text {
   font-size: 18px;
 }
 
-.staff-text a {
-  color: black;
-}
-
-a {
-  color: #fffafa;
-}
-
-footer {
-  background-color: #305548;
-}
-
-#footer-container {
-  color: #ebf4f5;
-  display: flex;
-  justify-content: space-evenly;
-  flex-wrap: wrap;
-  padding-bottom: 5px;
-  width: 100%;
-  max-width: 900px;
-  margin: 0 auto;
-}
-
+/* === Category card === */
 .category-card {
   text-shadow: none;
   display: flex;
@@ -119,8 +165,6 @@ footer {
   margin: 30px 10px;
   padding: 10px;
   background-color: #fffafa;
-  color: black;
-  text-align: center;
   width: 220px;
   height: 400px;
   text-decoration: none;
@@ -140,10 +184,7 @@ footer {
   max-width: 100%;
 }
 
-.category-card h2,
-.category-card p {
-  text-decoration: none;
-  font-weight: bold;
+.category-card h2 {
   color: black;
 }
 
@@ -154,79 +195,6 @@ footer {
   margin: auto;
   padding: 10px 30px;
   font-size: 20px;
-  color: #fffafa;
-  font-weight: 500;
-}
-
-footer {
-  background-color: #305548;
-}
-
-#footer-container {
-  color: #ebf4f5;
-  display: flex;
-  justify-content: space-evenly;
-  flex-wrap: wrap;
-  padding-bottom: 5px;
-  width: 100%;
-  max-width: 900px;
-  margin: 0 auto;
-}
-
-.footer-content {
-  padding: 0 10px;
-  max-width: 230px;
-  min-width: min-content;
-}
-
-.footer-content p {
-  margin: 10px auto;
-  width: fit-content;
-}
-
-.footer-content a {
-  text-decoration: none;
-}
-
-.footer-title {
-  color: #fffafa;
-  margin: 5px;
-  font-family: "Calibri", "Trebuchet MS", sans-serif;
-  text-align: center;
-}
-
-.sidor {
-  text-decoration: none;
-}
-
-.footer-content a:hover {
-  text-decoration: underline;
-}
-
-.day,
-.time {
-  padding-right: 4px;
-}
-
-.time {
-  color: #fffafa;
-}
-
-#banner {
-  min-height: fit-content;
-  text-align: center;
-  color: #fffafa;
-  text-shadow: #305548 1px 1px 2px;
-  background-repeat: no-repeat;
-}
-
-#content-container {
-  width: 90%;
-  max-width: 1600px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  justify-items: center;
 }
 
 hr {
@@ -234,9 +202,38 @@ hr {
   margin: 10px 0;
 }
 
-#spacer {
-  height: 40px;
+/* === Footer === */
+footer {
   background-color: #305548;
+}
+
+#footer-container {
+  color: #fffafa;
+  display: flex;
+  justify-content: space-evenly;
+  padding-bottom: 5px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.footer-content {
+  padding: 0 10px;
+  max-width: 230px;
+}
+
+.footer-content p {
+  margin: 10px auto;
+  width: fit-content;
+}
+
+.footer-title {
+  color: #fffafa;
+  margin: 7px;
+}
+
+.day,
+.time {
+  padding-right: 4px;
 }
 
 #opening-hours {
@@ -244,39 +241,30 @@ hr {
   flex-wrap: wrap;
   justify-content: center;
   align-items: flex-start;
-  padding: 0 5px;
-  margin: 0 auto;
 }
 
-body > h2 {
-  color: #fffafa;
-  align-self: center;
-  font-size: 5em;
-  text-shadow: #305548 1px 1px 2px;
-}
-
+/* === Media Queries === */
 @media screen and (max-width: 890px) {
   .category-card {
     width: 60%;
-    max-width: 400px;
+    max-width: 300px;
     height: fit-content;
   }
 
-  .category-card h2,
-  .category-card p {
-    font-size: 5vw;
+  .category-card h2 {
+    font-size: 2em;
   }
 
   #content-container {
     grid-template-columns: 1fr;
   }
 
-  body > h2 {
-    font-size: 0;
+  #slogan {
+    display: none;
   }
 
   h1 {
-    font-size: 5em;
+    font-size: 3em;
   }
 
   #footer-container {
