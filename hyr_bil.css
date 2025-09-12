@@ -74,7 +74,7 @@ h1 > a {
 
 .car {
   width: 83%;
-  min-width: min-content;
+  max-width: min-content;
 }
 
 footer {
