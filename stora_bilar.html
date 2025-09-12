@@ -2,23 +2,28 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Hyra bil</title>
-  <link rel="stylesheet" href="hyr_bil.css" />
+  <link rel="stylesheet" href="hyr_bil.css">
 </head>
 
-<body onload="addTable(storaBilarArray); originalPrices(); checkCookies();">
+<body onload="sortTable(storaBilarArray); checkCookies();">
   <h1><a href="index.html">Fjellporten biluthyrning</a></h1>
   <div class="container">
     <h2>Stora bilar</h2>
-    <div id="tax-container">
+    <div id="control-panel">
+      <label>Sortera efter:&nbsp;</label>
+      <select id="drop-down-menu" onchange="sortTable(storaBilarArray)">
+        <option value="name-asc">Namn A-Ö</option>
+        <option value="name-desc">Namn Ö-A</option>
+        <option value="price-asc">Pris stigande</option>
+        <option value="price-desc">Pris fallande</option>
+      </select>
       <p>exkl. moms</p>
-      <input type="checkbox" id="tax-button" />
+      <input type="checkbox" id="tax-button">
     </div>
-    <div class="cars">
-      <table id="car-table">
-      </table>
+    <div id="cars">
     </div>
   </div>
   <footer>
@@ -27,21 +32,21 @@
         <h2 class="footer-title">Navigering</h2>
         <p>
           <a href="små_bilar.html" class="sidor">Hyr liten bil</a>
-          <br />
+          <br>
           <a href="stora_bilar.html" class="sidor">Hyr stor bil</a>
-          <br />
+          <br>
           <a href="husbilar.html" class="sidor">Hyr husbil</a>
-          <br />
+          <br>
           <a href="personal.html" class="sidor">Personal</a>
         </p>
       </div>
       <div class="footer-content">
         <h2 class="footer-title">Kontakta oss</h2>
         <p>
-          Tel: <a href="tel:5553571113">555-357 11 13</a><br />
+          Tel: <a href="tel:5553571113">555-357 11 13</a><br>
           E-post:
           <a href="mailto:notreal@fjellporten.se">notreal@fjellporten.se</a>
-          <br />
+          <br>
           Adress:
           <a href="https://maps.app.goo.gl/Hxnt9voo3bzES1Q3A">Kurravaaravägen 4, 98137 Kiruna</a>
         </p>

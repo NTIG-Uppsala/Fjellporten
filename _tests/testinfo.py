@@ -2,6 +2,7 @@ from unittest import TestCase, main
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.action_chains import ActionChains
 from os import path, getcwd
 
 # settings for how tests are run
@@ -190,6 +191,46 @@ class TestProductPage(TestCase):
         lastCar = rows[-1].find_elements(By.TAG_NAME, "td")[0]
         lastCarName = lastCar.text
         assert lastCarName == "Volvo XC60 D4 AWD", f"Expected 'Volvo XC60 D4 AWD' but got '{lastCarName}'"
+    
+    def testSortingByPrice(self):
+        self.browser.get("http://localhost:8000/husbilar.html") 
+        menu = self.browser.find_element(By.ID, "drop-down-menu")
+        menu.click()
+
+        self.browser.find_element(By.CSS_SELECTOR, "#drop-down-menu option[value='price-desc']").click()
+        rows = self.browser.find_elements(By.CSS_SELECTOR, "#car-table tr")
+        firstPrice = rows[0].find_elements(By.TAG_NAME, "td")[1]
+        assert firstPrice.text == "2 400 kr/dag", f"Expected '2 400 kr/dag' but got '{firstPrice.text}'"
+        lastPrice = rows[-1].find_elements(By.TAG_NAME, "td")[1]
+        assert lastPrice.text == "1 400 kr/dag", f"Expected '1 400 kr/dag' but got '{lastPrice.text}'"
+
+        menu.click()
+        self.browser.find_element(By.CSS_SELECTOR, "#drop-down-menu option[value='price-asc']").click()
+        rows = self.browser.find_elements(By.CSS_SELECTOR, "#car-table tr")
+        firstPrice = rows[0].find_elements(By.TAG_NAME, "td")[1]
+        assert firstPrice.text == "1 400 kr/dag", f"Expected '1 400 kr/dag' but got '{firstPrice.text}'"
+        lastPrice = rows[-1].find_elements(By.TAG_NAME, "td")[1]
+        assert lastPrice.text == "2 400 kr/dag", f"Expected '2 400 kr/dag' but got '{lastPrice.text}'"
+    
+    def testSortingByName(self):
+        self.browser.get("http://localhost:8000/små_bilar.html") 
+        menu = self.browser.find_element(By.ID, "drop-down-menu")
+        menu.click()
+
+        self.browser.find_element(By.CSS_SELECTOR, "#drop-down-menu option[value='name-desc']").click()
+        rows = self.browser.find_elements(By.CSS_SELECTOR, "#car-table tr")
+        firstCar = rows[0].find_elements(By.TAG_NAME, "td")[0]
+        assert firstCar.text == "Volkswagen Polo TSI", f"Expected 'Volkswagen Polo TSI' but got '{firstCar.text}'"
+        lastCar = rows[-1].find_elements(By.TAG_NAME, "td")[0]
+        assert lastCar.text == "Ford Fiesta EcoBoost", f"Expected 'Ford Fiesta EcoBoost' but got '{lastCar.text}'"
+
+        menu.click()
+        self.browser.find_element(By.CSS_SELECTOR, "#drop-down-menu option[value='name-asc']").click()
+        rows = self.browser.find_elements(By.CSS_SELECTOR, "#car-table tr")
+        firstCar = rows[0].find_elements(By.TAG_NAME, "td")[0]
+        assert firstCar.text == "Ford Fiesta EcoBoost", f"Expected 'Ford Fiesta EcoBoost' but got '{firstCar.text}'"
+        lastCar = rows[-1].find_elements(By.TAG_NAME, "td")[0]
+        assert lastCar.text == "Volkswagen Polo TSI", f"Expected 'Volkswagen Polo TSI' but got '{lastCar.text}'"
 
 # this bit is here so that the tests are run when the file is run as a normal python-program
 if __name__ == "__main__":

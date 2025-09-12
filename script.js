@@ -1,44 +1,45 @@
-const buttonText = document.getElementById("tax-container").querySelector("p");
+const buttonText = document.getElementById("control-panel").querySelector("p");
 const button = document.getElementById("tax-button");
 var prices = []
 
 let isTaxFree = false;
-let taxAmount = 1.25; // 25% tax
+let taxAmount = 1.25; // 25% Moms
 
 let småBilarArray = [
-  ["Toyota Yaris 1.5 Hybrid", "520 kr/dag"],
-  ["Volkswagen Polo TSI", "480 kr/dag"],
-  ["Kia Picanto", "360 kr/dag"],
-  ["Renault Clio", "400 kr/dag"],
-  ["Ford Fiesta EcoBoost", "450 kr/dag"],
-  ["Peugeot 208", "430 kr/dag"]
+  ["Toyota Yaris 1.5 Hybrid", 520],
+  ["Volkswagen Polo TSI", 480],
+  ["Kia Picanto", 360],
+  ["Renault Clio", 400],
+  ["Ford Fiesta EcoBoost", 450],
+  ["Peugeot 208", 430]
 ];
-let småBilarArraysorted = småBilarArray.sort();
 
 let storaBilarArray = [
-  ["Volvo XC60 D4 AWD", "1 050 kr/dag"],
-  ["Volkswagen Passat Variant", "900 kr/dag"],
-  ["Skoda Kodiaq 7-sits", "1 100 kr/dag"],
-  ["BMW 320d Touring", "1 000 kr/dag"],
-  ["Audi A4 Avant", "980 kr/dag"],
-  ["Mercedes-Benz GLC", "1 200 kr/dag"],
+  ["Volvo XC60 D4 AWD", 1050],
+  ["Volkswagen Passat Variant", 900],
+  ["Skoda Kodiaq 7-sits", 1100],
+  ["BMW 320d Touring", 1000],
+  ["Audi A4 Avant", 980],
+  ["Mercedes-Benz GLC", 1200],
 ];
 
-let storaBilarArraysorted = storaBilarArray.sort();
-
 let husbilarArray = [
-  ["Adria Coral XL (4 bäddar)", "1 800 kr/dag"],
-  ["Hymer B-Class Modern Comfort (5 bäddar)", "2 200 kr/dag"],
-  ["Knaus BoxStar Camper Van (2 bäddar)", "1 400 kr/dag"],
-  ["Bürstner Lyseo TD (4 bäddar)", "1 900 kr/dag"],
-  ["Sunlight A72 (6 bäddar)", "2 400 kr/dag"],
-  ["Dethleffs Globebus (3 bäddar)", "1 600 kr/dag"],
-]
-let husbilarArraysorted = husbilarArray.sort();
+  ["Adria Coral XL (4 bäddar)", 1800],
+  ["Hymer B-Class Modern Comfort (5 bäddar)", 2200],
+  ["Knaus BoxStar Camper Van (2 bäddar)", 1400],
+  ["Bürstner Lyseo TD (4 bäddar)", 1900],
+  ["Sunlight A72 (6 bäddar)", 2400],
+  ["Dethleffs Globebus (3 bäddar)", 1600],
+];
 
 button.addEventListener("click", () => {
   isTaxFree = !isTaxFree;
   updatePrices();
+  if (isTaxFree) {
+    document.cookie = 'taxFree=True';
+  } else {
+    document.cookie = 'taxFree=False';
+  }
 });
 
 function originalPrices() {
@@ -58,43 +59,67 @@ function checkCookies() {
 
 function updatePrices() {
   prices.forEach(cell => {
-    let text = cell.textContent;
-    let amount = parseInt(text.replaceAll(" ", ""));
-
     if (isTaxFree) {
+      let text = cell.innerHTML;
+      let amount = parseInt(text.replaceAll("&nbsp;", ""));
       let newPrice = amount / taxAmount;
       // Format number with spaces as thousands separator
       let newPriceFormatted = newPrice.toLocaleString("sv-SE");
       cell.textContent = newPriceFormatted + " kr/dag";
-      document.cookie = 'taxFree=True';
     } else {
       let original = cell.getAttribute("original-price");
       cell.textContent = original;
-      document.cookie = 'taxFree=False';
     }
   })
 };
 
 function addTable(array) {
-  // Get the table from HTML by its id "car-table"
-  let table = document.getElementById("car-table");
+  let tableDiv = document.getElementById("cars");
+  let table = document.createElement('TABLE');
+  table.setAttribute("id", "car-table");
+  tableDiv.appendChild(table);
 
-  // Loop through each row in småBilarArray
+  // Loop through each row in array
   for (let i = 0; i < array.length; i++) {
-    // Create a new table row
     let tr = document.createElement('TR');
-    // Add the row to the table
     table.appendChild(tr);
 
     // Loop through each element (cell) in the current row
     for (let j = 0; j < array[i].length; j++) {
-      // Create a new table cell
       let td = document.createElement('TD');
-      // Create a text node with the array value and add it to the cell
-      td.appendChild(document.createTextNode(array[i][j]));
+      let cell = array[i][j];
+      // If it's the price column, format the number
+      if (j === 1) {
+        cell = cell.toLocaleString("sv-SE");
+        cell = cell + " kr/dag";
+      }
+      td.appendChild(document.createTextNode(cell));
       td.className = (j === 0 ? 'car' : 'price'); // Assign class based on column index
-      // Add the cell to the row
       tr.appendChild(td);
     }
   }
 }
+
+function clearTable() {
+  var tbl = document.getElementById('car-table');
+  if (tbl) tbl.parentNode.removeChild(tbl);
+}
+
+function sortTable(array) {
+  const value = document.getElementById("drop-down-menu").value;
+  if (value === "name-asc") {
+    array.sort();
+  } else if (value === "name-desc") {
+    array.sort().reverse();
+  } else if (value === "price-asc") {
+    // Sort array by second element (price) in ascending order
+    array.sort((a, b) => a[1] - b[1]);
+  } else if (value === "price-desc") {
+    // Sort array by second element (price) in descending order
+    array.sort((a, b) => b[1] - a[1]);
+  }
+  clearTable();
+  addTable(array);
+  originalPrices();
+  updatePrices();
+};
