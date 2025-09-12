@@ -12,7 +12,7 @@ body {
 
 h1 {
   text-align: center;
-  font-size: 60px;
+  font-size: 2.5em;
   text-shadow: #305548 1px 1px 2px;
   margin: 0px auto 10px;
   padding: 20px;
@@ -74,7 +74,7 @@ h1 > a {
 
 .car {
   width: 83%;
-  max-width: min-content;
+  /* max-width: min-content; */
 }
 
 footer {
