@@ -2,8 +2,6 @@ from unittest import TestCase, main
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.common.action_chains import ActionChains
-from os import path, getcwd
 
 # settings for how tests are run
 doNotCloseBrowser = False  # if true the browser stays open after tests are done
