@@ -4,7 +4,7 @@ body {
   background-image: url(images/banner_mountain.jpg);
   background-size: cover;
   background-position: 50% 55%;
-  font-family: "calibri", sans-serif;
+  font-family: "Calibri", "Trebuchet MS", sans-serif;
   min-height: 100vh;
   display: grid;
   grid-template-rows: min-content 1fr min-content;
@@ -12,12 +12,11 @@ body {
 
 h1 {
   text-align: center;
-  font-size: 60px;
+  font-size: 4em;
   text-shadow: #305548 1px 1px 2px;
   margin: 0px auto 10px;
   padding: 20px;
   text-decoration: none;
-  font-family: "calibri", "serif";
 }
 
 a {
@@ -151,5 +150,9 @@ footer {
   #footer-container {
     flex-direction: column;
     align-items: center;
+  }
+
+  h1 {
+    font-size: 3em;
   }
 }
