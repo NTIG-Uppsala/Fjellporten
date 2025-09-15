@@ -1,4 +1,3 @@
-const buttonText = document.getElementById("control-panel").querySelector("p");
 const button = document.getElementById("tax-button");
 var prices = []
 

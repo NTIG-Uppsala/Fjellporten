@@ -100,22 +100,22 @@ class TestMainPage(TestCase):
         self.browser.get("http://localhost:8000/")
         card = self.browser.find_elements(By.CLASS_NAME, "category-card")[0]
         card.click()
-        self.assertIn("Kia Picanto", self.browser.page_source)
-        self.assertNotIn("Audi A4 Avant", self.browser.page_source)
+        self.assertIn("Kia Picanto", self.browser.find_element(By.ID, "car-table").text)
+        self.assertNotIn("Audi A4 Avant", self.browser.find_element(By.ID, "car-table").text)
 
     def testLargeCars(self):
         self.browser.get("http://localhost:8000/")
         card = self.browser.find_elements(By.CLASS_NAME, "category-card")[1]
         card.click()
-        self.assertIn("Audi A4 Avant", self.browser.page_source)
-        self.assertNotIn("Kia Picanto", self.browser.page_source)
+        self.assertIn("Audi A4 Avant", self.browser.find_element(By.ID, "car-table").text)
+        self.assertNotIn("Kia Picanto", self.browser.find_element(By.ID, "car-table").text)
 
     def testCamperVans(self):
         self.browser.get("http://localhost:8000/")
         card = self.browser.find_elements(By.CLASS_NAME, "category-card")[2]
         card.click()
-        self.assertIn("Adria Coral XL", self.browser.page_source)
-        self.assertNotIn("Audi A4 Avant", self.browser.page_source)
+        self.assertIn("Adria Coral XL", self.browser.find_element(By.ID, "car-table").text)
+        self.assertNotIn("Audi A4 Avant", self.browser.find_element(By.ID, "car-table").text)
 
     def testStaffPictures(self):
         self.browser.get("http://localhost:8000/")
