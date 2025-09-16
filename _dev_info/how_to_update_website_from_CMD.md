@@ -19,4 +19,4 @@
 6. Use git pull to update website
 
 ---
-[Go back to README.md](../README.md)
+[Go back to README](../README.md)

@@ -41,4 +41,4 @@
 18. Use git clone to clone repository by typing git clone https://github.com/NTIG-Uppsala/Fjellporten .
 
 ---
-[Go back to README.md](../README.md)
+[Go back to README](../README.md)

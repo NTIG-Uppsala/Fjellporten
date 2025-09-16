@@ -6,4 +6,4 @@
 - JavaScript (ES15)  
 
 ---
-[Go back to README.md](../README.md)
+[Go back to README](../README.md)

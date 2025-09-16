@@ -10,4 +10,4 @@
 - Everyone present in the group must review the code, make sure they understand it, and ensure that it follows our coding standards.  
 
 ---
-[Go back to README.md](../README.md)
+[Go back to README](../README.md)
