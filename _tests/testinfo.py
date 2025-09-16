@@ -91,38 +91,38 @@ class TestMainPage(TestCase):
     # TESTS START HERE
     def testCategoryList(self):
         self.browser.get("http://localhost:8000/")
-        content = self.browser.find_element(By.ID, "content-container")
+        content = self.browser.find_element(By.ID, "contentContainer")
         self.assertIn("små bilar", content.text.lower())
         self.assertIn("stora bilar", content.text.lower())
         self.assertIn("husbilar", content.text.lower())
 
     def testSmallCars(self):
         self.browser.get("http://localhost:8000/")
-        card = self.browser.find_elements(By.CLASS_NAME, "category-card")[0]
+        card = self.browser.find_elements(By.CLASS_NAME, "categoryCard")[0]
         card.click()
-        self.assertIn("Kia Picanto", self.browser.find_element(By.ID, "car-table").text)
-        self.assertNotIn("Audi A4 Avant", self.browser.find_element(By.ID, "car-table").text)
+        self.assertIn("Kia Picanto", self.browser.find_element(By.ID, "carTable").text)
+        self.assertNotIn("Audi A4 Avant", self.browser.find_element(By.ID, "carTable").text)
 
     def testLargeCars(self):
         self.browser.get("http://localhost:8000/")
-        card = self.browser.find_elements(By.CLASS_NAME, "category-card")[1]
+        card = self.browser.find_elements(By.CLASS_NAME, "categoryCard")[1]
         card.click()
-        self.assertIn("Audi A4 Avant", self.browser.find_element(By.ID, "car-table").text)
-        self.assertNotIn("Kia Picanto", self.browser.find_element(By.ID, "car-table").text)
+        self.assertIn("Audi A4 Avant", self.browser.find_element(By.ID, "carTable").text)
+        self.assertNotIn("Kia Picanto", self.browser.find_element(By.ID, "carTable").text)
 
     def testCamperVans(self):
         self.browser.get("http://localhost:8000/")
-        card = self.browser.find_elements(By.CLASS_NAME, "category-card")[2]
+        card = self.browser.find_elements(By.CLASS_NAME, "categoryCard")[2]
         card.click()
-        self.assertIn("Adria Coral XL", self.browser.find_element(By.ID, "car-table").text)
-        self.assertNotIn("Audi A4 Avant", self.browser.find_element(By.ID, "car-table").text)
+        self.assertIn("Adria Coral XL", self.browser.find_element(By.ID, "carTable").text)
+        self.assertNotIn("Audi A4 Avant", self.browser.find_element(By.ID, "carTable").text)
 
     def testStaffPictures(self):
         self.browser.get("http://localhost:8000/")
         self.browser.find_element(By.CSS_SELECTOR, '[href="personal.html"]').click()
-        pictures = self.browser.find_elements(By.CLASS_NAME, "staff-picture")
+        pictures = self.browser.find_elements(By.CLASS_NAME, "staffPicture")
         self.assertEqual(len(pictures), 3)
-        content = self.browser.find_element(By.ID, "content-container")
+        content = self.browser.find_element(By.ID, "contentContainer")
         self.assertIn("Anna Pettersson", content.text)
         self.assertIn("Fredrik Örtqvist", content.text)
         self.assertIn("Peter Johansson", content.text)
@@ -158,27 +158,27 @@ class TestProductPage(TestCase):
         pass  # does nothing
 
     # TESTS START HERE
-    def testTaxButton(self):
+    def testVATButton(self):
         self.browser.get("http://localhost:8000/small_cars.html")
-        self.assertIn("450", self.browser.find_element(By.ID, "car-table").text)
-        self.assertNotIn("416", self.browser.find_element(By.ID, "car-table").text)
-        button = self.browser.find_element(By.ID, "tax-button")
+        self.assertIn("450", self.browser.find_element(By.ID, "carTable").text)
+        self.assertNotIn("416", self.browser.find_element(By.ID, "carTable").text)
+        button = self.browser.find_element(By.ID, "VATButton")
         button.click()
-        self.assertIn("416", self.browser.find_element(By.ID, "car-table").text)
+        self.assertIn("416", self.browser.find_element(By.ID, "carTable").text)
 
-    def testTaxCookie(self):
+    def testVATCookie(self):
         self.browser.get("http://localhost:8000/small_cars.html")
-        self.assertIn("450", self.browser.find_element(By.ID, "car-table").text)
-        self.assertNotIn("416", self.browser.find_element(By.ID, "car-table").text)
-        button = self.browser.find_element(By.ID, "tax-button")
+        self.assertIn("450", self.browser.find_element(By.ID, "carTable").text)
+        self.assertNotIn("416", self.browser.find_element(By.ID, "carTable").text)
+        button = self.browser.find_element(By.ID, "VATButton")
         button.click()
-        self.assertIn("416", self.browser.find_element(By.ID, "car-table").text)
+        self.assertIn("416", self.browser.find_element(By.ID, "carTable").text)
         self.browser.refresh()
-        self.assertIn("416", self.browser.find_element(By.ID, "car-table").text)
+        self.assertIn("416", self.browser.find_element(By.ID, "carTable").text)
 
     def testSortingDefault(self):
         self.browser.get("http://localhost:8000/big_cars.html")
-        rows = self.browser.find_elements(By.CSS_SELECTOR, "#car-table tr")
+        rows = self.browser.find_elements(By.CSS_SELECTOR, "#carTable tr")
         firstCar = rows[0].find_elements(By.TAG_NAME, "td")[0]
         firstCarName = firstCar.text
         assert firstCarName == "Audi A4 Avant", f"Expected 'Audi A4 Avant' but got '{firstCarName}'"
@@ -188,19 +188,19 @@ class TestProductPage(TestCase):
 
     def testSortingByPrice(self):
         self.browser.get("http://localhost:8000/caravans.html")
-        menu = self.browser.find_element(By.ID, "drop-down-menu")
+        menu = self.browser.find_element(By.ID, "dropDownMenu")
         menu.click()
 
-        self.browser.find_element(By.CSS_SELECTOR, "#drop-down-menu option[value='price-desc']").click()
-        rows = self.browser.find_elements(By.CSS_SELECTOR, "#car-table tr")
+        self.browser.find_element(By.CSS_SELECTOR, "#dropDownMenu option[value='priceDesc']").click()
+        rows = self.browser.find_elements(By.CSS_SELECTOR, "#carTable tr")
         firstPrice = rows[0].find_elements(By.TAG_NAME, "td")[1]
         assert firstPrice.text == "2 400 kr/dag", f"Expected '2 400 kr/dag' but got '{firstPrice.text}'"
         lastPrice = rows[-1].find_elements(By.TAG_NAME, "td")[1]
         assert lastPrice.text == "1 400 kr/dag", f"Expected '1 400 kr/dag' but got '{lastPrice.text}'"
 
         menu.click()
-        self.browser.find_element(By.CSS_SELECTOR, "#drop-down-menu option[value='price-asc']").click()
-        rows = self.browser.find_elements(By.CSS_SELECTOR, "#car-table tr")
+        self.browser.find_element(By.CSS_SELECTOR, "#dropDownMenu option[value='priceAsc']").click()
+        rows = self.browser.find_elements(By.CSS_SELECTOR, "#carTable tr")
         firstPrice = rows[0].find_elements(By.TAG_NAME, "td")[1]
         assert firstPrice.text == "1 400 kr/dag", f"Expected '1 400 kr/dag' but got '{firstPrice.text}'"
         lastPrice = rows[-1].find_elements(By.TAG_NAME, "td")[1]
@@ -208,19 +208,19 @@ class TestProductPage(TestCase):
 
     def testSortingByName(self):
         self.browser.get("http://localhost:8000/small_cars.html")
-        menu = self.browser.find_element(By.ID, "drop-down-menu")
+        menu = self.browser.find_element(By.ID, "dropDownMenu")
         menu.click()
 
-        self.browser.find_element(By.CSS_SELECTOR, "#drop-down-menu option[value='name-desc']").click()
-        rows = self.browser.find_elements(By.CSS_SELECTOR, "#car-table tr")
+        self.browser.find_element(By.CSS_SELECTOR, "#dropDownMenu option[value='nameDesc']").click()
+        rows = self.browser.find_elements(By.CSS_SELECTOR, "#carTable tr")
         firstCar = rows[0].find_elements(By.TAG_NAME, "td")[0]
         assert firstCar.text == "Volkswagen Polo TSI", f"Expected 'Volkswagen Polo TSI' but got '{firstCar.text}'"
         lastCar = rows[-1].find_elements(By.TAG_NAME, "td")[0]
         assert lastCar.text == "Ford Fiesta EcoBoost", f"Expected 'Ford Fiesta EcoBoost' but got '{lastCar.text}'"
 
         menu.click()
-        self.browser.find_element(By.CSS_SELECTOR, "#drop-down-menu option[value='name-asc']").click()
-        rows = self.browser.find_elements(By.CSS_SELECTOR, "#car-table tr")
+        self.browser.find_element(By.CSS_SELECTOR, "#dropDownMenu option[value='nameAsc']").click()
+        rows = self.browser.find_elements(By.CSS_SELECTOR, "#carTable tr")
         firstCar = rows[0].find_elements(By.TAG_NAME, "td")[0]
         assert firstCar.text == "Ford Fiesta EcoBoost", f"Expected 'Ford Fiesta EcoBoost' but got '{firstCar.text}'"
         lastCar = rows[-1].find_elements(By.TAG_NAME, "td")[0]
