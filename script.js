@@ -1,10 +1,10 @@
-const button = document.getElementById("tax-button");
+const button = document.getElementById("VAT-button");
 var prices = []
 
-let isTaxFree = false;
-let taxAmount = 1.25; // 25% Moms
+let isVATFree = false;
+let VATRate = 0.25; // 25% VAT
 
-let småBilarArray = [
+let smallCarsArray = [
   ["Toyota Yaris 1.5 Hybrid", 520],
   ["Volkswagen Polo TSI", 480],
   ["Kia Picanto", 360],
@@ -13,7 +13,7 @@ let småBilarArray = [
   ["Peugeot 208", 430]
 ];
 
-let storaBilarArray = [
+let bigCarsArray = [
   ["Volvo XC60 D4 AWD", 1050],
   ["Volkswagen Passat Variant", 900],
   ["Skoda Kodiaq 7-sits", 1100],
@@ -22,7 +22,7 @@ let storaBilarArray = [
   ["Mercedes-Benz GLC", 1200],
 ];
 
-let husbilarArray = [
+let caravansArray = [
   ["Adria Coral XL (4 bäddar)", 1800],
   ["Hymer B-Class Modern Comfort (5 bäddar)", 2200],
   ["Knaus BoxStar Camper Van (2 bäddar)", 1400],
@@ -32,12 +32,12 @@ let husbilarArray = [
 ];
 
 button.addEventListener("click", () => {
-  isTaxFree = !isTaxFree;
+  isVATFree = !isVATFree;
   updatePrices();
-  if (isTaxFree) {
-    document.cookie = 'taxFree=True';
+  if (isVATFree) {
+    document.cookie = 'VATFree=True';
   } else {
-    document.cookie = 'taxFree=False';
+    document.cookie = 'VATFree=False';
   }
 });
 
@@ -47,21 +47,13 @@ function originalPrices() {
     cell.setAttribute("original-price", cell.textContent);
   });
 }
-function checkCookies() {
-  let cookie = document.cookie;
-  if (cookie == 'taxFree=True') {
-    isTaxFree = true;
-    updatePrices();
-    document.getElementById("tax-button").checked = true;
-  }
-}
 
 function updatePrices() {
   prices.forEach(cell => {
-    if (isTaxFree) {
+    if (isVATFree) {
       let text = cell.innerHTML;
       let amount = parseInt(text.replaceAll("&nbsp;", ""));
-      let newPrice = amount / taxAmount;
+      let newPrice = amount / (VATRate +1);
       // Format number with spaces as thousands separator
       let newPriceFormatted = newPrice.toLocaleString("sv-SE");
       cell.textContent = newPriceFormatted + " kr/dag";
@@ -71,6 +63,15 @@ function updatePrices() {
     }
   })
 };
+
+function checkCookies() {
+  let cookie = document.cookie;
+  if (cookie == 'VATFree=True') {
+    isVATFree = true;
+    updatePrices();
+    document.getElementById("VAT-button").checked = true;
+  }
+}
 
 function addTable(array) {
   let tableDiv = document.getElementById("cars");
@@ -117,6 +118,7 @@ function sortTable(array) {
     // Sort array by second element (price) in descending order
     array.sort((a, b) => b[1] - a[1]);
   }
+
   clearTable();
   addTable(array);
   originalPrices();
