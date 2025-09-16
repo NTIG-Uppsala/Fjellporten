@@ -1,4 +1,4 @@
-const button = document.getElementById("VAT-button");
+const button = document.getElementById("VATButton");
 var prices = []
 
 let isVATFree = false;
@@ -44,7 +44,7 @@ button.addEventListener("click", () => {
 function originalPrices() {
   prices = document.querySelectorAll(".price");
   prices.forEach(cell => {
-    cell.setAttribute("original-price", cell.textContent);
+    cell.setAttribute("originalPrice", cell.textContent);
   });
 }
 
@@ -58,7 +58,7 @@ function updatePrices() {
       let newPriceFormatted = newPrice.toLocaleString("sv-SE");
       cell.textContent = newPriceFormatted + " kr/dag";
     } else {
-      let original = cell.getAttribute("original-price");
+      let original = cell.getAttribute("originalPrice");
       cell.textContent = original;
     }
   })
@@ -69,14 +69,14 @@ function checkCookies() {
   if (cookie == 'VATFree=True') {
     isVATFree = true;
     updatePrices();
-    document.getElementById("VAT-button").checked = true;
+    document.getElementById("VATButton").checked = true;
   }
 }
 
 function addTable(array) {
   let tableDiv = document.getElementById("cars");
   let table = document.createElement('TABLE');
-  table.setAttribute("id", "car-table");
+  table.setAttribute("id", "carTable");
   tableDiv.appendChild(table);
 
   // Loop through each row in array
@@ -101,20 +101,20 @@ function addTable(array) {
 }
 
 function clearTable() {
-  var tbl = document.getElementById('car-table');
+  var tbl = document.getElementById('carTable');
   if (tbl) tbl.parentNode.removeChild(tbl);
 }
 
 function sortTable(array) {
-  const value = document.getElementById("drop-down-menu").value;
-  if (value === "name-asc") {
+  const value = document.getElementById("dropDownMenu").value;
+  if (value === "nameAsc") {
     array.sort();
-  } else if (value === "name-desc") {
+  } else if (value === "nameDesc") {
     array.sort().reverse();
-  } else if (value === "price-asc") {
+  } else if (value === "priceAsc") {
     // Sort array by second element (price) in ascending order
     array.sort((a, b) => a[1] - b[1]);
-  } else if (value === "price-desc") {
+  } else if (value === "priceDesc") {
     // Sort array by second element (price) in descending order
     array.sort((a, b) => b[1] - a[1]);
   }

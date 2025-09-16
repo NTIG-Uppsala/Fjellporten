@@ -32,7 +32,7 @@ h2 {
   margin: 10px 0;
 }
 
-#staff-header {
+#staffHeader {
   margin: 5px auto;
   font-size: 3em;
 }
@@ -49,15 +49,15 @@ a {
   color: #fffafa;
 }
 
-.footer-content a {
+.footerContent a {
   text-decoration: none;
 }
 
-.footer-content a:hover {
+.footerContent a:hover {
   text-decoration: underline;
 }
 
-.staff-text a {
+.staffText a {
   color: black;
 }
 
@@ -73,7 +73,7 @@ a {
   max-width: 700px;
 }
 
-#content-container {
+#contentContainer {
   width: 90%;
   min-width: fit-content;
   max-width: 1600px;
@@ -84,30 +84,30 @@ a {
 }
 
 /* === Control Panel === */
-#control-panel {
+#controlPanel {
   float: right;
   display: flex;
   align-items: center;
   margin: 0;
 }
 
-#control-panel p,
-#control-panel input {
+#controlPanel p,
+#controlPanel input {
   margin: 5px 2px;
 }
 
 /* === Tables === */
-#car-table {
+#carTable {
   border-collapse: collapse;
   width: 100%;
 }
 
-#car-table td {
+#carTable td {
   border: black 1px solid;
   padding: 5px 10px;
 }
 
-#car-table tr:nth-child(2n) {
+#carTable tr:nth-child(2n) {
   background-color: #ebf4f5;
 }
 
@@ -122,7 +122,7 @@ a {
 }
 
 /* === Staff-card === */
-.staff-card {
+.staffCard {
   text-shadow: none;
   display: flex;
   flex-direction: column;
@@ -135,29 +135,29 @@ a {
   box-shadow: 0px 1px 1px 1px rgba(30, 55, 48, 0.7);
 }
 
-.staff-picture {
+.staffPicture {
   height: 250px;
   width: 250px;
   margin: 20px auto 10px auto;
 }
 
-.staff-name {
+.staffName {
   font-size: 30px;
   font-weight: bold;
   margin: 5px 0;
 }
 
-.staff-title {
+.staffTitle {
   font-size: 21px;
   margin: 5px 0;
 }
 
-.staff-text {
+.staffText {
   font-size: 18px;
 }
 
 /* === Category card === */
-.category-card {
+.categoryCard {
   text-shadow: none;
   display: flex;
   flex-direction: column;
@@ -172,23 +172,23 @@ a {
   box-shadow: 0px 1px 1px 1px rgba(30, 55, 48, 0.7);
 }
 
-.category-card:hover {
+.categoryCard:hover {
   transform: scale(1.1);
   transition: transform 0.2s;
   box-shadow: 0px 3px 3px 3px rgba(30, 55, 48, 0.7);
 }
 
-.category-card img {
+.categoryCard img {
   margin: 30% auto;
   height: 50%;
   max-width: 100%;
 }
 
-.category-card h2 {
+.categoryCard h2 {
   color: black;
 }
 
-.category-card p {
+.categoryCard p {
   background-color: #5c8275;
   border: #305548 2px solid;
   border-radius: 15px;
@@ -207,7 +207,7 @@ footer {
   background-color: #305548;
 }
 
-#footer-container {
+#footerContainer {
   color: #fffafa;
   display: flex;
   justify-content: space-evenly;
@@ -216,17 +216,17 @@ footer {
   margin: 0 auto;
 }
 
-.footer-content {
+.footerContent {
   padding: 0 10px;
   max-width: 230px;
 }
 
-.footer-content p {
+.footerContent p {
   margin: 10px auto;
   width: fit-content;
 }
 
-.footer-title {
+.footerTitle {
   color: #fffafa;
   margin: 7px;
 }
@@ -236,7 +236,7 @@ footer {
   padding-right: 4px;
 }
 
-#opening-hours {
+#openingHours {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -245,17 +245,17 @@ footer {
 
 /* === Media Queries === */
 @media screen and (max-width: 890px) {
-  .category-card {
+  .categoryCard {
     width: 60%;
     max-width: 300px;
     height: fit-content;
   }
 
-  .category-card h2 {
+  .categoryCard h2 {
     font-size: 2em;
   }
 
-  #content-container {
+  #contentContainer {
     grid-template-columns: 1fr;
   }
 
@@ -267,7 +267,7 @@ footer {
     font-size: 3em;
   }
 
-  #footer-container {
+  #footerContainer {
     flex-direction: column;
     align-items: center;
   }
