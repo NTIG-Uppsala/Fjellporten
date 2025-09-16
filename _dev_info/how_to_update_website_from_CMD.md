@@ -17,3 +17,6 @@
 4. Check if branch is up to date on your device by typing git status
 5. Use git fetch to check globally for any new changes
 6. Use git pull to update website
+
+---
+[Go back to README.md](../README.md)
