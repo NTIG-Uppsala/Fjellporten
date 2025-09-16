@@ -6,3 +6,6 @@
 4. Run generate_pages.py
 5. Check so that everything in website folder works
 6. Done
+
+---
+[Go back to README](../README.md)

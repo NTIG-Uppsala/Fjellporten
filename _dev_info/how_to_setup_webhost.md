@@ -39,3 +39,6 @@
 16. Install git by typing apt-get install git-all
 17. Then update git by typing apt-get update
 18. Use git clone to clone repository by typing git clone https://github.com/NTIG-Uppsala/Fjellporten .
+
+---
+[Go back to README](../README.md)

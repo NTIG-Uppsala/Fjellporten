@@ -7,3 +7,5 @@
 
 - Live Preview
 
+---
+[Go back to README](../README.md)
