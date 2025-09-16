@@ -1,4 +1,5 @@
-const button = document.getElementById("VATButton");
+const BUTTON = document.getElementById("VATButton");
+
 var prices = []
 
 let isVATFree = false;
@@ -31,7 +32,7 @@ let caravansArray = [
   ["Dethleffs Globebus (3 bäddar)", 1600],
 ];
 
-button.addEventListener("click", () => {
+BUTTON.addEventListener("click", () => {
   isVATFree = !isVATFree;
   updatePrices();
   if (isVATFree) {
@@ -69,7 +70,7 @@ function checkCookies() {
   if (cookie == 'VATFree=True') {
     isVATFree = true;
     updatePrices();
-    document.getElementById("VATButton").checked = true;
+    BUTTON.checked = true;
   }
 }
 

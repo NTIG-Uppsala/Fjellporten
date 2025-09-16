@@ -85,15 +85,21 @@ a {
 
 /* === Control Panel === */
 #controlPanel {
-  float: right;
   display: flex;
   align-items: center;
   margin: 0;
 }
 
-#controlPanel p,
-#controlPanel input {
-  margin: 5px 2px;
+#controlPanel * {
+  margin: 5px 5px;
+}
+
+#controlPanel *:nth-of-type(odd) {
+  margin-right: 0;
+}
+
+#controlPanel p {
+  margin-left: auto;
 }
 
 /* === Tables === */
