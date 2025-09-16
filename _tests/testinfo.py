@@ -159,7 +159,7 @@ class TestProductPage(TestCase):
 
     # TESTS START HERE
     def testTaxButton(self):
-        self.browser.get("http://localhost:8000/små_bilar.html")
+        self.browser.get("http://localhost:8000/small_cars.html")
         self.assertIn("450", self.browser.find_element(By.ID, "car-table").text)
         self.assertNotIn("416", self.browser.find_element(By.ID, "car-table").text)
         button = self.browser.find_element(By.ID, "tax-button")
@@ -167,7 +167,7 @@ class TestProductPage(TestCase):
         self.assertIn("416", self.browser.find_element(By.ID, "car-table").text)
 
     def testTaxCookie(self):
-        self.browser.get("http://localhost:8000/små_bilar.html")
+        self.browser.get("http://localhost:8000/small_cars.html")
         self.assertIn("450", self.browser.find_element(By.ID, "car-table").text)
         self.assertNotIn("416", self.browser.find_element(By.ID, "car-table").text)
         button = self.browser.find_element(By.ID, "tax-button")
@@ -177,7 +177,7 @@ class TestProductPage(TestCase):
         self.assertIn("416", self.browser.find_element(By.ID, "car-table").text)
 
     def testSortingDefault(self):
-        self.browser.get("http://localhost:8000/stora_bilar.html")
+        self.browser.get("http://localhost:8000/big_cars.html")
         rows = self.browser.find_elements(By.CSS_SELECTOR, "#car-table tr")
         firstCar = rows[0].find_elements(By.TAG_NAME, "td")[0]
         firstCarName = firstCar.text
@@ -187,7 +187,7 @@ class TestProductPage(TestCase):
         assert lastCarName == "Volvo XC60 D4 AWD", f"Expected 'Volvo XC60 D4 AWD' but got '{lastCarName}'"
 
     def testSortingByPrice(self):
-        self.browser.get("http://localhost:8000/husbilar.html")
+        self.browser.get("http://localhost:8000/caravans.html")
         menu = self.browser.find_element(By.ID, "drop-down-menu")
         menu.click()
 
@@ -207,7 +207,7 @@ class TestProductPage(TestCase):
         assert lastPrice.text == "2 400 kr/dag", f"Expected '2 400 kr/dag' but got '{lastPrice.text}'"
 
     def testSortingByName(self):
-        self.browser.get("http://localhost:8000/små_bilar.html")
+        self.browser.get("http://localhost:8000/small_cars.html")
         menu = self.browser.find_element(By.ID, "drop-down-menu")
         menu.click()
 
