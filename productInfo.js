@@ -54,7 +54,7 @@ function updatePrices() {
     if (isVATFree) {
       let text = cell.innerHTML;
       let amount = parseInt(text.replaceAll("&nbsp;", ""));
-      let newPrice = amount / (VATRate +1);
+      let newPrice = amount / (VATRate + 1);
       // Format number with spaces as thousands separator
       let newPriceFormatted = newPrice.toLocaleString("sv-SE");
       cell.textContent = newPriceFormatted + " kr/dag";
