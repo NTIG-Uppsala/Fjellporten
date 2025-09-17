@@ -61,10 +61,10 @@ class TestProductPage(TestCase):
         rows = self.browser.find_elements(By.CSS_SELECTOR, "#carTable tr")
         firstCar = rows[0].find_elements(By.TAG_NAME, "td")[0]
         firstCarName = firstCar.text
-        assert firstCarName == "Audi A4 Avant", f"Expected 'Audi A4 Avant' but got '{firstCarName}'"
+        self.assertEqual("Audi A4 Avant", firstCarName)
         lastCar = rows[-1].find_elements(By.TAG_NAME, "td")[0]
         lastCarName = lastCar.text
-        assert lastCarName == "Volvo XC60 D4 AWD", f"Expected 'Volvo XC60 D4 AWD' but got '{lastCarName}'"
+        self.assertEqual("Volvo XC60 D4 AWD", lastCarName)
 
     def testSortingByPrice(self):
         self.browser.get("http://localhost:8000/caravans.html")
