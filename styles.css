@@ -87,6 +87,8 @@ a {
   justify-items: center;
 }
 
+/* === Back Button === */
+
 .backButton {
   font-size: xx-large;
   width: fit-content;
@@ -99,6 +101,14 @@ a {
   color: black;
   text-decoration: none;
   position: absolute;
+}
+
+#banner .backButton {
+  color: #fffafa;
+  border-color: #fffafa;
+  position: relative;
+  padding: 3px 0 3px 3px;
+  top: -4px;
 }
 
 .backButton:hover {
@@ -122,6 +132,10 @@ a {
   background-color: #fffafa;
 }
 
+.dropdownMenuCars select:hover {
+  cursor: pointer;
+}
+
 .dropdownMenuCars option {
   font-size: small;
 }
@@ -142,7 +156,7 @@ a {
   margin-right: 0;
 }
 
-#controlPanel p {
+#controlPanel label {
   margin-left: auto;
 }
 
@@ -171,16 +185,6 @@ a {
 #banner {
   color: #fffafa;
   text-shadow: #305548 1px 1px 2px;
-}
-
-/* === Staff === */
-
-#banner .backButton {
-  color: #fffafa;
-  border-color: #fffafa;
-  position: relative;
-  padding: 3px 0 3px 3px;
-  top: -4px;
 }
 
 /* === Staff-card === */
