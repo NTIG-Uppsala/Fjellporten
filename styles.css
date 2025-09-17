@@ -83,6 +83,23 @@ a {
   justify-items: center;
 }
 
+/* === Dropdown Menu Cars === */
+.dropdownMenuCars {
+  text-align: center;
+  margin: 10px;
+}
+
+.dropdownMenuCars select {
+  border: none;
+  font-size: xx-large;
+  font-weight: bold;
+  background-color: #fffafa;
+}
+
+.dropdownMenuCars option {
+  font-size: small;
+}
+
 /* === Control Panel === */
 #controlPanel {
   display: flex;

@@ -118,7 +118,7 @@ function sortTable(array) {
   } else if (value === "priceDesc") {
     // Sort array by second element (price) in descending order
     array.sort((a, b) => b[1] - a[1]);
-  }
+  } 
 
   clearTable();
   addTable(array);

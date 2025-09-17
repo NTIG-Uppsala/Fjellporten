@@ -11,7 +11,13 @@
 <body onload="sortTable(caravansArray); checkCookies();">
   <h1><a href="index.html">Fjellporten biluthyrning</a></h1>
   <div class="container">
-    <h2>Husbilar</h2>
+    <div class="dropdownMenuCars">
+      <select id="pageSelect">
+        <option value="small_cars.html">Små bilar</option>
+        <option value="big_cars.html">Stora bilar</option>
+        <option value="caravans.html">Husbilar</option> 
+      </select>
+    </div>
     <div id="controlPanel">
       <label>Sortera efter:&nbsp;</label>
       <select id="dropDownMenu" onchange="sortTable(caravansArray)">
@@ -91,6 +97,7 @@
     </div>
   </footer>
   <script src="productInfo.js"></script>
+  <script src="navigation.js"></script>
 </body>
 
 </html>
