@@ -7,6 +7,7 @@
 
 ## Links to dev info docs
 - [Coding Standards](_dev_info/coding_standards.md)
+- [Connection Info](_dev_info/connection_info.md)
 - [Definition Of Done](_dev_info/definition_of_done.md)
 - [Development Enviroment Standard](_dev_info/development_environment_standards.md)
 - [How To Make Commits](_dev_info/how_to_make_commits.md)
