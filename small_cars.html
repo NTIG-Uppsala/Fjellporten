@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 
-<body onload="sortTable(smallCarsArray); checkCookies();">
+<body onload="init(carDictionary['smallCarsArray']); checkCookies();">
   <h1><a href="index.html">Fjellporten biluthyrning</a></h1>
   <div class="container">
     <a href="index.html" class="backButton">
@@ -27,7 +27,7 @@
     </div>
     <div id="controlPanel">
       <p>Sortera efter:&nbsp;</p>
-      <select id="dropDownMenu" onchange="sortTable(smallCarsArray)">
+      <select id="dropDownMenu" onchange="sortTable(carDictionary['smallCarsArray'])">
         <option value="nameAsc">Namn A-Ö</option>
         <option value="nameDesc">Namn Ö-A</option>
         <option value="priceAsc">Pris stigande</option>

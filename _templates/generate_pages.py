@@ -41,7 +41,7 @@ for pageTemplate in pageTemplateList:
                 if moduleTemplate[2]: # Checks if the module is only supposed to be used by product pages
                     if pageTemplate[2]: # Checks if the page is a product page
                         if moduleTemplate[1] == "!!!CAR_TABLE!!!": # Checks if the module is specifically the car table module
-                            module = module.replace("'!!!CAR_ARRAY!!!'", f"{pageTemplate[3]}Array")
+                            module = module.replace("'!!!CAR_ARRAY!!!'", f"carDictionary['{pageTemplate[3]}Array']")
                         # Replace module template replace keyword with said module 
                         page = page.replace(moduleTemplate[1], module)
                     else:

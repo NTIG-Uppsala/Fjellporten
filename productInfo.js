@@ -5,32 +5,22 @@ var prices = []
 let isVATFree = false;
 let VATRate = 0.25; // 25% VAT
 
-let smallCarsArray = [
-  ["Toyota Yaris 1.5 Hybrid", 520],
-  ["Volkswagen Polo TSI", 480],
-  ["Kia Picanto", 360],
-  ["Renault Clio", 400],
-  ["Ford Fiesta EcoBoost", 450],
-  ["Peugeot 208", 430]
-];
+carDictionary = {
+  "smallCarsArray": [],
+  "bigCarsArray": [],
+  "caravansArray": [],
+}
 
-let bigCarsArray = [
-  ["Volvo XC60 D4 AWD", 1050],
-  ["Volkswagen Passat Variant", 900],
-  ["Skoda Kodiaq 7-sits", 1100],
-  ["BMW 320d Touring", 1000],
-  ["Audi A4 Avant", 980],
-  ["Mercedes-Benz GLC", 1200],
-];
+// Creates headers for the http requests to the Supabase API
+const MY_HEADERS = new Headers();
+MY_HEADERS.append("apikey", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNjcGZ2enNldWpweHlyaXlyYXNnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTgxODAyNDYsImV4cCI6MjA3Mzc1NjI0Nn0.FtpnWdeNZ8jcV8eK_-_EIOpFtBUtmUEt0pH2JXIKrbg");
 
-let caravansArray = [
-  ["Adria Coral XL (4 bäddar)", 1800],
-  ["Hymer B-Class Modern Comfort (5 bäddar)", 2200],
-  ["Knaus BoxStar Camper Van (2 bäddar)", 1400],
-  ["Bürstner Lyseo TD (4 bäddar)", 1900],
-  ["Sunlight A72 (6 bäddar)", 2400],
-  ["Dethleffs Globebus (3 bäddar)", 1600],
-];
+// Creates request
+const REQUEST_OPTIONS = {
+  method: "GET",
+  headers: MY_HEADERS,
+  redirect: "follow"
+};
 
 BUTTON.addEventListener("click", () => {
   // Inverses isVATFree when the VAT button is pressed
@@ -43,6 +33,68 @@ BUTTON.addEventListener("click", () => {
   }
 });
 
+// Runs as soon as the page loads
+function init(currentPageArray) {
+  getData()
+  waitForData(currentPageArray)
+}
+
+// Gets data from the database
+function getData() {
+
+  data = [];
+
+  fetch("https://ccpfvzseujpxyriyrasg.supabase.co/rest/v1/all_cars", REQUEST_OPTIONS)
+    
+    // Gets a response from the fetch
+    .then((response) => response.text())
+    .then((result) => {
+      data = result;
+
+      // Formats the data into a "list" of all cars and their info
+      carsObj = JSON.parse(data);
+
+      // Loops through every car in the "list"
+      carsObj.forEach(car => {
+        outputArray = getOutputArray(car);
+        carInfo = getCarInfo(car);
+
+        // Adds the car and its info to the correct car array
+        carDictionary[outputArray].push(carInfo);
+      });
+    })
+    .catch((error) => console.error(error));
+}
+
+// Checks the car type of a specified car and returns where said car should be listed
+function getOutputArray(car) {
+  switch (car.car_type){
+    case "small_car":
+      return ("smallCarsArray");
+    case "big_car":
+      return ("bigCarsArray");
+    case "caravan":
+      return ("caravansArray");
+  }
+}
+
+// Gets info about a specified car
+function getCarInfo(car) {
+  return [car.car_name, car.cost]
+}
+
+// Waits until caravansArray has gotten data from the database and then sorts the table
+function waitForData(currentPageArray) {
+  if (carDictionary["caravansArray"].length === 0) {
+    setTimeout(() => {
+      waitForData(currentPageArray)
+    }, 10);
+  } else {
+    sortTable(currentPageArray)
+  }
+}
+
+// Checks if prices should be shown with or without VAT by using a cookie
 function checkCookies() {
   let cookie = document.cookie;
   if (cookie == 'VATFree=True') {
@@ -115,17 +167,17 @@ function updatePrices() {
 
 // Gets called from html with that pages array to then sort the table
 function sortTable(currentPageArray) {
-  const value = document.getElementById("dropDownMenu").value;
-  if (value === "nameAsc") {
+  const VALUE = document.getElementById("dropDownMenu").value;
+  if (VALUE === "nameAsc") {
     // Sort array by first element (name) in ascending order
     currentPageArray.sort();
-  } else if (value === "nameDesc") {
+  } else if (VALUE === "nameDesc") {
     // Sort array by first element (name) in descending order
     currentPageArray.sort().reverse();
-  } else if (value === "priceAsc") {
+  } else if (VALUE === "priceAsc") {
     // Sort array by second element (price) in ascending order
     currentPageArray.sort((a, b) => a[1] - b[1]);
-  } else if (value === "priceDesc") {
+  } else if (VALUE === "priceDesc") {
     // Sort array by second element (price) in descending order
     currentPageArray.sort((a, b) => b[1] - a[1]);
   }
