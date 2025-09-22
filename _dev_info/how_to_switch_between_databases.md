@@ -1,4 +1,4 @@
-# How To Switch Between Databases
+# How To Switch Between Databases (for testing purposes)
 
 ## Connection Info
 
@@ -12,8 +12,9 @@
 
 ## How To Actually Switch
 
-1. Go to config.js
-2. Paste API Key and URL in their respective areas
+1. Copy config.example.js
+2. Rename to config.js
+3. Paste API Key and URL in their respective areas
 
 ---
 [Go back to README](../README.md)
