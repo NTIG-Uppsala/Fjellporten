@@ -13,7 +13,7 @@
 ## How To Actually Switch
 
 1. Copy config.example.js
-2. Rename to config.js
+2. Rename copy to config.js
 3. Paste API Key and URL in their respective areas
 
 ---
