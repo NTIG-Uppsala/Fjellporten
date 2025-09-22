@@ -13,7 +13,7 @@ carDictionary = {
 
 // Creates headers for the http requests to the Supabase API
 const MY_HEADERS = new Headers();
-MY_HEADERS.append("apikey", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNjcGZ2enNldWpweHlyaXlyYXNnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTgxODAyNDYsImV4cCI6MjA3Mzc1NjI0Nn0.FtpnWdeNZ8jcV8eK_-_EIOpFtBUtmUEt0pH2JXIKrbg");
+MY_HEADERS.append("apikey", "sb_publishable_ziySQOqn0dIfHz_yty2dTw_e_2clfWK");
 
 // Creates request
 const REQUEST_OPTIONS = {
@@ -44,7 +44,7 @@ function getData() {
 
   data = [];
 
-  fetch("https://ccpfvzseujpxyriyrasg.supabase.co/rest/v1/all_cars", REQUEST_OPTIONS)
+  fetch("https://ihxpbcjkkafcbjmnvsfm.supabase.co/rest/v1/all_cars", REQUEST_OPTIONS)
     
     // Gets a response from the fetch
     .then((response) => response.text())
