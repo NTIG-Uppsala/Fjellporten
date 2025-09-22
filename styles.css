@@ -91,16 +91,16 @@ a {
 
 .backButton {
   text-decoration: none;
+  position: absolute;
+  margin-top: 5px;
+  margin-right: auto;
 }
 
 .backButton svg {
   border-radius: 50%;
-  margin-top: 5px;
-  margin-right: auto;
-  position: absolute;
 }
 
-#staffHeader .backButton svg {
+#staffHeader .backButton {
   position: relative;
   top: 7px;
 }
@@ -304,6 +304,18 @@ footer {
   flex-wrap: wrap;
   justify-content: center;
   align-items: flex-start;
+}
+
+/* === No Javascript === */
+
+.noScript #controlPanel,
+.noScript .dropdownMenuCars {
+  display: none;
+}
+
+.noScript .backButton {
+  position: relative;
+  margin-left: -25px;
 }
 
 /* === Media Queries === */
