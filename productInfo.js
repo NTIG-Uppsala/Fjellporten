@@ -16,7 +16,7 @@ carDictionary = {
 const MY_HEADERS = new Headers();
 MY_HEADERS.append("apikey", window._env_.SUPABASE_ANON_KEY);
 
-// Creates request
+// Creates request options to get information from the database
 const REQUEST_OPTIONS = {
   method: "GET",
   headers: MY_HEADERS,
