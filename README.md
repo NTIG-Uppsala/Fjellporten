@@ -7,10 +7,10 @@
 
 ## Links to dev info docs
 - [Coding Standards](_dev_info/coding_standards.md)
-- [How To Switch Between Databases](_dev_info/how_to_switch_between_databases.md)
 - [Definition Of Done](_dev_info/definition_of_done.md)
 - [Development Environment Standards](_dev_info/development_environment_standards.md)
 - [How To Make Commits](_dev_info/how_to_make_commits.md)
+- [How To Switch Between Databases](_dev_info/how_to_switch_between_databases.md)
 - [How To Test Website Code](_dev_info/how_to_test_website_code.md)
 - [How To Update Website Code](_dev_info/how_to_update_website_code.md)
 - [How To Update Website From CMD](_dev_info/how_to_update_website_from_CMD.md)
