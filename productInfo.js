@@ -1,5 +1,5 @@
-const BODY = document.getElementById("body")
-const BUTTON = document.getElementById("VATButton");
+const HTML_BODY = document.getElementById("body")
+const VAT_BUTTON = document.getElementById("VATButton");
 
 var prices = []
 
@@ -23,7 +23,7 @@ const REQUEST_OPTIONS = {
   redirect: "follow"
 };
 
-BUTTON.addEventListener("click", () => {
+VAT_BUTTON.addEventListener("click", () => {
   // Inverses isVATFree when the VAT button is pressed
   isVATFree = !isVATFree;
   updatePrices();
@@ -42,7 +42,7 @@ function init(currentPageArray) {
 }
 
 function removeNoScriptClass() {
-  BODY.classList.remove("noScript")
+  HTML_BODY.classList.remove("noScript")
 }
 
 // Gets data from the database
@@ -106,7 +106,7 @@ function checkCookies() {
   if (cookie == 'VATFree=True') {
     isVATFree = true;
     updatePrices();
-    BUTTON.checked = true;
+    VAT_BUTTON.checked = true;
   }
 }
 
@@ -159,7 +159,7 @@ function updatePrices() {
       // Show prices without VAT
       let text = cell.innerHTML;
       let oldPrice = parseInt(text.replaceAll("&nbsp;", ""));
-      let newPrice = oldPrice / (VATRate + 1);
+      let newPrice = Math.round(oldPrice / (VATRate + 1));
       // Format number with spaces as thousands separator
       let newPriceFormatted = newPrice.toLocaleString("sv-SE");
       cell.textContent = newPriceFormatted + " kr/dag";
