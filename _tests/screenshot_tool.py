@@ -3,7 +3,6 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 import re
 
-
 screenshot_Counter = 1
 
 options = Options()
@@ -11,10 +10,10 @@ options = Options()
 
 driver = webdriver.Chrome(options=options)
 
-driver.get("http://localhost:8000/products.html")
+driver.get("http://localhost:8000/products.html?car_type=small_car")
 
 # Directory where screenshots are saved
-screenshot_dir = "_screenshots"
+screenshot_dir = "screenshots"
 
 # Make sure directory exists
 os.makedirs(screenshot_dir, exist_ok=True)

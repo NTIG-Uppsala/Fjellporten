@@ -2,6 +2,7 @@ from unittest import TestCase, main
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
+import time
 
 # settings for how tests are run
 doNotCloseBrowser = False  # if true the browser stays open after tests are done
@@ -49,6 +50,7 @@ class TestMainPage(TestCase):
         self.browser.get("http://localhost:8000/")
         card = self.browser.find_elements(By.CLASS_NAME, "categoryCard")[0]
         card.click()
+        time.sleep(1)
         self.assertIn("Kia Picanto", self.browser.find_element(By.ID, "carTable").text)
         self.assertNotIn("Audi A4 Avant", self.browser.find_element(By.ID, "carTable").text)
 
@@ -56,6 +58,7 @@ class TestMainPage(TestCase):
         self.browser.get("http://localhost:8000/")
         card = self.browser.find_elements(By.CLASS_NAME, "categoryCard")[1]
         card.click()
+        time.sleep(1)
         self.assertIn("Audi A4 Avant", self.browser.find_element(By.ID, "carTable").text)
         self.assertNotIn("Kia Picanto", self.browser.find_element(By.ID, "carTable").text)
 
@@ -63,6 +66,7 @@ class TestMainPage(TestCase):
         self.browser.get("http://localhost:8000/")
         card = self.browser.find_elements(By.CLASS_NAME, "categoryCard")[2]
         card.click()
+        time.sleep(1)
         self.assertIn("Adria Coral XL", self.browser.find_element(By.ID, "carTable").text)
         self.assertNotIn("Audi A4 Avant", self.browser.find_element(By.ID, "carTable").text)
 

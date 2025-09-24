@@ -2,9 +2,10 @@ from unittest import TestCase, main
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
+import time
 
 # settings for how tests are run
-doNotCloseBrowser = True  # if true the browser stays open after tests are done
+doNotCloseBrowser = False  # if true the browser stays open after tests are done
 hideWindow = not (doNotCloseBrowser)  # shows browser while tests are running
 
 
@@ -40,8 +41,9 @@ class TestProductPage(TestCase):
     # TESTS START HERE
     def testVATButton(self):
         self.browser.get("http://localhost:8000/index.html")
-        smallCarsPageLink = self.browser.find_element(By.ID, "smallCarsLink")
-        smallCarsPageLink.click()
+        card = self.browser.find_elements(By.CLASS_NAME, "categoryCard")[0]
+        card.click()
+        time.sleep(1)
         self.assertIn("450", self.browser.find_element(By.ID, "carTable").text)
         self.assertNotIn("416", self.browser.find_element(By.ID, "carTable").text)
         button = self.browser.find_element(By.ID, "VATButton")
@@ -50,20 +52,23 @@ class TestProductPage(TestCase):
 
     def testVATCookie(self):
         self.browser.get("http://localhost:8000/index.html")
-        smallCarsPageLink = self.browser.find_element(By.ID, "smallCarsLink")
-        smallCarsPageLink.click()
+        card = self.browser.find_elements(By.CLASS_NAME, "categoryCard")[0]
+        card.click()
+        time.sleep(1)
         self.assertIn("450", self.browser.find_element(By.ID, "carTable").text)
         self.assertNotIn("416", self.browser.find_element(By.ID, "carTable").text)
         button = self.browser.find_element(By.ID, "VATButton")
         button.click()
         self.assertIn("416", self.browser.find_element(By.ID, "carTable").text)
         self.browser.refresh()
+        time.sleep(1)
         self.assertIn("416", self.browser.find_element(By.ID, "carTable").text)
 
     def testSortingDefault(self):
         self.browser.get("http://localhost:8000/index.html")
-        bigCarsPageLink = self.browser.find_element(By.ID, "bigCarsLink")
-        bigCarsPageLink.click()
+        card = self.browser.find_elements(By.CLASS_NAME, "categoryCard")[1]
+        card.click()
+        time.sleep(1)
         rows = self.browser.find_elements(By.CSS_SELECTOR, "#carTable tr")
         firstCar = rows[0].find_elements(By.TAG_NAME, "td")[0]
         firstCarName = firstCar.text
@@ -74,45 +79,64 @@ class TestProductPage(TestCase):
 
     def testSortingByPrice(self):
         self.browser.get("http://localhost:8000/index.html")
-        caravansPageLink = self.browser.find_element(By.ID, "caravansLink")
-        caravansPageLink.click()
-        menu = self.browser.find_element(By.ID, "dropDownMenu")
+        card = self.browser.find_elements(By.CLASS_NAME, "categoryCard")[2]
+        card.click()
+        time.sleep(1)
+        menu = self.browser.find_element(By.ID, "dropDownMenuSort")
+        
         menu.click()
-
-        self.browser.find_element(By.CSS_SELECTOR, "#dropDownMenu option[value='priceDesc']").click()
+        self.browser.find_element(By.CSS_SELECTOR, "#dropDownMenuSort option[value='priceDesc']").click()
         rows = self.browser.find_elements(By.CSS_SELECTOR, "#carTable tr")
         firstPrice = rows[0].find_elements(By.TAG_NAME, "td")[1]
         self.assertEqual("2 400 kr/dag", firstPrice.text)
         lastPrice = rows[-1].find_elements(By.TAG_NAME, "td")[1]
-        self.assertEqual("1 400 kr/dag", lastPrice.text)
+        self.assertEqual("321 kr/dag", lastPrice.text)
 
         menu.click()
-        self.browser.find_element(By.CSS_SELECTOR, "#dropDownMenu option[value='priceAsc']").click()
+        self.browser.find_element(By.CSS_SELECTOR, "#dropDownMenuSort option[value='priceAsc']").click()
         rows = self.browser.find_elements(By.CSS_SELECTOR, "#carTable tr")
         firstPrice = rows[0].find_elements(By.TAG_NAME, "td")[1]
-        self.assertEqual("1 400 kr/dag", firstPrice.text)
+        self.assertEqual("321 kr/dag", firstPrice.text)
         lastPrice = rows[-1].find_elements(By.TAG_NAME, "td")[1]
         self.assertEqual("2 400 kr/dag", lastPrice.text)
 
     def testSortingByName(self):
         self.browser.get("http://localhost:8000/index.html")
-        menu = self.browser.find_element(By.ID, "dropDownMenu")
+        card = self.browser.find_elements(By.CLASS_NAME, "categoryCard")[0]
+        card.click()
+        time.sleep(1)
+        menu = self.browser.find_element(By.ID, "dropDownMenuSort")
+        
         menu.click()
-
-        self.browser.find_element(By.CSS_SELECTOR, "#dropDownMenu option[value='nameDesc']").click()
+        self.browser.find_element(By.CSS_SELECTOR, "#dropDownMenuSort option[value='nameDesc']").click()
         rows = self.browser.find_elements(By.CSS_SELECTOR, "#carTable tr")
         firstCar = rows[0].find_elements(By.TAG_NAME, "td")[0]
-        self.assertEqual("Volkswagen Polo TSI", firstCar.text)
+        self.assertEqual("öäå", firstCar.text)
         lastCar = rows[-1].find_elements(By.TAG_NAME, "td")[0]
         self.assertEqual("Ford Fiesta EcoBoost", lastCar.text)
 
         menu.click()
-        self.browser.find_element(By.CSS_SELECTOR, "#dropDownMenu option[value='nameAsc']").click()
+        self.browser.find_element(By.CSS_SELECTOR, "#dropDownMenuSort option[value='nameAsc']").click()
         rows = self.browser.find_elements(By.CSS_SELECTOR, "#carTable tr")
         firstCar = rows[0].find_elements(By.TAG_NAME, "td")[0]
         self.assertEqual("Ford Fiesta EcoBoost", firstCar.text)
         lastCar = rows[-1].find_elements(By.TAG_NAME, "td")[0]
-        self.assertEqual("Volkswagen Polo TSI", lastCar.text)
+        self.assertEqual("öäå", lastCar.text)
+        
+    def testChangingCarType(self):
+        self.browser.get("http://localhost:8000/index.html")
+        card = self.browser.find_elements(By.CLASS_NAME, "categoryCard")[0]
+        card.click()
+        time.sleep(1)
+        self.assertIn("450", self.browser.find_element(By.ID, "carTable").text)
+        self.assertNotIn("1 050", self.browser.find_element(By.ID, "carTable").text)
+        menu = self.browser.find_element(By.ID, "dropDownMenuCars")
+        
+        menu.click()
+        self.browser.find_element(By.CSS_SELECTOR, "#dropDownMenuCars option[value='products.html?car_type=big_car']").click()
+        time.sleep(1)
+        self.assertIn("1 050", self.browser.find_element(By.ID, "carTable").text)
+        self.assertNotIn("450", self.browser.find_element(By.ID, "carTable").text)
 
 # this bit is here so that the tests are run when the file is run as a normal python-program
 if __name__ == "__main__":
