@@ -5,23 +5,19 @@ import re
 languageTemplateList = [
     ["_templates/languages/swedish.txt", ""],
     ["_templates/languages/english.txt", "_english"],
-    ["_templates/languages/english.txt", "_norwegian"]
+    ["_templates/languages/norwegian.txt", "_norwegian"]
 ] 
 
 # List of page templates with their filename starts and if they're a product page or not
 pageTemplateList = [
-    ["_templates/pages/index.html", "index", False],
-    ["_templates/pages/staff.html", "staff", False],
-    ["_templates/pages/small_cars.html", "small_cars", True, "smallCars"],
-    ["_templates/pages/big_cars.html", "big_cars", True, "bigCars"],
-    ["_templates/pages/caravans.html", "caravans", True, "caravans"],
+    ["_templates/pages/index.html", "index"],
+    ["_templates/pages/staff.html", "staff"],
+    ["_templates/pages/products.html", "products"],
     ]
 
 # List of module templates with their replace keywords and if they're specifically for product pages or not
 moduleTemplateList = [
-    ["_templates/modules/footer.html", "!!!FOOTER!!!", False],
-    ["_templates/modules/car_table.html", "!!!CAR_TABLE!!!", True],
-    ["_templates/modules/product_page_js.html", "!!!PRODUCT_PAGE_JS!!!", True],
+    ["_templates/modules/footer.html", "!!!FOOTER!!!"],
 ]
 
 # Creates a list where all the full pages will be placed until they get checked with the language templates
@@ -38,18 +34,9 @@ for pageTemplate in pageTemplateList:
             with open(moduleTemplate[0], encoding="utf-8") as m:
                 # Read module template
                 module = m.read()
-                if moduleTemplate[2]: # Checks if the module is only supposed to be used by product pages
-                    if pageTemplate[2]: # Checks if the page is a product page
-                        if moduleTemplate[1] == "!!!CAR_TABLE!!!": # Checks if the module is specifically the car table module
-                            module = module.replace("'!!!CAR_ARRAY!!!'", f"carDictionary['{pageTemplate[3]}Array']")
-                        # Replace module template replace keyword with said module 
-                        page = page.replace(moduleTemplate[1], module)
-                    else:
-                        pass # The module will be ignored since the page isn't supposed to have it
-                else:
-                    
-                    # Replace module template replace keyword with said module 
-                    page = page.replace(moduleTemplate[1], module)
+                
+                # Replace module template replace keyword with said module 
+                page = page.replace(moduleTemplate[1], module)
                     
         with open(outputFile, "w", encoding="utf-8") as f:
             f.write(page)

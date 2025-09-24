@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 
-<body onload="init(carDictionary['bigCarsArray']); checkCookies();" id="body" class="noScript">
+<body id="body" class="noScript">
   <h1><a href="index.html">Fjellporten biluthyrning</a></h1>
   <div class="container">
     <a href="index.html" class="backButton">
@@ -18,16 +18,16 @@
         <line x1="16" y1="12" x2="8" y2="12"/>
       </svg>
     </a>
-    <div class="dropdownMenuCars">
+    <div id="dropDownMenuCars">
       <select id="pageSelect">
-        <option value="small_cars.html">Små bilar</option>
-        <option value="big_cars.html">Stora bilar</option>
-        <option value="caravans.html">Husbilar</option> 
+        <option value="products.html?car_type=small_car">Små bilar</option>
+        <option value="products.html?car_type=big_car">Stora bilar</option>
+        <option value="products.html?car_type=caravan">Husbilar</option> 
       </select>
     </div>
     <div id="controlPanel">
       <p>Sortera efter:&nbsp;</p>
-      <select id="dropDownMenu" onchange="sortTable(carDictionary['bigCarsArray'])">
+      <select id="dropDownMenuSort">
         <option value="nameAsc">Namn A-Ö</option>
         <option value="nameDesc">Namn Ö-A</option>
         <option value="priceAsc">Pris stigande</option>
@@ -52,11 +52,11 @@
       <div class="footerContent">
         <h2 class="footerTitle">Navigering</h2>
         <p>
-          <a href="small_cars.html">Hyr liten bil</a>
+          <a href="products.html?car_type=small_car">Hyr liten bil</a>
           <br>
-          <a href="big_cars.html">Hyr stor bil</a>
+          <a href="products.html?car_type=big_car">Hyr stor bil</a>
           <br>
-          <a href="caravans.html">Hyr husbil</a>
+          <a href="products.html?car_type=caravan">Hyr husbil</a>
           <br>
           <a href="staff.html">Personal</a>
         </p>
@@ -108,9 +108,11 @@
       </div>
     </div>
   </footer>
+  
   <script src="config.js"></script>
   <script src="productInfo.js"></script>
   <script src="navigation.js"></script>
+
 </body>
 
 </html>

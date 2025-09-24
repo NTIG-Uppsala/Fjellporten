@@ -39,7 +39,9 @@ class TestProductPage(TestCase):
 
     # TESTS START HERE
     def testVATButton(self):
-        self.browser.get("http://localhost:8000/small_cars.html")
+        self.browser.get("http://localhost:8000/index.html")
+        smallCarsPageLink = self.browser.find_element(By.ID, "smallCarsLink")
+        smallCarsPageLink.click()
         self.assertIn("450", self.browser.find_element(By.ID, "carTable").text)
         self.assertNotIn("416", self.browser.find_element(By.ID, "carTable").text)
         button = self.browser.find_element(By.ID, "VATButton")
@@ -47,7 +49,9 @@ class TestProductPage(TestCase):
         self.assertIn("416", self.browser.find_element(By.ID, "carTable").text)
 
     def testVATCookie(self):
-        self.browser.get("http://localhost:8000/small_cars.html")
+        self.browser.get("http://localhost:8000/index.html")
+        smallCarsPageLink = self.browser.find_element(By.ID, "smallCarsLink")
+        smallCarsPageLink.click()
         self.assertIn("450", self.browser.find_element(By.ID, "carTable").text)
         self.assertNotIn("416", self.browser.find_element(By.ID, "carTable").text)
         button = self.browser.find_element(By.ID, "VATButton")
@@ -57,7 +61,9 @@ class TestProductPage(TestCase):
         self.assertIn("416", self.browser.find_element(By.ID, "carTable").text)
 
     def testSortingDefault(self):
-        self.browser.get("http://localhost:8000/big_cars.html")
+        self.browser.get("http://localhost:8000/index.html")
+        bigCarsPageLink = self.browser.find_element(By.ID, "bigCarsLink")
+        bigCarsPageLink.click()
         rows = self.browser.find_elements(By.CSS_SELECTOR, "#carTable tr")
         firstCar = rows[0].find_elements(By.TAG_NAME, "td")[0]
         firstCarName = firstCar.text
@@ -67,7 +73,9 @@ class TestProductPage(TestCase):
         self.assertEqual("Volvo XC60 D4 AWD", lastCarName)
 
     def testSortingByPrice(self):
-        self.browser.get("http://localhost:8000/caravans.html")
+        self.browser.get("http://localhost:8000/index.html")
+        caravansPageLink = self.browser.find_element(By.ID, "caravansLink")
+        caravansPageLink.click()
         menu = self.browser.find_element(By.ID, "dropDownMenu")
         menu.click()
 
@@ -87,7 +95,7 @@ class TestProductPage(TestCase):
         self.assertEqual("2 400 kr/dag", lastPrice.text)
 
     def testSortingByName(self):
-        self.browser.get("http://localhost:8000/small_cars.html")
+        self.browser.get("http://localhost:8000/index.html")
         menu = self.browser.find_element(By.ID, "dropDownMenu")
         menu.click()
 

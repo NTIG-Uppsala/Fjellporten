@@ -113,24 +113,24 @@ a {
 
 /* === Dropdown Menu Cars === */
 
-.dropdownMenuCars {
+#dropDownMenuCars {
   text-align: center;
   margin: 10px;
   margin-right: auto;
 }
 
-.dropdownMenuCars select {
+#dropDownMenuCars select {
   border: none;
   font-size: xx-large;
   font-weight: bold;
   background-color: #fffafa;
 }
 
-.dropdownMenuCars select:hover {
+#dropDownMenuCars select:hover {
   cursor: pointer;
 }
 
-.dropdownMenuCars option {
+#dropDownMenuCars option {
   font-size: small;
 }
 
@@ -309,7 +309,7 @@ footer {
 /* === No Javascript === */
 
 .noScript #controlPanel,
-.noScript .dropdownMenuCars {
+.noScript #dropDownMenuCars {
   display: none;
 }
 

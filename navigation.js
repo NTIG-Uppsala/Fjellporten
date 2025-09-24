@@ -5,11 +5,12 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!PAGE_SELECT) return;
 
     // Gets the last index of a list containing all the separate parts of the current pages filepath
-    const CURRENT = window.location.pathname.split("/").pop();
+    const CURRENT_PATH = window.location.pathname.split("/").pop() + window.location.search;
+    console.log(CURRENT_PATH)
     
     // Loops through all options in the dropdown menu until it matches the current pages filename
     for (let i = 0; i < PAGE_SELECT.options.length; i++) {
-        if (PAGE_SELECT.options[i].value === CURRENT) {
+        if (PAGE_SELECT.options[i].value === CURRENT_PATH) {
 
             // Sets the selected option to the one that matches the current pages filename
             PAGE_SELECT.selectedIndex = i;
