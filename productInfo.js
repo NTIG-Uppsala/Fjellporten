@@ -48,7 +48,6 @@ function init() {
   checkCookies()
   getData()
   waitForData()
-  sortTable()
 }
 
 function removeNoScriptClass() {
@@ -99,6 +98,7 @@ function waitForData() {
     }, 10);
   } else {
       updateViewModel()
+      sortTable()
   }
 }
 
@@ -171,6 +171,7 @@ function sortTable() {
     // Sort array by second element (price) in descending order
     carTableViewModel.sort((a, b) => b.cost - a.cost);
   }
+  console.log(carTableViewModel)
   render()
 };
 
