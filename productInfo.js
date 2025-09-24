@@ -11,7 +11,7 @@ let carTableViewModel = [];
 
 const STATE = {
   isVATFree: false,
-  sortBy: null,
+  sortBy: "nameAsc",
   allCars: [],
   carType: new URLSearchParams(document.location.search).get("car_type"),
 }
@@ -38,15 +38,13 @@ document.addEventListener("DOMContentLoaded", () => {
 VAT_BUTTON.addEventListener("click", () => {
   // Inverses isVATFree when the VAT button is pressed
   STATE.isVATFree = !STATE.isVATFree;
+  localStorage.setItem("VATFree", STATE.isVATFree ? "true" : "false");
   updateViewModel()
-  if (STATE.isVATFree) {
-    document.cookie = 'VATFree=True';
-  } else {
-    document.cookie = 'VATFree=False';
-  }
 });
 
-DROPDOWN_MENU_SORT.addEventListener("change", (e) => {
+DROPDOWN_MENU_SORT.addEventListener("change", () => {
+  STATE.sortBy = DROPDOWN_MENU_SORT.value;
+  localStorage.setItem("SortOption", STATE.sortBy);
   sortTable()
 });
 
@@ -54,7 +52,8 @@ DROPDOWN_MENU_SORT.addEventListener("change", (e) => {
 
 function init() {
   removeNoScriptClass()
-  checkCookies()
+  loadVATPreference()
+  loadSortPreference()
   getData()
   waitForData()
 }
@@ -95,15 +94,21 @@ function waitForData() {
   }
 }
 
-// === Cookies === //
+// === LocalStorage === //
 
 // Checks if prices should be shown with or without VAT by using a cookie
-function checkCookies() {
-  let cookie = document.cookie;
-  if (cookie == 'VATFree=True') {
-    STATE.isVATFree = true;
-    updateViewModel() 
-    VAT_BUTTON.checked = true;
+function loadVATPreference() {
+  STATE.isVATFree = localStorage.getItem("VATFree") === "true";
+  VAT_BUTTON.checked = STATE.isVATFree;
+  updateViewModel() 
+}
+
+function loadSortPreference() {
+  let sortOption = localStorage.getItem("SortOption");
+  if (sortOption) {
+    STATE.sortBy = sortOption;
+    DROPDOWN_MENU_SORT.value = sortOption;
+    sortTable()
   }
 }
 
@@ -136,7 +141,7 @@ function updateViewModel() {
     ...car,
     display_price: STATE.isVATFree ? Math.round(car.cost/(1 + VATRate)) : car.cost,
   }));
-  render()
+  sortTable()
 }
 
 function isCorrectCarType(element) {
