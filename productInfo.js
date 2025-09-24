@@ -1,6 +1,3 @@
-document.addEventListener("DOMContentLoaded", () => {
-
-
 // === Constants and global variables === //
 
 const HTML_BODY = document.getElementById("body")
@@ -33,6 +30,10 @@ const REQUEST_OPTIONS = {
 };
 
 // === Event Listeners === //
+
+document.addEventListener("DOMContentLoaded", () => {
+  init();
+});
 
 VAT_BUTTON.addEventListener("click", () => {
   // Inverses isVATFree when the VAT button is pressed
@@ -184,7 +185,3 @@ function clearTable() {
   var table = document.getElementById('carTable');
   if (table) table.parentNode.removeChild(table);
 }
-
-init();
-
-});
