@@ -56,7 +56,6 @@ function init() {
   checkCookies()
   getData()
   waitForData()
-  sortTable()
 }
 
 function removeNoScriptClass() {
@@ -91,6 +90,7 @@ function waitForData() {
     }, 10);
   } else {
       updateViewModel()
+      sortTable()
   }
 }
 
