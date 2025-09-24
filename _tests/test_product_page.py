@@ -44,25 +44,25 @@ class TestProductPage(TestCase):
         card = self.browser.find_elements(By.CLASS_NAME, "categoryCard")[0]
         card.click()
         time.sleep(1)
-        self.assertIn("450", self.browser.find_element(By.ID, "carTable").text)
-        self.assertNotIn("416", self.browser.find_element(By.ID, "carTable").text)
+        self.assertIn("450 kr/dag", self.browser.find_element(By.ID, "carTable").text)
+        self.assertNotIn("416 kr/dag", self.browser.find_element(By.ID, "carTable").text)
         button = self.browser.find_element(By.ID, "VATButton")
         button.click()
-        self.assertIn("416", self.browser.find_element(By.ID, "carTable").text)
+        self.assertIn("416 kr/dag", self.browser.find_element(By.ID, "carTable").text)
 
     def testVATCookie(self):
         self.browser.get("http://localhost:8000/index.html")
         card = self.browser.find_elements(By.CLASS_NAME, "categoryCard")[0]
         card.click()
         time.sleep(1)
-        self.assertIn("450", self.browser.find_element(By.ID, "carTable").text)
-        self.assertNotIn("416", self.browser.find_element(By.ID, "carTable").text)
+        self.assertIn("450 kr/dag", self.browser.find_element(By.ID, "carTable").text)
+        self.assertNotIn("416 kr/dag", self.browser.find_element(By.ID, "carTable").text)
         button = self.browser.find_element(By.ID, "VATButton")
         button.click()
-        self.assertIn("416", self.browser.find_element(By.ID, "carTable").text)
+        self.assertIn("416 kr/dag", self.browser.find_element(By.ID, "carTable").text)
         self.browser.refresh()
         time.sleep(1)
-        self.assertIn("416", self.browser.find_element(By.ID, "carTable").text)
+        self.assertIn("416 kr/dag", self.browser.find_element(By.ID, "carTable").text)
 
     def testSortingDefault(self):
         self.browser.get("http://localhost:8000/index.html")
@@ -87,17 +87,17 @@ class TestProductPage(TestCase):
         menu.click()
         self.browser.find_element(By.CSS_SELECTOR, "#dropDownMenuSort option[value='priceDesc']").click()
         rows = self.browser.find_elements(By.CSS_SELECTOR, "#carTable tr")
-        firstPrice = rows[0].find_elements(By.TAG_NAME, "td")[1]
+        firstPrice = rows[0].find_elements(By.TAG_NAME, "td")[2]
         self.assertEqual("2 400 kr/dag", firstPrice.text)
-        lastPrice = rows[-1].find_elements(By.TAG_NAME, "td")[1]
+        lastPrice = rows[-1].find_elements(By.TAG_NAME, "td")[2]
         self.assertEqual("321 kr/dag", lastPrice.text)
 
         menu.click()
         self.browser.find_element(By.CSS_SELECTOR, "#dropDownMenuSort option[value='priceAsc']").click()
         rows = self.browser.find_elements(By.CSS_SELECTOR, "#carTable tr")
-        firstPrice = rows[0].find_elements(By.TAG_NAME, "td")[1]
+        firstPrice = rows[0].find_elements(By.TAG_NAME, "td")[2]
         self.assertEqual("321 kr/dag", firstPrice.text)
-        lastPrice = rows[-1].find_elements(By.TAG_NAME, "td")[1]
+        lastPrice = rows[-1].find_elements(By.TAG_NAME, "td")[2]
         self.assertEqual("2 400 kr/dag", lastPrice.text)
 
     def testSortingByName(self):
@@ -128,15 +128,53 @@ class TestProductPage(TestCase):
         card = self.browser.find_elements(By.CLASS_NAME, "categoryCard")[0]
         card.click()
         time.sleep(1)
-        self.assertIn("450", self.browser.find_element(By.ID, "carTable").text)
-        self.assertNotIn("1 050", self.browser.find_element(By.ID, "carTable").text)
+        self.assertIn("450 kr/dag", self.browser.find_element(By.ID, "carTable").text)
+        self.assertNotIn("1 050 kr/dag", self.browser.find_element(By.ID, "carTable").text)
         menu = self.browser.find_element(By.ID, "dropDownMenuCars")
         
         menu.click()
         self.browser.find_element(By.CSS_SELECTOR, "#dropDownMenuCars option[value='products.html?car_type=big_car']").click()
         time.sleep(1)
-        self.assertIn("1 050", self.browser.find_element(By.ID, "carTable").text)
-        self.assertNotIn("450", self.browser.find_element(By.ID, "carTable").text)
+        self.assertIn("1 050 kr/dag", self.browser.find_element(By.ID, "carTable").text)
+        self.assertNotIn("450 kr/dag", self.browser.find_element(By.ID, "carTable").text)
+        
+    def testCheckCargo(self):
+        self.browser.get("http://localhost:8000/index.html")
+        card = self.browser.find_elements(By.CLASS_NAME, "categoryCard")[0]
+        card.click()
+        time.sleep(1)
+        self.assertIn("290L", self.browser.find_element(By.ID, "carTable").text)
+    
+    def testCheckBeds(self):
+        self.browser.get("http://localhost:8000/index.html")
+        card = self.browser.find_elements(By.CLASS_NAME, "categoryCard")[2]
+        card.click()
+        time.sleep(1)
+        self.assertIn("4st", self.browser.find_element(By.ID, "carTable").text)
+        
+    def testSortingByCargo(self):
+        self.browser.get("http://localhost:8000/index.html")
+        card = self.browser.find_elements(By.CLASS_NAME, "categoryCard")[0]
+        card.click()
+        time.sleep(1)
+        menu = self.browser.find_element(By.ID, "dropDownMenuSort")
+        
+        menu.click()
+        self.browser.find_element(By.CSS_SELECTOR, "#dropDownMenuSort option[value='cargo/bedsDesc']").click()
+        rows = self.browser.find_elements(By.CSS_SELECTOR, "#carTable tr")
+        firstCar = rows[0].find_elements(By.TAG_NAME, "td")[1]
+        self.assertEqual("351L", firstCar.text)
+        lastCar = rows[-1].find_elements(By.TAG_NAME, "td")[1]
+        self.assertEqual("3L", lastCar.text)
+
+        menu.click()
+        self.browser.find_element(By.CSS_SELECTOR, "#dropDownMenuSort option[value='cargo/bedsAsc']").click()
+        rows = self.browser.find_elements(By.CSS_SELECTOR, "#carTable tr")
+        firstCar = rows[0].find_elements(By.TAG_NAME, "td")[1]
+        self.assertEqual("3L", firstCar.text)
+        lastCar = rows[-1].find_elements(By.TAG_NAME, "td")[1]
+        self.assertEqual("351L", lastCar.text)
+        
 
 # this bit is here so that the tests are run when the file is run as a normal python-program
 if __name__ == "__main__":

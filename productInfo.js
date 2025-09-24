@@ -117,19 +117,45 @@ function loadSortPreference() {
 
 // Gets called from html with that pages array to then sort the table
 function sortTable() {
-  const VALUE = document.getElementById("dropDownMenuSort").value;
-  if (VALUE === "nameAsc") {
-    // Sort array by first element (name) in ascending order
-    carTableViewModel.sort((a, b) => a.car_name.localeCompare(b.car_name, 'sv', {'sensitivity': 'base'}));
-  } else if (VALUE === "nameDesc") {
-    // Sort array by first element (name) in descending order
-    carTableViewModel.sort((a, b) => b.car_name.localeCompare(a.car_name, 'sv', {'sensitivity': 'base'}));
-  } else if (VALUE === "priceAsc") {
-    // Sort array by second element (price) in ascending order
-    carTableViewModel.sort((a, b) => a.cost - b.cost);
-  } else if (VALUE === "priceDesc") {
-    // Sort array by second element (price) in descending order
-    carTableViewModel.sort((a, b) => b.cost - a.cost);
+  const SORT_BY_VALUE = document.getElementById("dropDownMenuSort").value;
+  switch(SORT_BY_VALUE) {
+    
+    case "nameAsc":
+      // Sort array by name in ascending order
+      carTableViewModel.sort((a, b) => a.car_name.localeCompare(b.car_name, 'sv', {'sensitivity': 'base'}));
+      break;
+    
+    case "nameDesc":
+      // Sort array by name in descending order
+      carTableViewModel.sort((a, b) => b.car_name.localeCompare(a.car_name, 'sv', {'sensitivity': 'base'}));
+      break;
+    
+    case "priceAsc":
+      // Sort array by price in ascending order
+      carTableViewModel.sort((a, b) => a.cost - b.cost);
+      break;
+    
+    case "priceDesc":
+      // Sort array by price in descending order
+      carTableViewModel.sort((a, b) => b.cost - a.cost);
+      break;
+    
+    case "cargo/bedsAsc":
+      // Sort array by cargo/beds in ascending order
+      if (STATE.carType == "caravan") {
+        carTableViewModel.sort((a, b) => a.beds - b.beds)
+      } else {
+        carTableViewModel.sort((a, b) => a.cargo_space - b.cargo_space)
+      }
+      break;
+    
+    case "cargo/bedsDesc":
+      // Sort array by cargo/beds in ascending order
+      if (STATE.carType == "caravan") {
+        carTableViewModel.sort((a, b) => b.beds - a.beds)
+      } else {
+        carTableViewModel.sort((a, b) => b.cargo_space - a.cargo_space)
+      }
   }
   render()
 };
@@ -155,10 +181,43 @@ function render() {
 
 // Creates the actual table with cars and their info
 function addTable() {
+  let sortCargoBedsAsc = document.querySelector("#dropDownMenuSort option[value='cargo/bedsAsc']")
+  let sortCargoBedsDesc = document.querySelector("#dropDownMenuSort option[value='cargo/bedsDesc']")
   let tableDiv = document.getElementById("cars");
   let table = document.createElement('TABLE');
+  const AMOUNT_OF_COLUMNS = 3
+
+  if (STATE.carType === "caravan") {
+    sortCargoBedsAsc.textContent = "Antal sängar stigande"
+    sortCargoBedsDesc.textContent = "Antal sängar fallande"
+  } else {
+    sortCargoBedsAsc.textContent = "Lastutrymme stigande"
+    sortCargoBedsDesc.textContent = "Lastutrymme fallande"
+  }
+
   table.setAttribute("id", "carTable");
   tableDiv.appendChild(table);
+
+  for (let i = 0; i < AMOUNT_OF_COLUMNS; i++) {
+    let th = document.createElement('TH');
+    switch(i) {
+      case 0:
+        th.textContent = "Bilmodell"
+        break;
+      
+      case 1:
+        if (STATE.carType === "caravan") {
+          th.textContent = "Antal sängar"
+        } else {
+          th.textContent = "Lastutrymme"
+        }
+        break;
+
+      case 2:
+        th.textContent = "Kostnad"
+    }
+    table.appendChild(th)
+  }
 
   // Loop through each row in the array
   for (let i = 0; i < carTableViewModel.length; i++) {
@@ -166,20 +225,31 @@ function addTable() {
     table.appendChild(tr);
 
     // Loop through each element (cell) in the current row
-    for (let j = 0; j < 2; j++) {
+    for (let j = 0; j < AMOUNT_OF_COLUMNS; j++) {
       let td = document.createElement('TD');
       let cell = null;
       switch(j) {
         case 0:
           cell = carTableViewModel[i].car_name;
+          td.className = "car"
           break;
 
         case 1:
+          if (STATE.carType === "caravan") {
+            cell = carTableViewModel[i].beds.toLocaleString("sv-SE") + "st";
+            td.className = "beds"
+          } else {
+            cell = carTableViewModel[i].cargo_space.toLocaleString("sv-SE") + "L";
+            td.className = "cargoSpace"
+          }
+          break;
+
+        case 2:
           cell = carTableViewModel[i].display_price.toLocaleString("sv-SE") + " kr/dag";
+          td.className = "price"
           break;
         }
       td.appendChild(document.createTextNode(cell));
-      td.className = (j === 0 ? 'car' : 'price'); // Assign class based on column index
       tr.appendChild(td);
     }
   }
