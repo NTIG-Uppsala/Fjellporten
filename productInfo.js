@@ -1,7 +1,16 @@
 document.addEventListener("DOMContentLoaded", () => {
+
+
+// === Constants and global variables === //
+
 const HTML_BODY = document.getElementById("body")
 const VAT_BUTTON = document.getElementById("VATButton");
 const DROPDOWN_MENU_SORT = document.getElementById("dropDownMenuSort")
+let VATRate = 0.25; // 25% VAT
+let carTableViewModel = [];
+
+
+// === State Management === //
 
 const STATE = {
   isVATFree: false,
@@ -10,9 +19,7 @@ const STATE = {
   carType: new URLSearchParams(document.location.search).get("car_type"),
 }
 
-let VATRate = 0.25; // 25% VAT
-
-let carTableViewModel = []
+// === Configuration for API === //
 
 // Creates headers for the http requests to the Supabase API
 const API_KEY = new Headers();
@@ -25,7 +32,7 @@ const REQUEST_OPTIONS = {
   redirect: "follow",
 };
 
-/* === Event Listeners === */
+// === Event Listeners === //
 
 VAT_BUTTON.addEventListener("click", () => {
   // Inverses isVATFree when the VAT button is pressed
@@ -42,7 +49,8 @@ DROPDOWN_MENU_SORT.addEventListener("change", (e) => {
   sortTable()
 });
 
-// Runs as soon as the page loads
+// === Initiation === //
+
 function init() {
   removeNoScriptClass()
   checkCookies()
@@ -55,40 +63,24 @@ function removeNoScriptClass() {
   HTML_BODY.classList.remove("noScript")
 }
 
+// === Data Handling === //
+
 // Gets data from the database
 function getData() {
-
   data = [];
-
-  fetch(window._env_.SUPABASE_URL, REQUEST_OPTIONS)
-    
+  fetch(window._env_.SUPABASE_URL, REQUEST_OPTIONS) 
     // Gets a response from the fetch
     .then((response) => response.text())
     .then((result) => {
       data = result;
-
       // Formats the data into a "list" of all cars and their info
       carsObj = JSON.parse(data);
-
       // Loops through every car in the "list" and adds them to the STATE object
       carsObj.forEach(car => {
         STATE.allCars.push(car)
       });
     })
     .catch((error) => console.error(error));
-}
-
-function updateViewModel() {
-  carTableViewModel = STATE.allCars.filter(isCorrectCarType)
-  carTableViewModel = carTableViewModel.map(car => ({
-    ...car,
-    display_price: STATE.isVATFree ? Math.round(car.cost/(1 + VATRate)) : car.cost,
-  }));
-  render()
-}
-
-function isCorrectCarType(element) {
-  return element.car_type === STATE.carType
 }
 
 // Waits until caravansArray has gotten data from the database and then sorts the table
@@ -102,6 +94,8 @@ function waitForData() {
   }
 }
 
+// === Cookies === //
+
 // Checks if prices should be shown with or without VAT by using a cookie
 function checkCookies() {
   let cookie = document.cookie;
@@ -110,6 +104,42 @@ function checkCookies() {
     updateViewModel() 
     VAT_BUTTON.checked = true;
   }
+}
+
+// === Sorting === //
+
+
+// Gets called from html with that pages array to then sort the table
+function sortTable() {
+  const VALUE = document.getElementById("dropDownMenuSort").value;
+  if (VALUE === "nameAsc") {
+    // Sort array by first element (name) in ascending order
+    carTableViewModel.sort((a, b) => a.car_name.localeCompare(b.car_name, 'sv', {'sensitivity': 'base'}));
+  } else if (VALUE === "nameDesc") {
+    // Sort array by first element (name) in descending order
+    carTableViewModel.sort((a, b) => b.car_name.localeCompare(a.car_name, 'sv', {'sensitivity': 'base'}));
+  } else if (VALUE === "priceAsc") {
+    // Sort array by second element (price) in ascending order
+    carTableViewModel.sort((a, b) => a.cost - b.cost);
+  } else if (VALUE === "priceDesc") {
+    // Sort array by second element (price) in descending order
+    carTableViewModel.sort((a, b) => b.cost - a.cost);
+  }
+  render()
+};
+
+// === View Model and Rendering === //
+function updateViewModel() {
+  carTableViewModel = STATE.allCars.filter(isCorrectCarType)
+  carTableViewModel = carTableViewModel.map(car => ({
+    ...car,
+    display_price: STATE.isVATFree ? Math.round(car.cost/(1 + VATRate)) : car.cost,
+  }));
+  render()
+}
+
+function isCorrectCarType(element) {
+  return element.car_type === STATE.carType
 }
 
 function render() {
@@ -154,26 +184,6 @@ function clearTable() {
   var table = document.getElementById('carTable');
   if (table) table.parentNode.removeChild(table);
 }
-
-// Gets called from html with that pages array to then sort the table
-function sortTable() {
-  const VALUE = document.getElementById("dropDownMenuSort").value;
-  if (VALUE === "nameAsc") {
-    // Sort array by first element (name) in ascending order
-    carTableViewModel.sort((a, b) => a.car_name.localeCompare(b.car_name, 'sv', {'sensitivity': 'base'}));
-  } else if (VALUE === "nameDesc") {
-    // Sort array by first element (name) in descending order
-    carTableViewModel.sort((a, b) => b.car_name.localeCompare(a.car_name, 'sv', {'sensitivity': 'base'}));
-  } else if (VALUE === "priceAsc") {
-    // Sort array by second element (price) in ascending order
-    carTableViewModel.sort((a, b) => a.cost - b.cost);
-  } else if (VALUE === "priceDesc") {
-    // Sort array by second element (price) in descending order
-    carTableViewModel.sort((a, b) => b.cost - a.cost);
-  }
-  render()
-};
-
 
 init();
 
