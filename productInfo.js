@@ -36,15 +36,17 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 VAT_BUTTON.addEventListener("click", () => {
-  // Inverses isVATFree when the VAT button is pressed
+  // Inverses isVATFree when the VAT button is pressed and updates localStorage
   STATE.isVATFree = !STATE.isVATFree;
   localStorage.setItem("VATFree", STATE.isVATFree ? "true" : "false");
   updateViewModel()
 });
 
 DROPDOWN_MENU_SORT.addEventListener("change", () => {
+  // Updates the sortBy state and then updates localStorage
   STATE.sortBy = DROPDOWN_MENU_SORT.value;
   localStorage.setItem("SortOption", STATE.sortBy);
+  syncHeaderState()
   sortTable()
 });
 
@@ -96,28 +98,104 @@ function waitForData() {
 
 // === LocalStorage === //
 
-// Checks if prices should be shown with or without VAT by using a cookie
+// Checks if prices should be shown with or without VAT by using localStorage
 function loadVATPreference() {
   STATE.isVATFree = localStorage.getItem("VATFree") === "true";
   VAT_BUTTON.checked = STATE.isVATFree;
   updateViewModel() 
 }
 
+// Checks what sorting method should be used using localStorage
 function loadSortPreference() {
   let sortOption = localStorage.getItem("SortOption");
   if (sortOption) {
     STATE.sortBy = sortOption;
     DROPDOWN_MENU_SORT.value = sortOption;
+
+    // Restore the header sort state
+    syncHeaderState()
+
     sortTable()
   }
 }
 
 // === Sorting === //
 
+let lastSortColumn = null;
+let lastSortDirection = "asc";
 
-// Gets called from html with that pages array to then sort the table
+function handleHeaderClick(column) {
+
+  // Inverses sorting direction if the already selected header is clicked, 
+  // otherwise it sets the sortDirection to ascending
+  if (lastSortColumn === column) {
+    lastSortDirection = (lastSortDirection === "asc") ? "desc" : "asc";
+  } else {
+    lastSortDirection = "asc";
+  }
+
+  // Updates lastSortColumn to the current one
+  lastSortColumn = column;
+
+  // Checks which column the table should be sorted by depending on the selected header
+  // and updates the sortBy state and localStorage
+  let newSortBy = "";
+  switch (column) {
+    case "name":
+      newSortBy = (lastSortDirection === "asc") ? "nameAsc" : "nameDesc";
+      break;
+    case "price":
+      newSortBy = (lastSortDirection === "asc") ? "priceAsc" : "priceDesc";
+      break;
+    case "cargo/beds":
+      newSortBy = (lastSortDirection === "asc") ? "cargo/bedsAsc" : "cargo/bedsDesc";
+      break;
+  }
+
+  STATE.sortBy = newSortBy;
+  DROPDOWN_MENU_SORT.value = STATE.sortBy;
+  localStorage.setItem("SortOption", STATE.sortBy);
+
+  // Sorts the table
+  sortTable();
+}
+
+function updateHeaderIndicators() {
+  document.querySelectorAll("th.sortable").forEach(th => {
+    th.classList.remove("sortedAsc", "sortedDesc");
+    
+    // Reset aria-sort
+    th.removeAttribute("aria-sort");
+
+    if (th.dataset.sort === lastSortColumn) {
+      
+      th.classList.add((lastSortDirection === "asc") ? "sortedAsc" : "sortedDesc");
+
+      // Add accessible hint
+      th.setAttribute("aria-sort", lastSortDirection === "asc" ? "ascending" : "descending");
+    } else {
+      th.setAttribute("aria-sort", "none");
+    }
+  });
+}
+
+function syncHeaderState() {
+  
+  // Synchronises the header indicators with the sort dropdown menu
+  if (STATE.sortBy.startsWith("name")) {
+    lastSortColumn = "name";
+    lastSortDirection = STATE.sortBy.endsWith("Asc") ? "asc" : "desc";
+  } else if (STATE.sortBy.startsWith("price")) {
+    lastSortColumn = "price";
+    lastSortDirection = STATE.sortBy.endsWith("Asc") ? "asc" : "desc";
+  } else if (STATE.sortBy.startsWith("cargo/beds")) {
+    lastSortColumn = "cargo/beds";
+    lastSortDirection = STATE.sortBy.endsWith("Asc") ? "asc" : "desc";
+  }
+}
+
 function sortTable() {
-  const SORT_BY_VALUE = document.getElementById("dropDownMenuSort").value;
+  const SORT_BY_VALUE = STATE.sortBy;
   switch(SORT_BY_VALUE) {
     
     case "nameAsc":
@@ -179,14 +257,27 @@ function render() {
   addTable()
 }
 
+// Completely clears the table into a clean state
+function clearTable() {
+  var table = document.getElementById('carTable');
+  if (table) table.parentNode.removeChild(table);
+}
+
 // Creates the actual table with cars and their info
 function addTable() {
+
+  // Gets the cargo/beds sort option so it can later change the text depending on STATE.carType
   let sortCargoBedsAsc = document.querySelector("#dropDownMenuSort option[value='cargo/bedsAsc']")
   let sortCargoBedsDesc = document.querySelector("#dropDownMenuSort option[value='cargo/bedsDesc']")
+
+  // Gets the tableDiv from html and creates a table to be in said div
   let tableDiv = document.getElementById("cars");
   let table = document.createElement('TABLE');
+
+  // Sets the amount of columns that should be present in the table
   const AMOUNT_OF_COLUMNS = 3
 
+  // Changes the textContent of the cargo/beds sort option depending on STATE.carType
   if (STATE.carType === "caravan") {
     sortCargoBedsAsc.textContent = "Antal sängar stigande"
     sortCargoBedsDesc.textContent = "Antal sängar fallande"
@@ -195,14 +286,23 @@ function addTable() {
     sortCargoBedsDesc.textContent = "Lastutrymme fallande"
   }
 
+  // Adds the carTable id to the actual car table and appends it as a child to the tableDiv
   table.setAttribute("id", "carTable");
   tableDiv.appendChild(table);
 
+  // Creates the table headers and gives them their respective sort methods
+  let headerRow = document.createElement('TR');
+  headerRow.setAttribute("id", "headerRow")
+  table.appendChild(headerRow);
+
   for (let i = 0; i < AMOUNT_OF_COLUMNS; i++) {
     let th = document.createElement('TH');
+    th.classList.add("sortable");
+
     switch(i) {
       case 0:
         th.textContent = "Bilmodell"
+        th.dataset.sort = "name";
         break;
       
       case 1:
@@ -211,12 +311,18 @@ function addTable() {
         } else {
           th.textContent = "Lastutrymme"
         }
+        th.dataset.sort = "cargo/beds";
         break;
 
       case 2:
         th.textContent = "Kostnad"
+        th.dataset.sort = "price";
     }
-    table.appendChild(th)
+
+    // Creates an event listener for every table header so that they can later be clicked to be sorted by
+    // and then appends the header to the headerRow
+    th.addEventListener("click", () => handleHeaderClick(th.dataset.sort));
+    headerRow.appendChild(th);
   }
 
   // Loop through each row in the array
@@ -251,12 +357,7 @@ function addTable() {
         }
       td.appendChild(document.createTextNode(cell));
       tr.appendChild(td);
+      updateHeaderIndicators();
     }
   }
-}
-
-// Completely clears the table into a clean state
-function clearTable() {
-  var table = document.getElementById('carTable');
-  if (table) table.parentNode.removeChild(table);
 }

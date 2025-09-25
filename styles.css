@@ -175,6 +175,22 @@ a {
   width: 60%;
 }
 
+th.sortable {
+  cursor: pointer;
+}
+
+th.sortable::after {
+  margin-left: 3px;
+  content: '\2195';
+}
+
+th.sortedAsc::after {
+  content: "\2191";
+}
+th.sortedDesc::after {
+  content: "\2193";
+}
+
 /* === Banner === */
 
 #banner {
