@@ -26,7 +26,7 @@
       </select>
     </div>
     <div id="controlPanel">
-      <p>Sortera efter:&nbsp;</p>
+      <h3>Sortera efter:&nbsp;</h3>
       <select id="dropDownMenuSort">
         <option value="nameAsc">Namn A-Ö</option>
         <option value="nameDesc">Namn Ö-A</option>
@@ -35,8 +35,20 @@
         <option value="priceAsc">Pris stigande</option>
         <option value="priceDesc">Pris fallande</option>
       </select>
-      <label for="VATButton">exkl. moms</label>
-      <input type="checkbox" id="VATButton">
+
+      <div class="priceInput">
+        <h3>Prisintervall</h3>
+        <div class="field">
+          <input type="number" id="inputMin" placeholder="Min pris">
+          <div class="separator">-</div>
+          <input type="number" id="inputMax" placeholder="Max pris">
+        </div>
+      </div>
+      <div class="VAT">
+        <label for="VATButton">exkl. moms</label>
+        <input type="checkbox" id="VATButton">
+      </div>
+
     </div>
     <div id="cars">
     </div>

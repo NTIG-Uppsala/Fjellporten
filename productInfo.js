@@ -1,11 +1,10 @@
 // === Constants and global variables === //
 
-const HTML_BODY = document.getElementById("body")
+const HTML_BODY = document.getElementById("body");
 const VAT_BUTTON = document.getElementById("VATButton");
-const DROPDOWN_MENU_SORT = document.getElementById("dropDownMenuSort")
+const DROPDOWN_MENU_SORT = document.getElementById("dropDownMenuSort");
 let VATRate = 0.25; // 25% VAT
 let carTableViewModel = [];
-
 
 // === State Management === //
 
@@ -14,15 +13,15 @@ const STATE = {
   sortBy: "nameAsc",
   allCars: [],
   carType: new URLSearchParams(document.location.search).get("car_type"),
-}
+  minPrice: 0,
+  maxPrice: Infinity,
+};
 
 // === Configuration for API === //
 
-// Creates headers for the http requests to the Supabase API
 const API_KEY = new Headers();
 API_KEY.append("apikey", window._env_.SUPABASE_ANON_KEY);
 
-// Creates request options to get information from the database
 const REQUEST_OPTIONS = {
   method: "GET",
   headers: API_KEY,
@@ -39,7 +38,7 @@ VAT_BUTTON.addEventListener("click", () => {
   // Inverses isVATFree when the VAT button is pressed and updates localStorage
   STATE.isVATFree = !STATE.isVATFree;
   localStorage.setItem("VATFree", STATE.isVATFree ? "true" : "false");
-  updateViewModel()
+  updateViewModel();
 });
 
 DROPDOWN_MENU_SORT.addEventListener("change", () => {
@@ -53,46 +52,37 @@ DROPDOWN_MENU_SORT.addEventListener("change", () => {
 // === Initiation === //
 
 function init() {
-  removeNoScriptClass()
-  loadVATPreference()
-  loadSortPreference()
-  getData()
-  waitForData()
+  removeNoScriptClass();
+  loadVATPreference();
+  loadSortPreference();
+  getData();
+  attachPriceInputListener();
+  waitForData();
 }
 
 function removeNoScriptClass() {
-  HTML_BODY.classList.remove("noScript")
+  HTML_BODY.classList.remove("noScript");
 }
 
 // === Data Handling === //
 
-// Gets data from the database
 function getData() {
-  data = [];
-  fetch(window._env_.SUPABASE_URL, REQUEST_OPTIONS) 
-    // Gets a response from the fetch
+  fetch(window._env_.SUPABASE_URL, REQUEST_OPTIONS)
     .then((response) => response.text())
     .then((result) => {
-      data = result;
-      // Formats the data into a "list" of all cars and their info
-      carsObj = JSON.parse(data);
-      // Loops through every car in the "list" and adds them to the STATE object
-      carsObj.forEach(car => {
-        STATE.allCars.push(car)
-      });
+      const CARS_OBJ = JSON.parse(result);
+      CARS_OBJ.forEach(car => STATE.allCars.push(car));
     })
     .catch((error) => console.error(error));
 }
 
-// Waits until caravansArray has gotten data from the database and then sorts the table
 function waitForData() {
   if (STATE.allCars.length === 0) {
-    setTimeout(() => {
-      waitForData()
-    }, 10);
+    setTimeout(waitForData, 10);
   } else {
-      updateViewModel()
-      sortTable()
+    setPriceDefaults();
+    updateViewModel();
+    sortTable();
   }
 }
 
@@ -102,15 +92,15 @@ function waitForData() {
 function loadVATPreference() {
   STATE.isVATFree = localStorage.getItem("VATFree") === "true";
   VAT_BUTTON.checked = STATE.isVATFree;
-  updateViewModel() 
+  updateViewModel();
 }
 
 // Checks what sorting method should be used using localStorage
 function loadSortPreference() {
-  let sortOption = localStorage.getItem("SortOption");
-  if (sortOption) {
-    STATE.sortBy = sortOption;
-    DROPDOWN_MENU_SORT.value = sortOption;
+  const SORT_OPTION = localStorage.getItem("SortOption");
+  if (SORT_OPTION) {
+    STATE.sortBy = SORT_OPTION;
+    DROPDOWN_MENU_SORT.value = SORT_OPTION;
 
     // Restore the header sort state
     syncHeaderState()
@@ -199,62 +189,85 @@ function sortTable() {
   switch(SORT_BY_VALUE) {
     
     case "nameAsc":
-      // Sort array by name in ascending order
       carTableViewModel.sort((a, b) => a.car_name.localeCompare(b.car_name, 'sv', {'sensitivity': 'base'}));
       break;
-    
     case "nameDesc":
-      // Sort array by name in descending order
       carTableViewModel.sort((a, b) => b.car_name.localeCompare(a.car_name, 'sv', {'sensitivity': 'base'}));
       break;
-    
     case "priceAsc":
-      // Sort array by price in ascending order
       carTableViewModel.sort((a, b) => a.cost - b.cost);
       break;
-    
     case "priceDesc":
-      // Sort array by price in descending order
       carTableViewModel.sort((a, b) => b.cost - a.cost);
       break;
-    
     case "cargo/bedsAsc":
-      // Sort array by cargo/beds in ascending order
-      if (STATE.carType == "caravan") {
-        carTableViewModel.sort((a, b) => a.beds - b.beds)
-      } else {
-        carTableViewModel.sort((a, b) => a.cargo_space - b.cargo_space)
-      }
+      if (STATE.carType === "caravan") carTableViewModel.sort((a, b) => a.beds - b.beds);
+      else carTableViewModel.sort((a, b) => a.cargo_space - b.cargo_space);
       break;
-    
     case "cargo/bedsDesc":
-      // Sort array by cargo/beds in ascending order
-      if (STATE.carType == "caravan") {
-        carTableViewModel.sort((a, b) => b.beds - a.beds)
-      } else {
-        carTableViewModel.sort((a, b) => b.cargo_space - a.cargo_space)
-      }
+      if (STATE.carType === "caravan") carTableViewModel.sort((a, b) => b.beds - a.beds);
+      else carTableViewModel.sort((a, b) => b.cargo_space - a.cargo_space);
+      break;
   }
-  render()
-};
+  render();
+}
+
+// === Price Range Dropdown === //
+
+function attachPriceInputListener() {
+  const PRICE_INPUT = document.querySelectorAll(".priceInput input");
+
+  // Update STATE and trigger updateViewModel
+  PRICE_INPUT.forEach(input => {
+    input.addEventListener("input", () => {
+      STATE.minPrice = parseInt(PRICE_INPUT[0].value) || 0;
+      STATE.maxPrice = parseInt(PRICE_INPUT[1].value) || Infinity;
+      updateViewModel(); 
+    });
+  });
+}
+
+// Sets the default minimum and maximum prices in the price range
+function setPriceDefaults() {
+  if (STATE.allCars.length === 0) return;
+
+  const MAX_CAR_PRICE = Math.max(...STATE.allCars.map(car => car.cost));
+  const PRICE_INPUTS = document.querySelectorAll(".priceInput input");
+
+  PRICE_INPUTS[0].value = 0;
+  PRICE_INPUTS[1].value = MAX_CAR_PRICE;
+
+  STATE.minPrice = 0;
+  STATE.maxPrice = MAX_CAR_PRICE;
+}
 
 // === View Model and Rendering === //
+
 function updateViewModel() {
-  carTableViewModel = STATE.allCars.filter(isCorrectCarType)
-  carTableViewModel = carTableViewModel.map(car => ({
-    ...car,
-    display_price: STATE.isVATFree ? Math.round(car.cost/(1 + VATRate)) : car.cost,
-  }));
-  sortTable()
+  carTableViewModel = STATE.allCars
+
+    // Filters based on if the car is the correct type or not
+    .filter(isCorrectCarType)
+
+    // Adds display_price to every filtered car
+    .map(car => ({
+      ...car,
+      display_price: STATE.isVATFree ? Math.round(car.cost / (1 + VATRate)) : car.cost,
+    }))
+
+    // Filters based on if the car is within the price range or not
+    .filter(car => car.display_price >= STATE.minPrice && car.display_price <= STATE.maxPrice)
+    
+  sortTable();
 }
 
 function isCorrectCarType(element) {
-  return element.car_type === STATE.carType
+  return element.car_type === STATE.carType;
 }
 
 function render() {
-  clearTable()
-  addTable()
+  clearTable();
+  addTable();
 }
 
 // Completely clears the table into a clean state
@@ -279,11 +292,11 @@ function addTable() {
 
   // Changes the textContent of the cargo/beds sort option depending on STATE.carType
   if (STATE.carType === "caravan") {
-    sortCargoBedsAsc.textContent = "Antal sängar stigande"
-    sortCargoBedsDesc.textContent = "Antal sängar fallande"
+    sortCargoBedsAsc.textContent = "Antal sängar stigande";
+    sortCargoBedsDesc.textContent = "Antal sängar fallande";
   } else {
-    sortCargoBedsAsc.textContent = "Lastutrymme stigande"
-    sortCargoBedsDesc.textContent = "Lastutrymme fallande"
+    sortCargoBedsAsc.textContent = "Lastutrymme stigande";
+    sortCargoBedsDesc.textContent = "Lastutrymme fallande";
   }
 
   // Adds the carTable id to the actual car table and appends it as a child to the tableDiv
@@ -306,11 +319,7 @@ function addTable() {
         break;
       
       case 1:
-        if (STATE.carType === "caravan") {
-          th.textContent = "Antal sängar"
-        } else {
-          th.textContent = "Lastutrymme"
-        }
+        th.textContent = STATE.carType === "caravan" ? "Antal sängar" : "Lastutrymme";
         th.dataset.sort = "cargo/beds";
         break;
 
@@ -325,39 +334,36 @@ function addTable() {
     headerRow.appendChild(th);
   }
 
-  // Loop through each row in the array
-  for (let i = 0; i < carTableViewModel.length; i++) {
-    let tr = document.createElement('TR');
-    table.appendChild(tr);
+  carTableViewModel.forEach(car => {
+    const TR = document.createElement('TR');
+    table.appendChild(TR);
 
-    // Loop through each element (cell) in the current row
     for (let j = 0; j < AMOUNT_OF_COLUMNS; j++) {
-      let td = document.createElement('TD');
-      let cell = null;
+      const TD = document.createElement('TD');
+      let cell;
       switch(j) {
-        case 0:
-          cell = carTableViewModel[i].car_name;
-          td.className = "car"
-          break;
-
+        case 0: cell = car.car_name; TD.className = "car"; break;
         case 1:
           if (STATE.carType === "caravan") {
-            cell = carTableViewModel[i].beds.toLocaleString("sv-SE") + "st";
-            td.className = "beds"
+            cell = car.beds.toLocaleString("sv-SE") + "st";
+            TD.className = "beds";
           } else {
-            cell = carTableViewModel[i].cargo_space.toLocaleString("sv-SE") + "L";
-            td.className = "cargoSpace"
+            cell = car.cargo_space.toLocaleString("sv-SE") + "L";
+            TD.className = "cargoSpace";
           }
           break;
-
-        case 2:
-          cell = carTableViewModel[i].display_price.toLocaleString("sv-SE") + " kr/dag";
-          td.className = "price"
-          break;
-        }
-      td.appendChild(document.createTextNode(cell));
-      tr.appendChild(td);
+        case 2: cell = car.display_price.toLocaleString("sv-SE") + " kr/dag"; 
+        TD.className = "price"; 
+        break;
+      }
+      TD.appendChild(document.createTextNode(cell));
+      TR.appendChild(TD);
       updateHeaderIndicators();
     }
-  }
+  });
+}
+
+function clearTable() {
+  const TABLE = document.getElementById('carTable');
+  if (TABLE) TABLE.parentNode.removeChild(TABLE);
 }

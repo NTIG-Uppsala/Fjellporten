@@ -5,7 +5,7 @@ from selenium.webdriver.chrome.options import Options
 import time
 
 # settings for how tests are run
-doNotCloseBrowser = False  # if true the browser stays open after tests are done
+doNotCloseBrowser = True  # if true the browser stays open after tests are done
 hideWindow = not (doNotCloseBrowser)  # shows browser while tests are running
 
 
@@ -202,6 +202,35 @@ class TestProductPage(TestCase):
         self.assertEqual("2 400 kr/dag", firstPrice.text)
         lastPrice = rows[-1].find_elements(By.TAG_NAME, "td")[2]
         self.assertEqual("321 kr/dag", lastPrice.text)
+
+    def testPriceRangeFilter(self):
+        self.browser.get("http://localhost:8000/products.html?car_type=caravan")
+        time.sleep(1)
+
+        headerRow = self.browser.find_element(By.ID, "headerRow")
+        carCostHeader = headerRow.find_elements(By.TAG_NAME, "th")[2]
+        carCostHeader.click()
+
+        rows = self.browser.find_elements(By.CSS_SELECTOR, "#carTable tr")
+        firstPrice = rows[1].find_elements(By.TAG_NAME, "td")[2]
+        self.assertEqual("321 kr/dag", firstPrice.text)
+        lastPrice = rows[-1].find_elements(By.TAG_NAME, "td")[2]
+        self.assertEqual("2 400 kr/dag", lastPrice.text)
+
+        dropDownToggle = self.browser.find_element(By.CSS_SELECTOR, ".dropDownToggle")
+        dropDownToggle.click()
+        inputMin = self.browser.find_element(By.ID, "inputMin")
+        inputMax = self.browser.find_element(By.ID, "inputMax")
+        inputMin.clear()
+        inputMax.clear()
+        inputMin.send_keys(500)
+        inputMax.send_keys(2000)
+        
+        rows = self.browser.find_elements(By.CSS_SELECTOR, "#carTable tr")
+        firstPrice = rows[1].find_elements(By.TAG_NAME, "td")[2]
+        self.assertEqual("1 400 kr/dag", firstPrice.text)
+        lastPrice = rows[-1].find_elements(By.TAG_NAME, "td")[2]
+        self.assertEqual("1 900 kr/dag", lastPrice.text)
         
 
 # this bit is here so that the tests are run when the file is run as a normal python-program
