@@ -4,9 +4,6 @@ import time
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
-options = Options()
-# options.add_argument()
-
 resolutions = [
     (2560, 1440),
     (1920, 1080),
@@ -21,6 +18,9 @@ urls = [
     "http://localhost:8000/index.html",
     "http://localhost:8000/staff.html",
 ]
+
+options = Options()
+# options.add_argument()
 
 driver = webdriver.Chrome(options=options)
 
