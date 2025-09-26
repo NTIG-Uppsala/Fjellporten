@@ -149,18 +149,15 @@ a {
 #controlPanel * {
   margin: 5px 5px;
 }
+#controlPanel input {
+  margin: 5px 0;
+}
 
 /* === Price Range === */
 
-.priceInput { 
-  display: flex; 
-  flex-direction: column;
-  margin: 10px 0; 
-}
-
 .priceInput .field { 
   display: flex; 
-  width: 13rem; 
+  width: 14rem; 
   height: 30px; 
   align-items: center; 
 }
@@ -171,7 +168,7 @@ a {
   outline: none; 
   font-size: 16px; 
   margin-left: 10px; 
-  border-radius: 5px; 
+  border-radius: 5px;
   text-align: center; 
   border: 1px solid #999; 
 }
@@ -184,6 +181,10 @@ a {
   justify-content: center; 
 }
 
+.priceInput p {
+  font-size: larger;
+}
+
 /* === Tables === */
 
 #carTable {
@@ -193,20 +194,7 @@ a {
 
 #carTable th {
   font-size: larger;
-  padding: 0 0.3rem;
-}
-
-#carTable td {
-  border: black 1px solid;
-  padding: 5px 10px;
-}
-
-#carTable tr:nth-child(2n) {
-  background-color: #ebf4f5;
-}
-
-.car {
-  width: 60%;
+  padding: 0 0.1rem;
 }
 
 th.sortable {
@@ -223,6 +211,19 @@ th.sortedAsc::after {
 }
 th.sortedDesc::after {
   content: "\2193";
+}
+
+#carTable td {
+  border: black 1px solid;
+  padding: 5px 10px;
+}
+
+#carTable tr:nth-child(2n) {
+  background-color: #ebf4f5;
+}
+
+.car {
+  width: 60%;
 }
 
 /* === Banner === */

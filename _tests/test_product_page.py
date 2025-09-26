@@ -5,7 +5,7 @@ from selenium.webdriver.chrome.options import Options
 import time
 
 # settings for how tests are run
-doNotCloseBrowser = True  # if true the browser stays open after tests are done
+doNotCloseBrowser = False  # if true the browser stays open after tests are done
 hideWindow = not (doNotCloseBrowser)  # shows browser while tests are running
 
 
@@ -217,8 +217,6 @@ class TestProductPage(TestCase):
         lastPrice = rows[-1].find_elements(By.TAG_NAME, "td")[2]
         self.assertEqual("2 400 kr/dag", lastPrice.text)
 
-        dropDownToggle = self.browser.find_element(By.CSS_SELECTOR, ".dropDownToggle")
-        dropDownToggle.click()
         inputMin = self.browser.find_element(By.ID, "inputMin")
         inputMax = self.browser.find_element(By.ID, "inputMax")
         inputMin.clear()
