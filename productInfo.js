@@ -154,14 +154,15 @@ function updateHeaderIndicators() {
   document.querySelectorAll("th.sortable").forEach(th => {
     th.classList.remove("sortedAsc", "sortedDesc");
     
-    // Reset aria-sort
+    // Reset the aria-sort attribute
     th.removeAttribute("aria-sort");
 
     if (th.dataset.sort === lastSortColumn) {
       
       th.classList.add((lastSortDirection === "asc") ? "sortedAsc" : "sortedDesc");
 
-      // Add accessible hint
+      // Add aria-sort attribute and either set its value depending on if the column is the sorted 
+      // column or not and what direction the sorted column is getting sorted in
       th.setAttribute("aria-sort", lastSortDirection === "asc" ? "ascending" : "descending");
     } else {
       th.setAttribute("aria-sort", "none");
@@ -212,7 +213,7 @@ function sortTable() {
   render();
 }
 
-// === Price Range Dropdown === //
+// === Price Range === //
 
 function attachPriceInputListener() {
   const PRICE_INPUT = document.querySelectorAll(".priceInput input");
@@ -221,7 +222,14 @@ function attachPriceInputListener() {
   PRICE_INPUT.forEach(input => {
     input.addEventListener("input", () => {
       STATE.minPrice = parseInt(PRICE_INPUT[0].value) || 0;
-      STATE.maxPrice = parseInt(PRICE_INPUT[1].value) || Infinity;
+      STATE.maxPrice = parseInt(PRICE_INPUT[1].value) !== NaN ?  parseInt(PRICE_INPUT[1].value) : Infinity;
+      console.log(STATE.minPrice, STATE.maxPrice)
+      if (STATE.minPrice < 0) {
+        PRICE_INPUT[0].value = 0
+      }
+      if (STATE.minPrice > STATE.maxPrice) {
+        PRICE_INPUT[1].value = STATE.minPrice
+      }
       updateViewModel(); 
     });
   });
@@ -234,11 +242,11 @@ function setPriceDefaults() {
   const MAX_CAR_PRICE = Math.max(...STATE.allCars.map(car => car.cost));
   const PRICE_INPUTS = document.querySelectorAll(".priceInput input");
 
-  PRICE_INPUTS[0].value = 0;
-  PRICE_INPUTS[1].value = MAX_CAR_PRICE;
-
   STATE.minPrice = 0;
   STATE.maxPrice = MAX_CAR_PRICE;
+
+  PRICE_INPUTS[0].value = STATE.minPrice;
+  PRICE_INPUTS[1].value = STATE.maxPrice;
 }
 
 // === View Model and Rendering === //
