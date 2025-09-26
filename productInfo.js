@@ -223,7 +223,6 @@ function attachPriceInputListener() {
     input.addEventListener("input", () => {
       STATE.minPrice = parseInt(PRICE_INPUT[0].value) || 0;
       STATE.maxPrice = parseInt(PRICE_INPUT[1].value) !== NaN ?  parseInt(PRICE_INPUT[1].value) : Infinity;
-      console.log(STATE.minPrice, STATE.maxPrice)
       if (STATE.minPrice < 0) {
         PRICE_INPUT[0].value = 0
       }
