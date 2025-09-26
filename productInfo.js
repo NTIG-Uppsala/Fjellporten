@@ -80,8 +80,8 @@ function waitForData() {
   if (STATE.allCars.length === 0) {
     setTimeout(waitForData, 10);
   } else {
-    setPriceDefaults();
     updateViewModel();
+    setPriceDefaults();
     sortTable();
   }
 }
@@ -224,10 +224,10 @@ function attachPriceInputListener() {
       STATE.minPrice = parseInt(PRICE_INPUT[0].value) || 0;
       STATE.maxPrice = (isNaN(parseInt(PRICE_INPUT[1].value)) ? Infinity : parseInt(PRICE_INPUT[1].value));
       if (STATE.minPrice < 0) {
-        PRICE_INPUT[0].value = 0
+        PRICE_INPUT[0].value = 0;
       }
       if (STATE.minPrice > STATE.maxPrice) {
-        PRICE_INPUT[1].value = STATE.minPrice
+        PRICE_INPUT[1].value = STATE.minPrice;
       }
       updateViewModel(); 
     });
@@ -238,7 +238,7 @@ function attachPriceInputListener() {
 function setPriceDefaults() {
   if (STATE.allCars.length === 0) return;
 
-  const MAX_CAR_PRICE = Math.max(...STATE.allCars.map(car => car.cost));
+  const MAX_CAR_PRICE = Math.ceil((Math.max(...carTableViewModel.map(car => car.cost)))/1000)*1000;
   const PRICE_INPUTS = document.querySelectorAll(".priceInput input");
 
   STATE.minPrice = 0;
