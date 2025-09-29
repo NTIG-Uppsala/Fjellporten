@@ -28,7 +28,7 @@ driver = webdriver.Chrome(options=options)
 screenshot_dir = "screenshots"
 os.makedirs(screenshot_dir, exist_ok=True)
 
-def take_Screenshot(url, resolution):
+def takeScreenshot(url, resolution):
     width, height = resolution 
     driver.set_window_size(width, height)
     driver.get(url)
@@ -52,6 +52,6 @@ def take_Screenshot(url, resolution):
 
 for url in urls:
     for resolution in resolutions:
-        take_Screenshot(url, resolution)
+        takeScreenshot(url, resolution)
 
 driver.quit()
