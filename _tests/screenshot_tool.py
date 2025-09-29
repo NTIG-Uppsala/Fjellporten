@@ -25,8 +25,8 @@ options = Options()
 driver = webdriver.Chrome(options=options)
 
 # Directory where screenshots are saved
-screenshot_dir = "screenshots"
-os.makedirs(screenshot_dir, exist_ok=True)
+screenshotDir = "screenshots"
+os.makedirs(screenshotDir, existOk=True)
 
 def takeScreenshot(url, resolution):
     width, height = resolution 
@@ -35,20 +35,20 @@ def takeScreenshot(url, resolution):
     time.sleep(1)
 
     # Takes the page name from the url
-    page_name = url.split("/")[-1].split("?")[0].replace(".html", "")
+    pageName = url.split("/")[-1].split("?")[0].replace(".html", "")
     # Searches the url for a "car_type" paramater and captures it's value
-    car_type = re.search(r"car_type=([\w_]+)", url)
+    carType = re.search(r"car_type=([\w_]+)", url)
     # Add "_car_type" if found in the URL, and nothing if "_car_type" isnt found in the URL
-    car_type_str = f"_{car_type.group(1)}" if car_type else ""
+    carTypeStr = f"_{carType.group(1)}" if carType else ""
 
     # Puts the file name together
-    filename = f"screenshot_{page_name}{car_type_str}_{width}x{height}.png"
+    fileName = f"screenshot_{pageName}{carTypeStr}_{width}x{height}.png"
     # Puts the directory and filename in the same variable
-    filepath = os.path.join(screenshot_dir, filename)
+    filePath = os.path.join(screenshotDir, fileName)
 
     # Creates and saves file in the screenshots directory  
-    driver.save_screenshot(filepath)
-    print(f"Saved {filepath}")
+    driver.save_screenshot(filePath)
+    print(f"Saved {filePath}")
 
 for url in urls:
     for resolution in resolutions:
