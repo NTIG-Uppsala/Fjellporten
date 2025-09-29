@@ -34,13 +34,19 @@ def take_Screenshot(url, resolution):
     driver.get(url)
     time.sleep(1)
 
+    # Takes the page name from the url
     page_name = url.split("/")[-1].split("?")[0].replace(".html", "")
+    # Searches the url for a "car_type" paramater and captures it's value
     car_type = re.search(r"car_type=([\w_]+)", url)
+    # Add "_car_type" if found in the URL, and nothing if "_car_type" isnt found in the URL
     car_type_str = f"_{car_type.group(1)}" if car_type else ""
 
+    # Puts the file name together
     filename = f"screenshot_{page_name}{car_type_str}_{width}x{height}.png"
+    # Puts the directory and filename in the same variable
     filepath = os.path.join(screenshot_dir, filename)
 
+    # Creates and saves file in the screenshots directory  
     driver.save_screenshot(filepath)
     print(f"Saved {filepath}")
 
