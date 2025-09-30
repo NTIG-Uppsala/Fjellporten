@@ -216,13 +216,13 @@ class TestProductPage(TestCase):
         self.assertEqual("321 kr/dag", firstPrice.text)
         lastPrice = rows[-1].find_elements(By.TAG_NAME, "td")[2]
         self.assertEqual("2 400 kr/dag", lastPrice.text)
-
-        inputMin = self.browser.find_element(By.ID, "inputMin")
+        
         inputMax = self.browser.find_element(By.ID, "inputMax")
-        inputMin.clear()
         inputMax.clear()
-        inputMin.send_keys(500)
         inputMax.send_keys(2000)
+        inputMin = self.browser.find_element(By.ID, "inputMin")
+        inputMin.clear()
+        inputMin.send_keys(500)
         
         rows = self.browser.find_elements(By.CSS_SELECTOR, "#carTable tr")
         firstPrice = rows[1].find_elements(By.TAG_NAME, "td")[2]
