@@ -26,7 +26,7 @@ driver = webdriver.Chrome(options=options)
 
 # Directory where screenshots are saved
 screenshotDir = "screenshots"
-os.makedirs(screenshotDir, existOk=True)
+os.makedirs(screenshotDir, exist_ok=True)
 
 def takeScreenshot(url, resolution):
     width, height = resolution 
