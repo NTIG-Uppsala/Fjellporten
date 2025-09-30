@@ -226,8 +226,11 @@ function attachPriceInputListener() {
       if (STATE.minPrice < 0) {
         PRICE_INPUT[0].value = 0;
       }
+      if (STATE.maxPrice < 0) {
+        PRICE_INPUT[1].value = 0;
+      }
       if (STATE.minPrice > STATE.maxPrice) {
-        STATE.maxPrice = Infinity
+        STATE.maxPrice = Infinity;
       }
       updateViewModel(); 
     });
