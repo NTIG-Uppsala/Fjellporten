@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="sv">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adminpanel</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div id="loginForm">
+        <h1>Logga in</h1>
+
+        <form method="POST" action="/admin/login">
+            <label>Användarnamn:</label>
+            <input type="text" name="username" required <%=focus==='username' ? 'autofocus' : '' %> value="<%= username
+                %>"><br>
+
+                <label>Lösenord:</label>
+                <input type="password" name="password" required <%=focus==='password' ? 'autofocus' : '' %>><br>
+                <span style="color: red;">
+                    <%= error %>
+                </span><br>
+                <input type="submit" value="Logga in">
+        </form>
+    </div>
+</body>
+
+</html>
