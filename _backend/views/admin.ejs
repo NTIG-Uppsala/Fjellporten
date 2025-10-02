@@ -1,63 +1,94 @@
 <!DOCTYPE html>
-<html>
+<html lang="sv">
+
 <head>
-  <title>Fjellporten adminpanel</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adminpanel</title>
+  <link rel="stylesheet" href="panel_styles.css">
 </head>
+
 <body>
   <h1>Alla Bilar</h1>
 
-  <!-- Lista alla bilar -->
-  <ul>
-    <% if (cars && cars.length > 0) { %>
-      <% cars.forEach(car => { %>
-        <li>
-          <strong><%= car.car_name %></strong> 
-          (<%= car.car_type %>) 
-          <% if (car.car_type !== 'caravan') { %>
-            - Lastutrymme: <%= car.cargo_space %>L
-          <% } %>
-          <% if (car.car_type === 'caravan') { %>
-            - Sängar: <%= car.beds %>st
-          <% } %>
-          - Kostnad: <%= car.cost %> kr/dag
+  <% if (errorMessage) { %>
+    <div class="errorMessage"><%= errorMessage %></div>
+  <% } %>
 
-          <!-- Edit button -->
-          <button class="editBtn" data-id="<%= car.id %>">Redigera</button>
+  <table>
+    <thead>
+      <tr>
+        <th>Bilmodell</th>
+        <th>Typ</th>
+        <th>Info</th>
+        <th>Kostnad</th>
+        <th>Redigera</th>
+        <th>Ta bort</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if (cars && cars.length > 0) { %>
+        <% cars.forEach(car => { %>
+          <tr>
+            <td><strong><%= car.car_name %></strong></td>
+            <td>
+              <% const typeNames = { small_car: 'Liten bil', big_car: 'Stor bil', caravan: 'Husbil' }; %>
+              <%= typeNames[car.car_type] %>
+            </td>
+            <td>
+              <% if (car.car_type !== 'caravan') { %>
+                Lastutrymme: <%= car.cargo_space %>L
+              <% } else { %>
+                Sängar: <%= car.beds %>st
+              <% } %>
+            </td>
+            <td><%= car.cost %> kr/dag</td>
+            <td><button class="editBtn" data-id="<%= car.id %>">Redigera</button></td>
+            <td>
+              <form action="/delete-car" method="POST" style="display:inline;">
+                <input type="hidden" name="id" value="<%= car.id %>">
+                <button type="submit" onclick="return confirm('Är du säker på att du vill ta bort denna bil?')">Ta bort</button>
+              </form>
+            </td>
+          </tr>
 
-          <!-- Edit form (hidden initially) -->
-          <form id="editForm-<%= car.id %>" action="/edit-car" method="POST" style="display:none; margin-top:5px;">
-            <input type="hidden" name="id" value="<%= car.id %>">
-            <select name="car_type" required>
-                <option value="small_car" <%= car.car_type === 'small_car' ? 'selected' : '' %>>Liten bil</option>
-                <option value="big_car" <%= car.car_type === 'big_car' ? 'selected' : '' %>>Stor bil</option>
-                <option value="caravan" <%= car.car_type === 'caravan' ? 'selected' : '' %>>Husbil</option>
-            <input type="text" name="car_name" value="<%= car.car_name %>" required placeholder="Bilmodell">
-            <input type="number" name="cargo_space" value="<%= car.cargo_space != null ? car.cargo_space : '' %>" placeholder="Lastutrymme">
-            <input type="number" name="beds" value="<%= car.beds != null ? car.beds : '' %>" placeholder="Sängar">
-            <input type="number" name="cost" value="<%= car.cost != null ? car.cost : '' %>" placeholder="Kostnad/dag">
-            <button type="submit">Spara</button>
-            <button type="button" class="cancel-btn" data-id="<%= car.id %>">Avbryt</button>
-          </form>
+          <!-- Edit row -->
+          <tr id="editRow-<%= car.id %>" class="editRow">
+            <td colspan="6">
+              <form action="/edit-car" method="POST">
+                <input type="hidden" name="id" value="<%= car.id %>">
 
-          <!-- Delete button -->
-          <form action="/delete-car" method="POST" style="display:inline;">
-            <input type="hidden" name="id" value="<%= car.id %>">
-            <button type="submit" onclick="return confirm('Är du säker på att du vill ta bort denna bil?')">Ta bort</button>
-          </form>
-        </li>
-      <% }) %>
-    <% } else { %>
-      <li>Inga bilar hittades</li>
-    <% } %>
-  </ul>
+                <select name="car_type" required>
+                  <option value="small_car" <%= car.car_type === 'small_car' ? 'selected' : '' %>>Liten bil</option>
+                  <option value="big_car" <%= car.car_type === 'big_car' ? 'selected' : '' %>>Stor bil</option>
+                  <option value="caravan" <%= car.car_type === 'caravan' ? 'selected' : '' %>>Husbil</option>
+                </select>
+
+                <input type="text" name="car_name" value="<%= car.car_name %>" required placeholder="Bilmodell">
+                <input type="number" name="cargo_space" value="<%= car.cargo_space != null ? car.cargo_space : '' %>" placeholder="Lastutrymme">
+                <input type="number" name="beds" value="<%= car.beds != null ? car.beds : '' %>" placeholder="Sängar">
+                <input type="number" name="cost" value="<%= car.cost != null ? car.cost : '' %>" placeholder="Kostnad/dag">
+
+                <button type="submit">Spara</button>
+                <button type="button" class="cancelBtn" data-id="<%= car.id %>">Avbryt</button>
+              </form>
+            </td>
+          </tr>
+        <% }) %>
+      <% } else { %>
+        <tr><td colspan="6">Inga bilar hittades</td></tr>
+      <% } %>
+    </tbody>
+  </table>
 
   <!-- Lägg till ny bil -->
   <h2>Lägg till en ny bil</h2>
   <form action="/add-car" method="POST">
-    <select name="car_type" placeholder="Biltyp" required>
-        <option value="small_car">Liten bil</option>
-        <option value="big_car">Stor bil</option>
-        <option value="caravan">Husbil</option>
+    <select name="car_type" required>
+      <option value="small_car">Liten bil</option>
+      <option value="big_car">Stor bil</option>
+      <option value="caravan">Husbil</option>
+    </select>
     <input type="text" name="car_name" placeholder="Bilmodell" required>
     <input type="number" name="cargo_space" placeholder="Lastutrymme">
     <input type="number" name="beds" placeholder="Sängar">
@@ -65,24 +96,19 @@
     <button type="submit">Lägg till bil</button>
   </form>
 
-  <!-- Script för att visa/dölja redigeringsformulär -->
   <script>
-    // Visa redigeringsformulär
-    document.querySelectorAll('.editBtn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const id = btn.dataset.id;
-        const form = document.getElementById('editForm-' + id);
-        form.style.display = form.style.display === 'none' ? 'block' : 'none';
-      });
-    });
+    document.addEventListener('click', (e) => {
+      if (e.target.classList.contains('editBtn')) {
+        const id = e.target.dataset.id;
+        const row = document.getElementById('editRow-' + id);
+        if (row) row.style.display = row.style.display === 'table-row' ? 'none' : 'table-row';
+      }
 
-    // Dölj redigeringsformulär (avbryt)
-    document.querySelectorAll('.cancelBtn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const id = btn.dataset.id;
-        const form = document.getElementById('editForm-' + id);
-        form.style.display = 'none';
-      });
+      if (e.target.classList.contains('cancelBtn')) {
+        const id = e.target.dataset.id;
+        const row = document.getElementById('editRow-' + id);
+        if (row) row.style.display = 'none';
+      }
     });
   </script>
 </body>

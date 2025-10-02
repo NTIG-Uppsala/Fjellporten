@@ -3,6 +3,4 @@ __pycache__
 config.js
 screenshots
 node_modules
-package-lock.json
-package.json
 .env
