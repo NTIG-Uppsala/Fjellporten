@@ -6,15 +6,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Adminpanel</title>
   <link rel="stylesheet" href="panel_styles.css">
+  <style>
+  </style>
 </head>
 
 <body>
   <h1>Alla Bilar</h1>
-
-  <% if (errorMessage) { %>
-    <div class="errorMessage"><%= errorMessage %></div>
-  <% } %>
-
+  
   <table>
     <thead>
       <tr>
@@ -97,6 +95,7 @@
   </form>
 
   <script>
+    // Event delegation for edit/cancel buttons
     document.addEventListener('click', (e) => {
       if (e.target.classList.contains('editBtn')) {
         const id = e.target.dataset.id;
