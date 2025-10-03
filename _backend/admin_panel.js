@@ -69,16 +69,7 @@ function checkHasDisallowedValues(isCaravan, cargoSpace, bedsAmount) {
 }
 
 function sendError(res, statusCode, message) {
-  return res.status(statusCode).send(`
-    <div style= "display: flex; flex-direction: column; gap: 30px; margin-top: 30%; align-items: center; justify-content: center">
-      <div style= "color: red; font-weight: bold; font-size: 26px;">
-        ${message}
-      </div>
-      <a href="admin/" style= "font-weight: 600; font-size: 26px; color: black">
-        Klicka här för att gå tillbaka
-      </a>
-    </div>
-  `)
+  return res.status(statusCode).render("error", { message });
 }
 
 // --- Auth routes ---

@@ -62,10 +62,10 @@
                   <option value="caravan" <%= car.car_type === 'caravan' ? 'selected' : '' %>>Husbil</option>
                 </select>
 
-                <input type="text" name="car_name" value="<%= car.car_name %>" required placeholder="Bilmodell">
+                <input type="text" name="car_name" value="<%= car.car_name %>" placeholder="Bilmodell" required>
                 <input type="number" name="cargo_space" value="<%= car.cargo_space != null ? car.cargo_space : '' %>" placeholder="Lastutrymme">
                 <input type="number" name="beds" value="<%= car.beds != null ? car.beds : '' %>" placeholder="Sängar">
-                <input type="number" name="cost" value="<%= car.cost != null ? car.cost : '' %>" placeholder="Kostnad/dag">
+                <input type="number" name="cost" value="<%= car.cost != null ? car.cost : '' %>" placeholder="Kostnad/dag" required>
 
                 <button type="submit">Spara</button>
                 <button type="button" class="cancelBtn" data-id="<%= car.id %>">Avbryt</button>
@@ -90,7 +90,7 @@
     <input type="text" name="car_name" placeholder="Bilmodell" required>
     <input type="number" name="cargo_space" placeholder="Lastutrymme">
     <input type="number" name="beds" placeholder="Sängar">
-    <input type="number" name="cost" placeholder="Kostnad/dag">
+    <input type="number" name="cost" placeholder="Kostnad/dag" required>
     <button type="submit">Lägg till bil</button>
   </form>
 
