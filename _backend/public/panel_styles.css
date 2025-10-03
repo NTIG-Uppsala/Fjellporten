@@ -60,7 +60,7 @@ input[type=number] {
   display: flex;
   flex-direction: column;
   gap: 30px;
-  margin-top: 30%;
+  margin-top: 45vh;
   align-items: center;
   justify-content: center;
 }
