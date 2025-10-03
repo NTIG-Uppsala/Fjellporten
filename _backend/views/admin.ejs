@@ -43,7 +43,7 @@
             <td><%= car.cost %> kr/dag</td>
             <td><button class="editBtn" data-id="<%= car.id %>">Redigera</button></td>
             <td>
-              <form action="/delete-car" method="POST" style="display:inline;">
+              <form action="/admin/delete-car" method="POST" style="display:inline;">
                 <input type="hidden" name="id" value="<%= car.id %>">
                 <button type="submit" onclick="return confirm('Är du säker på att du vill ta bort denna bil?')">Ta bort</button>
               </form>
@@ -53,7 +53,7 @@
           <!-- Edit row -->
           <tr id="editRow-<%= car.id %>" class="editRow">
             <td colspan="6">
-              <form action="/edit-car" method="POST">
+              <form action="/admin/edit-car" method="POST">
                 <input type="hidden" name="id" value="<%= car.id %>">
 
                 <select name="car_type" required>
@@ -81,7 +81,7 @@
 
   <!-- Add new car -->
   <h2>Lägg till en ny bil</h2>
-  <form action="/add-car" method="POST">
+  <form action="/admin/add-car" method="POST">
     <select name="car_type" required>
       <option value="small_car">Liten bil</option>
       <option value="big_car">Stor bil</option>
