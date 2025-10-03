@@ -128,7 +128,6 @@ app.post("/add-car", requireLogin, async (req, res) => {
 
   cargo_space = cargo_space ? Number(cargo_space) : null;
   beds = beds ? Number(beds) : null;
-  cost = cost ? Number(cost) : null;
 
   try {
     const { error } = await supabase
