@@ -4,4 +4,3 @@ config.js
 screenshots
 node_modules
 .env
-restore_database.js
