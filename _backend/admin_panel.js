@@ -117,8 +117,8 @@ app.get("/admin", requireLogin, async (req, res) => {
 app.post("/add-car", requireLogin, async (req, res) => {
   let { car_type, car_name, cargo_space, beds, cost } = req.body;
 
-  if (!car_type || !car_name) {
-    return sendError(res, 400, "Biltyp och bilnamn är obligatoriska")
+  if (!car_type || !car_name || !cost) {
+    return sendError(res, 400, "Biltyp, bilnamn och kostnad är obligatoriska")
   }
 
   let isCaravan = checkIfCaravan(car_type);
@@ -147,8 +147,8 @@ app.post("/add-car", requireLogin, async (req, res) => {
 app.post("/edit-car", requireLogin, async (req, res) => {
   const { id, car_type, car_name, cargo_space, beds, cost } = req.body;
 
-  if (!id || !car_type || !car_name) {
-    return sendError(res, 400, "Biltyp och bilnamn är obligatoriska")
+  if (!id || !car_type || !car_name || !cost) {
+    return sendError(res, 400, "Biltyp, bilnamn och kostnad är obligatoriska")
   }
 
   let isCaravan = checkIfCaravan(car_type);
@@ -160,7 +160,7 @@ app.post("/edit-car", requireLogin, async (req, res) => {
     car_name,
     cargo_space: cargo_space ? Number(cargo_space) : null,
     beds: beds ? Number(beds) : null,
-    cost: cost ? Number(cost) : null,
+    cost,
   };
 
   try {
