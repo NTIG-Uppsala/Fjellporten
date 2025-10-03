@@ -122,7 +122,7 @@ app.get("/admin", requireLogin, async (req, res) => {
 });
 
 // --- Car management ---
-app.post("/add-car", requireLogin, async (req, res) => {
+app.post("/admin/add-car", requireLogin, async (req, res) => {
   let { car_type, car_name, cargo_space, beds, cost } = req.body;
 
   if (!car_type || !car_name || !cost) {
@@ -152,7 +152,7 @@ app.post("/add-car", requireLogin, async (req, res) => {
   }
 });
 
-app.post("/edit-car", requireLogin, async (req, res) => {
+app.post("/admin/edit-car", requireLogin, async (req, res) => {
   const { id, car_type, car_name, cargo_space, beds, cost } = req.body;
 
   if (!id || !car_type || !car_name || !cost) {
@@ -189,7 +189,7 @@ app.post("/edit-car", requireLogin, async (req, res) => {
   }
 });
 
-app.post("/delete-car", requireLogin, async (req, res) => {
+app.post("/admin/delete-car", requireLogin, async (req, res) => {
   const { id } = req.body;
   if (!id) return sendError(res, 400, "Bil-ID är obligatoriskt")
 
@@ -205,9 +205,6 @@ app.post("/delete-car", requireLogin, async (req, res) => {
     sendUnknownError(res);
   }
 });
-
-// --- Root redirect ---
-app.get("/", (req, res) => res.redirect("/admin"));
 
 const PORT = process.env.PORT || 3002;
 app.listen(PORT, () =>
