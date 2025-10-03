@@ -72,6 +72,14 @@ function sendError(res, statusCode, message) {
   return res.status(statusCode).render("error", { message });
 }
 
+function sendUnknownError(res) {
+  sendError(res, 500, "Oväntat fel");
+}
+
+function redirectAdmin(res) {
+  res.redirect("/admin");
+}
+
 // --- Auth routes ---
 app.get("/admin/login", (req, res) => {
   res.render("login", { error: "", username: "", focus: "username" });
@@ -84,7 +92,7 @@ app.post("/admin/login", (req, res) => {
     password === process.env.ADMIN_PASS
   ) {
     req.session.loggedIn = true;
-    res.redirect("/admin");
+    redirectAdmin(res)
   } else {
     res.render("login", {
       error: "Fel användarnamn eller lösenord.",
@@ -137,10 +145,10 @@ app.post("/add-car", requireLogin, async (req, res) => {
       console.error("Insert error:", error.message);
       return sendError(res, 500, "Fel vid tillägg av bil")
     }
-    res.redirect("/admin");
+    redirectAdmin(res);
   } catch (err) {
     console.error(err);
-    sendError(res, 500, "Oväntat fel")
+    sendUnknownError(res);
   }
 });
 
@@ -174,10 +182,10 @@ app.post("/edit-car", requireLogin, async (req, res) => {
       return sendError(res, 500, "Fel vid uppdatering av bil")
     }
 
-    res.redirect("/admin");
+    redirectAdmin(res);
   } catch (err) {
     console.error("Unexpected update error:", err);
-    sendError(res, 500, "Oväntat fel")
+    sendUnknownError(res);
   }
 });
 
@@ -191,10 +199,10 @@ app.post("/delete-car", requireLogin, async (req, res) => {
       console.error("Delete error:", error.message);
       return sendError(res, 500, "Fel vid borttagning av bil")
     }
-    res.redirect("/admin");
+    redirectAdmin(res);
   } catch (err) {
     console.error("Unexpected delete error:", err);
-    sendError(res, 500, "Oväntat fel")
+    sendUnknownError(res);
   }
 });
 
