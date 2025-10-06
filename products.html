@@ -26,29 +26,31 @@
       </select>
     </div>
     <div id="controlPanel">
-        <h3>Sortera efter:</h3>
-        <select id="dropDownMenuSort">
-          <option value="nameAsc">Namn A-Ö</option>
-          <option value="nameDesc">Namn Ö-A</option>
-          <option value="cargo/bedsAsc"></option>
-          <option value="cargo/bedsDesc"></option>
-          <option value="priceAsc">Pris stigande</option>
-          <option value="priceDesc">Pris fallande</option>
-        </select>
+      <p>Sortera efter:&nbsp;</p>
+      <select id="dropDownMenuSort">
+        <option value="nameAsc">Namn A-Ö</option>
+        <option value="nameDesc">Namn Ö-A</option>
+        <option value="cargo/bedsAsc">stigande</option>
+        <option value="cargo/bedsDesc">fallande</option>
+        <option value="priceAsc">Pris stigande</option>
+        <option value="priceDesc">Pris fallande</option>
+      </select>
 
-      <div class="priceInput">
-        <div class="field">
-          <input type="number" id="inputMin" placeholder="Min pris">
-          <div class="separator">-</div>
-          <input type="number" id="inputMax" placeholder="Max pris">
-          <p>kr</p>
+      <div class="priceDropDown">
+        <div class="dropDownToggle">Prisintervall</div>
+        <div class="dropDownContent">
+          <div class="priceInput">
+            <div class="field">
+              <input type="number" class="inputMin" placeholder="Min pris">
+              <div class="separator">-</div>
+              <input type="number" class="inputMax" placeholder="Max pris">
+            </div>
+          </div>
         </div>
       </div>
-      <h3 class="VAT">
-        <label for="VATButton">exkl. moms</label>
-        <input type="checkbox" id="VATButton">
-      </h3>
 
+      <label for="VATButton">exkl. moms</label>
+      <input type="checkbox" id="VATButton">
     </div>
     <div id="cars">
     </div>
