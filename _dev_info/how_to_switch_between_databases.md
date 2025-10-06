@@ -1,4 +1,4 @@
-# How To Switch Between Databases (for testing purposes)
+# How To Switch Between Databases (for testing purposes, with publishable keys (only reading the database))
 
 ## Connection Info
 
