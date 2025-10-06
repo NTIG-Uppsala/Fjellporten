@@ -2,7 +2,7 @@
 
 ## Remember to restore the database after all testing is done
 
-### Login to the admin panel
+### Start by logging in to the admin panel
 
  - [ ] Add a small car
  - [ ] Edit the cargo space of a small car
