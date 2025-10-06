@@ -54,6 +54,10 @@ input[type=number] {
   -moz-appearance: textfield;
 }
 
+#logoutButton {
+  margin-top: 50px;
+}
+
 /* Error page */
 
 .errorContainer {

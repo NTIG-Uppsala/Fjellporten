@@ -203,6 +203,13 @@ app.post("/admin/delete-car", requireLogin, async (req, res) => {
   }
 });
 
+// Logout
+app.post("admin/logout", requireLogin, async (req, res) => {
+  req.session.destroy(() => {
+    res.redirect('/admin/login');
+  })
+})
+
 // Serve static files
 app.use("/admin", express.static(path.join(__dirname, "public")));
 
