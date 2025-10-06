@@ -15,3 +15,4 @@
 - [How To Update Website Code](_dev_info/how_to_update_website_code.md)
 - [How To Update Website From CMD](_dev_info/how_to_update_website_from_CMD.md)
 - [Programming Languages](_dev_info/programming_languages.md)
+- [Test Checklist](_dev_info/test_checklist.md)
