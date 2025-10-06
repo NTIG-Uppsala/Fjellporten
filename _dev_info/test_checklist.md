@@ -4,7 +4,7 @@
 
 ### Start by logging in to the admin panel
 
- - [x] Add a small car
+ - [ ] Add a small car
  - [ ] Edit the cargo space of a small car
  - [ ] Edit the name of a small car
  - [ ] Edit the price of a small car
