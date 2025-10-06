@@ -57,11 +57,12 @@ const originalDatabase =
 let isDevServer = process.env.IS_DEV_SERVER === "true"
 
 if(isDevServer) {
-  await supabase.from("all_cars").delete().neq("cost", 0);
 
+  await supabase.from("all_cars").delete().neq("cost", 0);
   await supabase.from("all_cars").insert(originalDatabase);
 
   console.log("Database successfully restored")
+
 } else {
   console.log("Cannot restore database on production server")
 }
