@@ -99,14 +99,10 @@ app.post("/admin/login", (req, res) => {
   }
 });
 
-app.get("/admin/logout", (req, res) => {
-  req.session.destroy(() => res.redirect("/admin/login"));
-});
-
 // --- Admin dashboard (protected) ---
 app.get("/admin", requireLogin, async (req, res) => {
   try {
-    const { data, error } = await supabase.from("all_cars").select("*");
+    const { data, error } = await supabase.from("all_cars").select("*").order("car_name");
     if (error) {
       console.error("Fetch error:", error.message);
       return res.render("admin", { cars: [] });
